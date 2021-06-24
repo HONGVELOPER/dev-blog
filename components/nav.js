@@ -1,11 +1,23 @@
 function Nav(props) {
   
-  console.log(props)
+  console.log('Nav', props)
 
   const lists = []
   let i = 0
   while (i < props.data.length) {
-    lists.push(<li key={props.data[i].id}><a href={"/content/" + props.data[i].id}>{props.data[i].title}</a></li>)
+    lists.push(
+      <li key={props.data[i].id}>
+        <a href={"/content/" + props.data[i].id}
+          data-id={props.data[i].id}
+          onClick={function(e) {
+            e.preventDefault()
+            props.onChangePage(e.target.dataset.id)
+          }}
+        >
+          {props.data[i].title}
+        </a>
+      </li>
+    )
     i += 1
   }
 

@@ -9,7 +9,8 @@ import React , { useState }from "react"
 function Home() {
 
   const [subject, setSubject] = useState({
-    mode: "welcome",
+    mode: "read",
+    selected_content_id: 2,
     title: "WEB",
     sub: "World Wide WEB!",
     welcome: {title: "welcome", desc: "Hello, React Basic!!"},
@@ -19,14 +20,38 @@ function Home() {
       {id: 3, title: "JavaScript", desc: "JavaScript is for interactive"}
     ]
   })
-  
 
+  let _title, _desc = null
+  if (subject.mode === "welcome") {
+    _title = subject.welcome.title
+    _desc = subject.welcome.desc
+  } else if (subject.mode === "read") {
+    let i = 0
+    while (i < subject.contents.length) {
+      if (subject.contents[i].id === subject.selected_content_id) {
+        _title = subject.contents[i].title
+        _desc = subject.contents[i].desc
+        break
+      }
+      i += 1
+    }
+  }
+
+  console.log('app render')
   return (
     <Layout home>
-      <Header title={subject.title} sub={subject.sub} />
-      {/* <Header title="React" sub="For UI" /> */}
-      <Nav data={subject.contents} />
-      <Content title="HTML" desc="HTML is HyperText Markup Language" />
+      <Header
+        title={subject.title}
+        sub={subject.sub}
+        onChangePage={function() {
+          setSubject({...subject, mode: "welcome"})
+        }}
+      />
+      <Nav onChangePage={function(id) {
+        console.log(id,'id check')
+        setSubject({...subject, mode: "read", selected_content_id: Number(id)})
+      }} data={subject.contents} />
+      <Content title={_title} desc={_desc} />
       <Head>
         <title>{siteTitle}</title>
       </Head>
