@@ -1,5 +1,5 @@
 function Subject(props) {
-  console.log(props)
+  console.log('Subject render')
   return (
     <header>
       <h1><a href="/" onClick={function(e) {

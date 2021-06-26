@@ -1,6 +1,5 @@
 function Nav(props) {
-  
-  console.log('Nav', props)
+  console.log('Nav Render', props)
 
   const lists = []
   let i = 0
