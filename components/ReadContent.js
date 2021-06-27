@@ -12,7 +12,7 @@ function ReadContent(props) {
 
 // ShouldComponentUpdate(newPorps, newState) {
 //   렌더링을 할지 안할지 개발자의 마음대로 정할 수 있도록 도와주는 함수
-//   다음에 찾아보자.
+//   다음에 찾아보자. 
 // }
 
 export default ReadContent

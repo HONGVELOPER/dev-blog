@@ -6,7 +6,10 @@ import Header from '../components/header.js'
 import Nav from '../components/Nav.js'
 import ReadContent from '../components/ReadContent.js'
 import CreateContent from '../components/CreateContent.js'
+import UpdateContent from '../components/UpdateContent.js'
 import React , { useState }from "react"
+// import { Button } from 'react-bootstrap';
+
 
 function Home() {
 
@@ -53,7 +56,28 @@ function Home() {
       // add content to state.contents
       max_content_id += 1
       console.log(_title, _desc, 'title, desc check')
-      const _contents = subject.contents.concat({id: max_content_id, title: _title, desc: _desc})
+      const _contents = subject.contents.concat(
+        {id: max_content_id, title: _title, desc: _desc}
+      )
+      setSubject({...subject, contents: _contents})
+      console.log(subject, 'content')
+    }} />
+  } else if (subject.mode === "update") {
+    let i = 0
+    while (i < subject.contents.length) {
+      if (subject.contents[i].id === subject.selected_content_id) {
+        _title = subject.contents[i].title
+        _desc = subject.contents[i].desc
+        break
+      }
+      i += 1
+    }
+    _article = <UpdateContent title={_title} desc={_desc} onSubmit={function(_title, _desc) {
+      max_content_id += 1
+      console.log(_title, _desc, 'title, desc check')
+      const _contents = subject.contents.concat(
+        {id: max_content_id, title: _title, desc: _desc}
+      )
       setSubject({...subject, contents: _contents})
       console.log(subject, 'content')
     }} />
@@ -62,6 +86,7 @@ function Home() {
   console.log('app render')
   return (
     <Layout home>
+      {/* <Button>Left</Button> */}
       <Header
         title={subject.title}
         sub={subject.sub}
@@ -80,6 +105,7 @@ function Home() {
       <Head>
         <title>{siteTitle}</title>
       </Head>
+      <h1></h1>
       {/* <section className={utilStyles.headingMd}>
         <p>hello youngjin world</p>
         <p>

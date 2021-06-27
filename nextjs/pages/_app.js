@@ -1,13 +1,9 @@
-// 전역 css 설정 
-// style에 있는 파일도 컴포넌트로 생각하여 사용 가능
-
-import '../styles/global.css'
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import theme from '../public/theme';
+import theme from '../src/theme';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -37,5 +33,5 @@ export default function MyApp(props) {
 
 MyApp.propTypes = {
   Component: PropTypes.elementType.isRequired,
-  pageProps: PropTypes.object.isRequired, 
+  pageProps: PropTypes.object.isRequired,
 };
