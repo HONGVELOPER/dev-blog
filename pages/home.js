@@ -1,18 +1,12 @@
-import Home from '../components/Home.js'
-import Header from '../components/Header2.js'
+import AppBar from '../components/Appbar.js'
 
-function Basic() {
-  const style = {
-    border: "2px solid black"
-  }
-  
+function Home() {
+
   return (
-    <div style={style}>
-      <Header style={style}></Header>
-
-      <Home style={style} />
+    <div>
+      <AppBar></AppBar>
     </div>
   )
 }
 
-export default Basic
+export default Home
