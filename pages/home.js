@@ -1,5 +1,5 @@
-import AppBar from '../components/Appbar.js'
-import IndexContainer from '../components/RealHeader.js'
+import AppBar from '../components/index/Header.js'
+import IndexContainer from '../components/index/Container.js'
 
 function Home() {
 

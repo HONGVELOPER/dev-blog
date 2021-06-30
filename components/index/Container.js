@@ -1,6 +1,6 @@
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
-import styles from '../styles/container.module.css';
+import styles from '../../styles/container.module.css';
 
 const IndexContainer = () => {
   return (
