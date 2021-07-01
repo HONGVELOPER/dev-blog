@@ -1,0 +1,10 @@
+.navBar {
+  color: orange;
+  width: 240px;
+  flex-shrink: 0;
+}
+
+.navBar .avatar {
+  width: 150px;
+  height: 150px;
+}
