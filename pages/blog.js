@@ -1,6 +1,6 @@
-import Container from '../components/blog/Container.js';
-import NavBar from '../components/NavBar.js';
 import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '../components/index/Header.js'
+import Container from '../components/blog/Container.js';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -13,7 +13,7 @@ function Blog() {
   const classes = useStyles()
   return (
     <div>
-      <NavBar></NavBar>
+      <AppBar></AppBar>
       <Container></Container>
     </div>
   )

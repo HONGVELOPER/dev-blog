@@ -2,11 +2,10 @@ import AppBar from '../components/index/Header.js'
 import IndexContainer from '../components/index/Container.js'
 
 function Home() {
-
   return (
-    <div style={{height: "100vh", width: "100%"}}>
+    <div> 
       <AppBar></AppBar>
-      {/* <IndexContainer></IndexContainer> */}
+      <IndexContainer></IndexContainer>
     </div>
   )
 }
