@@ -47,7 +47,7 @@ const container = () => {
         <div style={{fontSize: '2vw', paddingTop: '14vw', color:'#218e16', fontWeight: 500}}>안녕하세요,</div>
         <div style={{fontSize: '1.2vw', marginTop: '1vw'}}>
           웹 브라우저로 사람을 연결하는 개발자 홍영진입니다.<br />
-          Next js & Node js 로 웹 애플리케이션을 구축합 니다.
+          Next js & Node js 로 웹 애플리케이션을 구축합니다.
         </div>
       </section>
       <section className={classes.skill}>
