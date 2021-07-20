@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React from 'react';
+import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
 import Box from '@material-ui/core/Box';
@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 // import Typography from '@material-ui/core/Typography';
 import Image from 'next/image'
 import Divider from '@material-ui/core/Divider';
+import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -75,13 +77,29 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-const BlogContainer = () => {
+// export async function getServerSideProps(context) {
+//   try {
+//     const response = await axios.get('/api/blog')
+//     if (response.status === 200) {
+//       return { 
+//         props: { 
+//           response: response 
+//         }
+//       } 
+//     }
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
+
+const BlogContainer = ({ data }) => {
   const classes = useStyles()
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
   return (
     <Container className={classes.root}>
       <Box className={classes.directionBox}>
@@ -112,6 +130,7 @@ const BlogContainer = () => {
             </Grid>
           </Grid>
         </Grid>
+        <Button href="./posting">to post</Button>
       </Box>
       {/* <AppBar position="static"> */}
       <Box className={classes.tabBox}>
@@ -133,7 +152,16 @@ const BlogContainer = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={4}>
+              {/* <Grid item xs={4}>
+                <Card variant="outlined" className={classes.card}>
+                  <CardContent>
+                    <Image src={'/images/profile.jpg'} width={300} height={300} />
+                    <Divider />
+                    <div>checkcheckcheckcheckcheck</div>
+                  </CardContent>
+                </Card>
+              </Grid> */}
+              {/* <Grid item xs={4}>
                 <Card variant="outlined" className={classes.card}>
                   <CardContent>
                     <Image src={'/images/profile.jpg'} width={300} height={300} />
@@ -147,15 +175,6 @@ const BlogContainer = () => {
                   <CardContent>
                     <Image src={'/images/profile.jpg'} width={300} height={300} />
                     <Divider />
-                    <div>checkcheckcheckcheckcheck</div>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={4}>
-                <Card variant="outlined" className={classes.card}>
-                  <CardContent>
-                    <Image src={'/images/profile.jpg'} width={300} height={300} />
-                    <Divider />
                     check
                   </CardContent>
                 </Card>
@@ -177,7 +196,7 @@ const BlogContainer = () => {
                     check
                   </CardContent>
                 </Card>
-              </Grid>
+              </Grid> */}
             </Grid>
           </TabPanel>
           <TabPanel value={value} index={1}>
