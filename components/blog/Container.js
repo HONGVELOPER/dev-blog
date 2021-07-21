@@ -12,7 +12,6 @@ import Grid from '@material-ui/core/Grid';
 import Image from 'next/image'
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import axios from 'axios';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -27,7 +26,6 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={3}>
-          {/* <Typography>{children}</Typography> */}
           {children}
         </Box>
       )}
@@ -77,28 +75,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }))
 
-// export async function getServerSideProps(context) {
-//   try {
-//     const response = await axios.get('/api/blog')
-//     if (response.status === 200) {
-//       return { 
-//         props: { 
-//           response: response 
-//         }
-//       } 
-//     }
-//   } catch (e) {
-//     console.log(e)
-//   }
-// }
-
-const BlogContainer = ({ data }) => {
+const BlogContainer = (props) => {
+  // console.log(props, 'props check')
   const classes = useStyles()
   const [value, setValue] = useState(0)
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const contentList = props.data.map((content) => (
+    <Grid item xs={4} key={content.P_ID}>
+      <Card variant="outlined" className={classes.card}>
+        <CardContent>
+          <Image src={'/images/profile.jpg'} width={300} height={300} />
+          <Divider />
+          <div>{content.P_TITLE}</div>
+        </CardContent>
+      </Card>
+    </Grid>
+  ))
 
   return (
     <Container className={classes.root}>
@@ -118,7 +114,7 @@ const BlogContainer = ({ data }) => {
               <Grid item xs={6}>
                 발행 포스트<br />
                 <span style={{color: '#218e16'}}>
-                  <span style={{fontSize: '2vw'}}>25</span>건
+                  <span style={{fontSize: '2vw'}}>{props.data.length}</span>건
                 </span>
               </Grid>
               <Grid item xs={6}>
@@ -130,7 +126,7 @@ const BlogContainer = ({ data }) => {
             </Grid>
           </Grid>
         </Grid>
-        <Button href="./posting">to post</Button>
+        <Button href="./blog/post">to post</Button>
       </Box>
       {/* <AppBar position="static"> */}
       <Box className={classes.tabBox}>
@@ -143,60 +139,7 @@ const BlogContainer = ({ data }) => {
         <Box className={classes.tabPanel}>
           <TabPanel value={value} index={0}>  
             <Grid container spacing={2}>
-              <Grid item xs={4}>
-                <Card variant="outlined" className={classes.card}>
-                  <CardContent>
-                    <Image src={'/images/profile.jpg'} width={300} height={300} />
-                    <Divider />
-                    <div>checkcheckcheckcheckcheck</div>
-                  </CardContent>
-                </Card>
-              </Grid>
-              {/* <Grid item xs={4}>
-                <Card variant="outlined" className={classes.card}>
-                  <CardContent>
-                    <Image src={'/images/profile.jpg'} width={300} height={300} />
-                    <Divider />
-                    <div>checkcheckcheckcheckcheck</div>
-                  </CardContent>
-                </Card>
-              </Grid> */}
-              {/* <Grid item xs={4}>
-                <Card variant="outlined" className={classes.card}>
-                  <CardContent>
-                    <Image src={'/images/profile.jpg'} width={300} height={300} />
-                    <Divider />
-                    <div>checkcheckcheckcheckcheck</div>
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={4}>
-                <Card variant="outlined" className={classes.card}>
-                  <CardContent>
-                    <Image src={'/images/profile.jpg'} width={300} height={300} />
-                    <Divider />
-                    check
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={4}>
-                <Card variant="outlined" className={classes.card}>
-                  <CardContent>
-                    <Image src={'/images/profile.jpg'} width={300} height={300} />
-                    <Divider />
-                    check
-                  </CardContent>
-                </Card>
-              </Grid>
-              <Grid item xs={4}>
-                <Card variant="outlined" className={classes.card}>
-                  <CardContent>
-                    <Image src={'/images/profile.jpg'} width={300} height={300} />
-                    <Divider />
-                    check
-                  </CardContent>
-                </Card>
-              </Grid> */}
+              {contentList}
             </Grid>
           </TabPanel>
           <TabPanel value={value} index={1}>
