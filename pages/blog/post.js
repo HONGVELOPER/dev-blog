@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 import AppBar from '../../components/index/Header.js'
-import PostContainer from '../../components/post/Container.js'
+import PostContainer from '../../components/post/editor.js'
 
 
 function BlogPost() {

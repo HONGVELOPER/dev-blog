@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../public/theme';
+import 'react-quill/dist/quill.snow.css';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
