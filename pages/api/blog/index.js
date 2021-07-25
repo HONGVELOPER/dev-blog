@@ -10,7 +10,6 @@ export const config = {
 
 const BlogHandler = async (req, res) => {
 	console.log(req.method, 'method check')
-	console.log('req~!!!')
 	if (req.method === 'POST') {
 		console.log('POST METHOD~')
 		try {

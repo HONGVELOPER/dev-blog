@@ -8,10 +8,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
-// import Typography from '@material-ui/core/Typography';
 import Image from 'next/image'
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import { useRouter } from 'next/router'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -79,6 +80,7 @@ const BlogContainer = (props) => {
   // console.log(props, 'props check')
   const classes = useStyles()
   const [value, setValue] = useState(0)
+  const router = useRouter()
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -86,12 +88,17 @@ const BlogContainer = (props) => {
 
   const contentList = props.data.map((content) => (
     <Grid item xs={4} key={content.P_ID}>
-      <Card variant="outlined" className={classes.card}>
-        <CardContent>
-          <Image src={'/images/profile.jpg'} width={300} height={300} />
-          <Divider />
-          <div>{content.P_TITLE}</div>
-        </CardContent>
+      <Card
+        variant="outlined"
+        className={classes.card}
+      >
+        <CardActionArea>
+          <CardContent>
+            <Image src={'/images/profile.jpg'} width={300} height={200} />
+            <Divider />
+            {content.P_TITLE}
+          </CardContent>
+        </CardActionArea>
       </Card>
     </Grid>
   ))
@@ -128,7 +135,6 @@ const BlogContainer = (props) => {
         </Grid>
         <Button href="./blog/post">to post</Button>
       </Box>
-      {/* <AppBar position="static"> */}
       <Box className={classes.tabBox}>
         <Tabs value={value} onChange={handleChange} variant="fullWidth" className={classes.tab} aria-label="simple tabs example"  >
           <Tab label="Posting" {...a11yProps(0)} />

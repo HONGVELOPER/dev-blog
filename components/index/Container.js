@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Image from 'next/image'
@@ -7,14 +8,14 @@ import CardContent from '@material-ui/core/CardContent';
 const useStyles = makeStyles((theme) => ({
   box: {
     position: 'relative',
-    height: '25vw',
+    height: '27vw',
   },
   bgImage: {
     zIndex: -1,
   },
   bgText: {
-    // border: '2px solid black',
     margin: 0,
+    marginBottom: '4vw',
     paddingLeft: '15vw',
   },
   skill: {
@@ -40,15 +41,44 @@ const useStyles = makeStyles((theme) => ({
 
 const container = () => {
   const classes = useStyles()
+  const [mobile, setMobile] = useState(null)
+  const divide = 900
+
+  useEffect(() => {
+    if (mobile === null) {
+      window.innerWidth < divide ? setMobile(true) : setMobile(false)
+    }
+    window.addEventListener('resize', function() {
+      window.innerWidth < divide ? setMobile(true) : setMobile(false)
+    }, {passive: true})
+    console.log(mobile, 'first')
+  })
+
   return (
     <Box className={classes.box}>
       <Image className={classes.bgImage} src={'/images/indexImage.jpg'} layout='fill'></Image>
       <section className={classes.bgText}>
-        <div style={{fontSize: '2vw', paddingTop: '14vw', color:'#218e16', fontWeight: 500}}>안녕하세요,</div>
-        <div style={{fontSize: '1.2vw', marginTop: '1vw'}}>
-          웹 브라우저로 사람을 연결하는 개발자 홍영진입니다.<br />
-          Next js & Node js 로 웹 애플리케이션을 구축합니다.
-        </div>
+        {mobile ? (
+          <Box>
+            <div style={{fontSize: '2vw', paddingTop: '14vw', color:'#218e16', fontWeight: 500}}>
+              안녕하세요,
+            </div>
+            <div style={{fontSize: '1.2vw', marginTop: '1vw'}}>
+              웹 브라우저로 사람을 연결하는 개발자 홍영진입니다.<br />
+              Next js & Node js 로 웹 애플리케이션을 구축합니다.
+            </div>
+          </Box>
+        ) : (
+          <Box>
+            <div style={{fontSize: '40px', paddingTop: '14vw', color:'#218e16', fontWeight: 500}}>
+              안녕하세요,
+            </div>
+            <div style={{fontSize: '20px', marginTop: '1vw'}}>
+              웹 브라우저로 사람을 연결하는 개발자 홍영진입니다.<br />
+              Next js & Node js 로 웹 애플리케이션을 구축합니다.
+            </div>
+          </Box>
+        )}
       </section>
       <section className={classes.skill}>
         <div style={{color: '#218e16'}}>Skills</div>
