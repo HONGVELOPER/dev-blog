@@ -12,7 +12,7 @@ import Image from 'next/image'
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -80,7 +80,6 @@ const BlogContainer = (props) => {
   // console.log(props, 'props check')
   const classes = useStyles()
   const [value, setValue] = useState(0)
-  const router = useRouter()
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -93,11 +92,13 @@ const BlogContainer = (props) => {
         className={classes.card}
       >
         <CardActionArea>
-          <CardContent>
-            <Image src={'/images/profile.jpg'} width={300} height={200} />
-            <Divider />
-            {content.P_TITLE}
-          </CardContent>
+          <Link href={`blog/${content.P_ID}`}>
+            <CardContent>
+              <Image src={'/images/profile.jpg'} width={300} height={200} />
+              <Divider />
+              {content.P_TITLE}
+            </CardContent>
+          </Link>
         </CardActionArea>
       </Card>
     </Grid>

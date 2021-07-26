@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Blog({ data }) {
+const Blog = ({ data }) => {
   const classes = useStyles()
   return (
     <div>
