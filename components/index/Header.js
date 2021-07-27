@@ -85,7 +85,7 @@ const Header = () => {
 
   return (
     <Container>
-      <AppBar elevation={0} position="static" color="transparent">
+      <AppBar elevation={0} position="fixed" color="transparent">
           <div className={classes.header}>
             {mobile ? (
               <Grid container spacing={2} style={{minWidth: '325px'}}>
@@ -94,7 +94,7 @@ const Header = () => {
                     <MenuIcon />
                   </IconButton>
                   <Box className={classes.mobileBox}>
-                    <Button className={classes.logoButton} href="../home">
+                    <Button className={classes.logoButton} href="/">
                       <span>DEV</span>&nbsp;Hong
                     </Button>
                   </Box>
@@ -106,7 +106,7 @@ const Header = () => {
             ) : (
               <Grid container spacing={2}>
                 <Grid item xs={10}>
-                  <Button href="../home">
+                  <Button href="/">
                     <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong</Button>
                   <Button href="../introduce" style={{marginLeft: '4vw', fontWeight: 50}}>
                     Introduction
@@ -126,8 +126,8 @@ const Header = () => {
           </div>
         <Divider></Divider>
         <Drawer anchor={'left'} open={navBar.left} onClose={toggleDrawer('left', false)}>
-              {list('left')}
-            </Drawer>
+          {list('left')}
+        </Drawer>
       </AppBar>
     </Container>
   )

@@ -1,9 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '../../components/blogDetail/Container.js';
 import Header from '../../components/index/Header.js';
-// import { useRouter } from 'next/router'
 import axios from 'axios';
-import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -13,8 +11,6 @@ const useStyles = makeStyles((theme) => ({
 
 const BlogDetail = ({ data }) => {
 	const classes = useStyles()
-	// const router = useRouter()
-	// console.log(router.query.id, 'router')
 
 	return (
 		<div>
