@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Link from 'next/link'
+import BreadCrumbs from '../../components/breadCrumbs.js';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -86,17 +87,17 @@ const BlogContainer = (props) => {
   };
 
   const contentList = props.data.map((content) => (
-    <Grid item xs={4} key={content.P_ID}>
+    <Grid item xs={4} key={content.id}>
       <Card
         variant="outlined"
         className={classes.card}
       >
         <CardActionArea>
-          <Link href={`blog/${content.P_ID}`}>
+          <Link href={`blog/${content.id}`}>
             <CardContent>
               <Image src={'/images/profile.jpg'} width={300} height={200} />
               <Divider />
-              {content.P_TITLE}
+              {content.title}
             </CardContent>
           </Link>
         </CardActionArea>
@@ -106,11 +107,12 @@ const BlogContainer = (props) => {
 
   return (
     <Container className={classes.root}>
-      <Box className={classes.directionBox}>
+      {/* <Box className={classes.directionBox}>
         <span>Home</span>
         <ArrowRightIcon fontSize="small" />
         <span style={{color: '#218e16'}}>Blog</span>
-      </Box>
+      </Box> */}
+      <BreadCrumbs></BreadCrumbs>
       <Box className={classes.titleBox}>
         <Grid container spacing={2}>
           <Grid item xs={8} style={{marginLeft: '20px'}}>

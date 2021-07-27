@@ -11,16 +11,14 @@ const BlogHandler = async (req, res) => {
 		}
 	} else if (req.method === 'GET') {
 		try {
-			if (Object.keys(req.query).length !== 0) {
+			// 게시물 1개 가져올 때
+			if (Object.keys(req.query).length !== 0) { 
 				const result = await blogFuncitons.getOnePost(req.query.id)
-				res.stausCode = 200
-				
-				return res.json(result)
-			} else {
-				const results = await blogFuncitons.getPost()
-				// console.log(results)
-				res.statusCode = 200
-				return res.json(results)
+				return res.status(200).json(result)
+			// 게시물 전체를 가져올 때
+			} else { 
+				const result = await blogFuncitons.getPost()
+				return res.status(200).json(result)
 			}
 		} catch (e) {
 			console.log(e)
@@ -29,4 +27,4 @@ const BlogHandler = async (req, res) => {
 	}
 }
 
-export default BlogHandler;
+export default BlogHandler

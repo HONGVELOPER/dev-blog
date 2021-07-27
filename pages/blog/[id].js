@@ -3,6 +3,7 @@ import Container from '../../components/blogDetail/Container.js';
 import Header from '../../components/index/Header.js';
 // import { useRouter } from 'next/router'
 import axios from 'axios';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-const BlogDetail = ({data}) => {
+const BlogDetail = ({ data }) => {
 	const classes = useStyles()
 	// const router = useRouter()
 	// console.log(router.query.id, 'router')
@@ -31,7 +32,7 @@ export async function getServerSideProps(context) {
 			id: context.query.id,
 		}
 	})
-	// console.log(response.data, 'response check')
+	// console.log(response.data[0], 'response check')
 	return {
 	  props: {
 			data: response.data[0],

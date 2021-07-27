@@ -1,8 +1,6 @@
 import { sql_query } from '../../../lib/db'
-// import axios from 'axios'
 
 const blogFunctions = {}
-
 
 // 블로그 글 포스팅
 blogFunctions.blogPost = async function (postData) {
@@ -23,10 +21,21 @@ blogFunctions.blogPost = async function (postData) {
 // 블로그 글 전체 가져오기
 blogFunctions.getPost = async function () {
 	try {
-		const result = await sql_query(`
+		const response = []
+		const results = await sql_query(`
 			select * from dev_blog.posting
 		`)
-		return result
+		for (const result of results) {
+			const final = {
+				id : result.P_ID,
+				title: result.P_TITLE,
+				content: result.P_CONTENT,
+				writer: result.P_WRITER,
+				date: result.P_DATE,
+			}
+			response.push(final)
+		}
+		return response
 	} catch (error) {
 		console.log(error)
 	}
@@ -38,7 +47,14 @@ blogFunctions.getOnePost = async function (id) {
 		const result = await sql_query(`
 			select * from dev_blog.posting where P_ID = ${id}
 		`)
-		return result
+		const response = [{
+			id: result[0].P_ID,
+			title: result[0].P_TITLE,
+			content: result[0].P_CONTENT,
+			writer: result[0].P_WRITER,
+			date: result[0].P_DATE,
+		}]
+		return response
 	} catch (error) {
 		console.log(error)
 	}
