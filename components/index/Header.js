@@ -85,7 +85,7 @@ const Header = () => {
 
   return (
     <Container>
-      <AppBar elevation={0} position="fixed" color="transparent">
+      <AppBar elevation={0} position="static" color="transparent">
           <div className={classes.header}>
             {mobile ? (
               <Grid container spacing={2} style={{minWidth: '325px'}}>
