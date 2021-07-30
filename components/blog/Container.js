@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -13,6 +13,28 @@ import Button from '@material-ui/core/Button';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Link from 'next/link'
 import BreadCrumbs from '../../components/breadCrumbs.js';
+import AppBar from '@material-ui/core/AppBar';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#218e16',
+    }
+  },
+  status: {
+    danger: 'orange',
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 800,
+      md: 1100,
+      lg: 1280,
+      xl: 1920
+    }
+  }
+})
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -43,37 +65,13 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-  },
-  directionBox: {
-    paddingTop: '3vw',
-    fontSize: '0.7vw',
-    display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap'
-  },
-  titleBox: {
-    // border: '1px solid red',
-    marginTop: '2vw',
-    fontSize: '1.7vw',
-    fontWeight: 50,
-  },
-  tabBox: {
-    marginTop: '2vw',
-    // border: '2px solid blue',
-    width: 'auto',
-  },
-  tab: {
-    // display: 'flex',
-    width: '30vw',
-    // border: '1px solid black'
-  },
-  tabPanel: {
-    marginTop: '3vw',
     flexGrow: 1,
+    marginTop: '100px',
   },
   card: {
-    height: '23vw',
-  }
+    // height: '45vw',
+    // minWidth: '200px',
+  },
 }))
 
 const BlogContainer = (props) => {
@@ -86,78 +84,64 @@ const BlogContainer = (props) => {
   };
 
   const contentList = props.data.map((content) => (
-    <Grid item xs={4} key={content.id}>
-      <Card
-        variant="outlined"
-        className={classes.card}
-      >
-        <CardActionArea>
-          <Link href={`blog/${content.id}`}>
-            <CardContent>
-              <Image src={'/images/profile.jpg'} width={300} height={200} />
-              <Divider />
-              {content.title}
-            </CardContent>
-          </Link>
-        </CardActionArea>
-      </Card>
-    </Grid>
+    <MuiThemeProvider theme={theme} key={content.id}>
+      <Grid item xs={12} sm={6} md={4} style={{padding: 20}}>
+        <Card
+          // variant="outlined"/
+          className={classes.card}
+          style={{minHeight: '450px'}}
+        >
+          <CardActionArea>
+            <Link href={`blog/${content.id}`}>
+              <CardContent>
+                <Image src={'/images/profile.jpg'} width={500} height={230} />
+                <Divider />
+                <Box style={{Height: '220px'}}>
+                  <h2>{content.title}</h2>
+                </Box>
+                <Box>
+                  {content.content}
+                </Box>
+              </CardContent>
+            </Link>
+          </CardActionArea>
+        </Card>
+      </Grid>
+    </MuiThemeProvider>
   ))
 
   return (
-    <Container className={classes.root}>
-      {/* <Box className={classes.directionBox}>
-        <span>Home</span>
-        <ArrowRightIcon fontSize="small" />
-        <span style={{color: '#218e16'}}>Blog</span>
-      </Box> */}
-      <BreadCrumbs></BreadCrumbs>
-      <Box className={classes.titleBox}>
-        <Grid container spacing={2}>
-          <Grid item xs={8} style={{marginLeft: '20px'}}>
-            개발과 관련된 다양한 이야기들을<br />
-            정성을 담아 기록하고 있어요
-          </Grid>
-          <Grid item xs={3}>
-            <Grid container spacing={1} style={{fontSize: '1.1vw'}}>
-              <Grid item xs={6}>
-                발행 포스트<br />
-                <span style={{color: '#218e16'}}>
-                  <span style={{fontSize: '2vw'}}>{props.data.length}</span>건
-                </span>
-              </Grid>
-              <Grid item xs={6}>
-                관련 태그<br />
-                <span style={{color: '#218e16'}}>
-                  <span style={{fontSize: '2vw'}}>60</span>개
-                </span>
-              </Grid>
-            </Grid>
-          </Grid>
+    <Container>
+      <Grid item xs={12} style={{marginTop: 40}}>
+        <BreadCrumbs />
+      </Grid>
+      <Button href="./blog/post">to post</Button>
+      <AppBar className={classes.root} position="static" elevation={0} style={{background: 'transparent', marginTop: '5vw'}}>
+        <MuiThemeProvider theme={theme}>
+          <Tabs
+            value={value}
+            indicatorColor="primary"
+            textColor="primary"
+            onChange={handleChange}
+            aria-label="simple tabs example"
+          >
+            <Tab label="최신 포스트" {...a11yProps(0)} />
+            <Tab label="인기 포스트" {...a11yProps(1)} />
+            <Tab label="Tag" {...a11yProps(2)} />
+          </Tabs>
+        </MuiThemeProvider>
+      </AppBar>
+      <TabPanel value={value} index={0}>
+        <Grid container spacing={0}>
+          {contentList}
         </Grid>
-        <Button href="./blog/post">to post</Button>
-      </Box>
-      <Box className={classes.tabBox}>
-        <Tabs value={value} onChange={handleChange} variant="fullWidth" className={classes.tab} aria-label="simple tabs example"  >
-          <Tab label="Posting" {...a11yProps(0)} />
-          <Tab label="Series" {...a11yProps(1)} />
-          <Tab label="Q&A" {...a11yProps(2)} />
-        </Tabs>
-        {/* 블로그 포스팅 값 가져오는 곳 아마 DB 연결하면서 수정 봐야 할듯 싶다 */}
-        <Box className={classes.tabPanel}>
-          <TabPanel value={value} index={0}>  
-            <Grid container spacing={2}>
-              {contentList}
-            </Grid>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            Series
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            Q&A
-          </TabPanel>
-        </Box>
-      </Box>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
     </Container>
   )
 }

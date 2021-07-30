@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Image from 'next/image'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 
 const useStyles = makeStyles((theme) => ({
   box: {
     position: 'relative',
-    height: '30vw',
+    height: '25vw',
+    minHeight: '150px',
   },
   bgImage: {
     border: '1px solid black',
@@ -16,35 +15,19 @@ const useStyles = makeStyles((theme) => ({
   },
   bgText: {
     margin: 0,
-    marginBottom: '7vw',
+    marginBottom: '8vw',
     paddingLeft: '15vw',
   },
   bgTextMobile: {
     marginBottom: '5vw',
     paddingLeft: '15vw',
   },
-  skill: {
-    marginTop: '8.5vw',
-    textAlign: 'center',
-    fontSize: '1.5vw',
-    height: '30vw',
-  },
-  detailImg: {
-    marginTop: '5vw',
-    height: '5vw',
-  },
-  detailBox: {
-    display: 'inline-block',
-    '& div': {
-      fontSize: '0.7vw',
-    }
-  },
 }))
 
 const container = () => {
   const classes = useStyles()
   const [mobile, setMobile] = useState(null)
-  const divide = 900
+  const divide = 1000
 
   useEffect(() => {
     if (mobile === null) {
@@ -56,6 +39,12 @@ const container = () => {
     console.log(mobile, 'first')
   })
 
+  const hello = () => (
+    <div>
+      Hello,  
+    </div>
+  )
+
   return (
     <Box className={classes.box}>
       <div>
@@ -64,7 +53,7 @@ const container = () => {
       {mobile ? (
         <section className={classes.bgTextMobile}>
           <Box>
-            <div style={{fontSize: '4vw', paddingTop: '16vw', color:'#218e16', fontWeight: 500}}>
+            <div style={{fontSize: '4vw', paddingTop: '11vw', color:'#218e16', fontWeight: 500}}>
               안녕하세요,
             </div>
             <div style={{fontSize: '2vw', marginTop: '1vw'}}>
@@ -76,7 +65,7 @@ const container = () => {
       ) : (
         <section className={classes.bgText}>
           <Box>
-            <div style={{fontSize: '40px', paddingTop: '15vw', color:'#218e16', fontWeight: 500}}>
+            <div style={{fontSize: '40px', paddingTop: '12.5vw', color:'#218e16', fontWeight: 500}}>
               안녕하세요,
             </div>
             <div style={{fontSize: '20px', marginTop: '1vw'}}>

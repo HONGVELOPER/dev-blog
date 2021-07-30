@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   logoButton: {
-    color: '#218e16',
+    // color: '#218e16',
     margin: '0 auto',
     bottom: '45px',
   },
@@ -74,11 +74,11 @@ const Header = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <Button href="../introduce" style={{display: 'block'}}>
-        Introduction
+      <Button href="../about" style={{display: 'block'}}>
+        About
       </Button>
-      <Button href="../project" style={{display: 'block'}}>Project</Button>  
-      <Button href="../blog" style={{display: 'block'}}>Blog</Button>  
+      {/* <Button href="../project" style={{display: 'block'}}>Project</Button>   */}
+      {/* <Button href="../blog" style={{display: 'block'}}>Blog</Button>   */}
       <Button href="https://github.com/Young-Jin1003" style={{display: 'block'}}>Github</Button>
     </div>
   )
@@ -94,8 +94,8 @@ const Header = () => {
                     <MenuIcon />
                   </IconButton>
                   <Box className={classes.mobileBox}>
-                    <Button className={classes.logoButton} href="/">
-                      <span>DEV</span>&nbsp;Hong
+                    <Button className={classes.logoButton} href="/blog">
+                      <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
                     </Button>
                   </Box>
                   <Drawer anchor={'left'} open={navBar.left} onClose={toggleDrawer('left', false)}>
@@ -106,13 +106,13 @@ const Header = () => {
             ) : (
               <Grid container spacing={2}>
                 <Grid item xs={10}>
-                  <Button href="/">
+                  <Button href="/blog">
                     <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong</Button>
-                  <Button href="../introduce" style={{marginLeft: '4vw', fontWeight: 50}}>
-                    Introduction
+                  <Button href="../about" style={{marginLeft: '4vw', fontWeight: 50}}>
+                    About
                   </Button>
-                  <Button href="../project" style={{marginLeft: '0.5vw', fontWeight: 50}}>Project</Button>  
-                  <Button href="../blog" style={{marginLeft: '0.5vw', fontWeight: 50}}>Blog</Button>  
+                  {/* <Button href="../project" style={{marginLeft: '0.5vw', fontWeight: 50}}>Project</Button>   */}
+                  {/* <Button href="../blog" style={{marginLeft: '0.5vw', fontWeight: 50}}>Blog</Button>   */}
                   <Button href="https://github.com/Young-Jin1003" style={{marginLeft: '0.5vw', fontWeight: 50}}>Github</Button>
                 </Grid>
                 <Grid item xs={2}>

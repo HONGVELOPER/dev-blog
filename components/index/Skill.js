@@ -9,13 +9,15 @@ const useStyles = makeStyles((theme) => ({
     height: '30vw',
   },
   skill: {
-    marginTop: '8.5vw',
+    marginTop: '6vw',
     textAlign: 'center',
     fontSize: '1.5vw',
-    // height: 'vw',
   },
+	skillMobile: {
+
+	},
   detailImg: {
-    // marginTop: '5vw',
+    marginTop: '4vw',
     height: '5vw',
   },
   detailBox: {

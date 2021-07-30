@@ -7,8 +7,8 @@ blogFunctions.blogPost = async function (postData) {
 	let success =  false
 	try {
 		await sql_query(`
-			insert into dev_blog.posting (P_TITLE, P_CONTENT, P_WRITER, P_DATE)
-			VALUE ('${postData.title}', '${postData.content}', '${postData.writer}', '3');
+			insert into dev_blog.post (P_TITLE, P_CONTENT, P_WRITER)
+			VALUE ('${postData.title}', '${postData.content}', '${postData.writer}');
 		`)
 		success = true
 	} catch (error) {
@@ -23,7 +23,7 @@ blogFunctions.getPost = async function () {
 	try {
 		const response = []
 		const results = await sql_query(`
-			select * from dev_blog.posting
+			select * from dev_blog.post
 		`)
 		for (const result of results) {
 			const final = {
@@ -45,14 +45,15 @@ blogFunctions.getPost = async function () {
 blogFunctions.getOnePost = async function (id) {
 	try {
 		const result = await sql_query(`
-			select * from dev_blog.posting where P_ID = ${id}
+			select * from dev_blog.post where P_ID = ${id}
 		`)
 		const response = [{
 			id: result[0].P_ID,
 			title: result[0].P_TITLE,
 			content: result[0].P_CONTENT,
+			view: result[0].P_VIEW,
 			writer: result[0].P_WRITER,
-			date: result[0].P_DATE,
+			date: result[0].P_MOD_DT,
 		}]
 		return response
 	} catch (error) {
