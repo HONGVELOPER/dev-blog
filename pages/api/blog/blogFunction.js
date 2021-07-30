@@ -29,7 +29,7 @@ blogFunctions.getPost = async function () {
 			const final = {
 				id : result.P_ID,
 				title: result.P_TITLE,
-				content: result.P_CONTENT,
+				content: result.P_CONTENT.replace(/(<([^>]+)>)/ig,""),
 				writer: result.P_WRITER,
 				date: result.P_DATE,
 			}
@@ -44,6 +44,9 @@ blogFunctions.getPost = async function () {
 // 블로그 상세 페이지 위한 글 가져오기
 blogFunctions.getOnePost = async function (id) {
 	try {
+		const view = await sql_query(`
+			update dev_blog.post set P_VIEW = P_VIEW + 1 where P_ID = ${id}
+		`)
 		const result = await sql_query(`
 			select * from dev_blog.post where P_ID = ${id}
 		`)

@@ -43,43 +43,29 @@ function BlogDetailContainer(props)	 {
 						</Grid>
 					</Grid>
 				) : (
-					<Grid container direction="column" spacing={2} style={{border: '1px solid red', marginTop: '40px'}}>
+					<Grid container direction="column" spacing={2} style={{marginTop: '40px'}}>
 						<Grid item xs={12}>
 							<BreadCrumbs />
 						</Grid>
 						<Grid item xs={12}>
-							{/* <div className={classes.title}>{props.data.title}</div> */}
 							<div className={classes.title}>
 								<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
 							</div>
-							<div style={{marginBottom: '40px'}}>{props.data.date}</div>
+							<div style={{marginBottom: '40px'}}>
+									<span>
+										{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
+									</span>
+							</div>
 						</Grid>
-						<Grid item xs={12} style={{display: 'flex', justifyContent: 'center', border: '1px solid blue'}}>
+						<Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
 							<Image src={'/images/profile.jpg'} width={300} height={400} />
 						</Grid>
 						{/* <Grid item xs={12}>{props.data.content}</Grid> */}
 						<Grid item xs={12}>
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-							포스팅 내용 DB에서 가져오는 공간<br />
-
+							<div dangerouslySetInnerHTML={{__html: props.data.content}} />
 						</Grid>
 						<div>
-							<button href="/blog" varaint="transparent">Back</button>
+							<Button href="/blog" varaint="transparent">←Back</Button>
 						</div>
 					</Grid>
 				)}
