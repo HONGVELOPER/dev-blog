@@ -5,6 +5,9 @@ import BreadCrumbs from '../breadCrumbs.js';
 import Grid from '@material-ui/core/Grid';
 import Image from 'next/image'
 import Button from '@material-ui/core/Button';
+import Link from 'next/link';
+import axios from 'axios';
+import router from 'next/router'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -34,42 +37,57 @@ function BlogDetailContainer(props)	 {
     // console.log(mobile, 'first')
   })
 
+	const deletePost = async () => {
+		const response = await axios.delete('/api/blog', {
+			params: {
+				id: props.data.id
+			}
+		})
+		console.log(response)
+		if (response.status === 200) {
+				alert('블로그 포스팅이 정상적으로 삭제되었습니다.')
+				router.push('./')
+		} else {
+				alert('ERROR')
+		}
+	}
+
 	return (
 		<Container className={classes.root}>
-				{mobile ? (
-					<Grid container spacing={2}>
-						<Grid item xs={12}>
-							<div>{props.title}</div>
-						</Grid>
-					</Grid>
-				) : (
-					<Grid container direction="column" spacing={2} style={{marginTop: '40px'}}>
-						<Grid item xs={12}>
-							<BreadCrumbs />
-						</Grid>
-						<Grid item xs={12}>
-							<div className={classes.title}>
-								<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
-							</div>
-							<div style={{marginBottom: '40px'}}>
-									<span>
-										{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
-									</span>
-							</div>
-						</Grid>
-						<Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-							<Image src={'/images/profile.jpg'} width={300} height={400} />
-						</Grid>
-						{/* <Grid item xs={12}>{props.data.content}</Grid> */}
-						<Grid item xs={12}>
-							<div dangerouslySetInnerHTML={{__html: props.data.content}} />
-						</Grid>
-						<div>
-							<Button href="/blog" varaint="transparent">←Back</Button>
-						</div>
-					</Grid>
-				)}
-			
+			<Grid container direction="column" spacing={2} style={{marginTop: '0px'}}>
+				<Grid item xs={12}>
+					<BreadCrumbs />
+				</Grid>
+				<Grid item xs={12}>
+					<div className={classes.title}>
+						<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
+					</div>
+					<div style={{marginBottom: '40px'}}>
+							<span>
+								{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
+							</span>
+					</div>
+				</Grid>
+				<Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
+					<Image src={'/images/profile.jpg'} width={300} height={400} />
+				</Grid>
+				<Grid item xs={12}>
+					<div dangerouslySetInnerHTML={{__html: props.data.content}} />
+				</Grid>
+				<div>
+					<Button href="/blog" varaint="text">←Back</Button>
+				</div>
+				<div>
+					<Link href={`/blog/update/${props.data.id}`}>
+						<Button variant="text">Update</Button>
+					</Link>
+				</div>
+				<div>
+				<Button	variant="text" onClick={deletePost}>
+					delete
+				</Button>
+				</div>
+			</Grid>
 		</Container>
 	)
 }

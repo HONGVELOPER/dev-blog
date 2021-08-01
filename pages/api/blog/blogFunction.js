@@ -29,9 +29,10 @@ blogFunctions.getPost = async function () {
 			const final = {
 				id : result.P_ID,
 				title: result.P_TITLE,
-				content: result.P_CONTENT.replace(/(<([^>]+)>)/ig,""),
+				content: result.P_CONTENT.replace(/(<([^>]+)>)/ig,"").substring(0, 80) + ' ···',
+				view: result.P_VIEW,
 				writer: result.P_WRITER,
-				date: result.P_DATE,
+				date: result.P_MOD_DT.split(' ')[0],
 			}
 			response.push(final)
 		}
@@ -63,5 +64,38 @@ blogFunctions.getOnePost = async function (id) {
 		console.log(error)
 	}
 }
+
+// 블로그 상세 페이지 업데이트
+blogFunctions.updatePost = async function (data) {
+	let success = null
+	try {
+		const result = await sql_query(`
+			update dev_blog.post set P_TITLE = '${data.title}', P_CONTENT = '${data.content}', P_WRITER = '${data.writer}' where P_ID = ${data.id}
+		`)
+		console.log(result, 'result')
+		success = true
+	} catch (error) {
+		success = false
+		console.log(error)
+	}
+	return success
+}
+
+blogFunctions.deletePost = async function(id) {
+	let success = null
+	// console.log(parseInt(id))
+
+	try {
+		const result = await sql_query(`
+			delete from dev_blog.post where P_ID = ${id}
+		`)
+		success = true
+	} catch (error) {
+		success = false
+		console.log(error)
+	}
+	return success
+}
+
 
 export default blogFunctions

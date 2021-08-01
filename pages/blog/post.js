@@ -1,6 +1,5 @@
-import { makeStyles } from "@material-ui/core";
-import AppBar from '../../components/index/Header.js'
-import PostContainer from '../../components/post/editor.js'
+import Header from '../../components/index/Header.js'
+import PostContainer from '../../components/posting/postContainer.js'
 
 
 function BlogPost() {
@@ -8,8 +7,8 @@ function BlogPost() {
 	
 	return (
 		<div>
-			<AppBar></AppBar>
-			<PostContainer></PostContainer>	
+			<Header />
+			<PostContainer />	
 		</div>
 	)
 }

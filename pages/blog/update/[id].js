@@ -1,19 +1,21 @@
-import Header from '../../components/index/Header.js';
-import DetailContainer from '../../components/blogDetail/Container.js';
+import Header from '../../../components/index/Header.js'
+import UpdateContainer from '../../../components/posting/updateContainer.js'
 import axios from 'axios';
 
-const BlogDetail = ({ data }) => {
-	// const classes = useStyles()
 
+const BlogUpdate = ({data}) => {
+	// const classes = useStyles()
+	
 	return (
 		<div>
 			<Header />
-			<DetailContainer data={data} />
+			<UpdateContainer data={data} />	
 		</div>
-	)	
+	)
 }
 
-export default BlogDetail
+
+export default BlogUpdate
 
 export async function getServerSideProps(context) {
 	const response = await axios.get('http://localhost:3000/api/blog', {

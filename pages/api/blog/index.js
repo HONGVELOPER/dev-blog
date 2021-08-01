@@ -1,3 +1,4 @@
+import blogFunctions from './blogFunction'
 import blogFuncitons from './blogFunction'
 
 const BlogHandler = async (req, res) => {
@@ -6,8 +7,8 @@ const BlogHandler = async (req, res) => {
 		try {
 			await blogFuncitons.blogPost(req.body)
 			return res.status(200).send({})
-		} catch (e) {
-			return res.status(500).json({ message: e.message })
+		} catch (error) {
+			return res.status(500).json({ message: error.message })
 		}
 	} else if (req.method === 'GET') {
 		try {
@@ -20,9 +21,30 @@ const BlogHandler = async (req, res) => {
 				const result = await blogFuncitons.getPost()
 				return res.status(200).json(result)
 			}
-		} catch (e) {
-			console.log(e)
-			return res.status(500).json({ message: e.message })
+		} catch (error) {
+			console.log(error)
+			return res.status(500).json({ message: error.message })
+		}
+	} else if (req.method === 'PUT') {
+		try {
+			const result = await blogFunctions.updatePost(req.body)
+			if (result) {
+				console.log('진입')
+				return res.status(200).send({})
+			}
+		} catch (error) {
+			console.log(error)
+			return res.status(500).json({ message: error.message })
+		}
+	} else if (req.method === 'DELETE') {
+		try {
+			const result = await blogFunctions.deletePost(req.query.id)
+			if (result) {
+				return res.status(200).send({})
+			}
+		} catch (error) {
+			console.log(error)
+			return res.status(500).json({ message: error.message })
 		}
 	}
 }

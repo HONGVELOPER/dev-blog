@@ -1,4 +1,4 @@
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import React, { useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -28,7 +28,7 @@ const theme = createMuiTheme({
   breakpoints: {
     values: {
       xs: 0,
-      sm: 800,
+      sm: 750,
       md: 1100,
       lg: 1280,
       xl: 1920
@@ -66,16 +66,32 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    marginTop: '100px',
   },
-  card: {
-    // height: '45vw',
-    // minWidth: '200px',
+  font: {
+    fontSize: '10px',
+    fontWeight: 200,
+  },
+  title: {
+    marginBottom: '20px',
+    fontSize: '17px',
+    fontWeight: 600,
+  },
+  tab: {
+    "& div": {
+      padding: 0
+    },
+  },
+  hover: {
+    marginBottom: 5,
+    "&:hover": {
+      opacity: 0.6,
+      // border: '1px solid black'
+    }
   },
 }))
 
 const BlogContainer = (props) => {
-  // console.log(props, 'props check')
+  // console.log(props)
   const classes = useStyles()
   const [value, setValue] = useState(0)
 
@@ -85,26 +101,32 @@ const BlogContainer = (props) => {
 
   const contentList = props.data.map((content) => (
     <MuiThemeProvider theme={theme} key={content.id}>
-      <Grid item xs={12} sm={6} md={4} style={{padding: 20}}>
+      <Grid item xs={12} sm={6} md={4} style={{padding: 20, minWidth: 300}}>
         <Card
-          // variant="outlined"/
+          variant="outlined"
           className={classes.card}
-          style={{minHeight: '450px'}}
+          style={{height: '450px'}}
         >
-          <CardActionArea>
+          <CardActionArea className={classes.hover}>
             <Link href={`blog/${content.id}`}>
-              <CardContent>
-                <Image src={'/images/profile.jpg'} width={500} height={230} />
-                <Divider />
-                <Box style={{Height: '220px'}}>
-                  <h2>{content.title}</h2>
-                </Box>
-                <Box>
-                  {content.content}
-                </Box>
+              <CardContent style={{padding: 0, height: '250px'}}>
+                <Image src={'/images/sunho.png'} layout='fill' objectFit='fill' />
               </CardContent>
             </Link>
           </CardActionArea>
+          <Divider variant="middle" />
+          <div style={{Height: '200px', padding: '10px'}}>
+            <Box className={classes.title}>
+              <div>{content.title}</div>
+            </Box>
+            <Box style={{height: '120px'}}>
+              {content.content}
+            </Box>
+            <div className={classes.font}>
+              <span>{content.date}</span>
+              <span>&nbsp;&nbsp;&nbsp;view: {content.view}</span>
+            </div>
+          </div>
         </Card>
       </Grid>
     </MuiThemeProvider>
@@ -112,11 +134,11 @@ const BlogContainer = (props) => {
 
   return (
     <Container>
-      <Grid item xs={12} style={{marginTop: 40}}>
-        <BreadCrumbs />
-      </Grid>
       <Button href="./blog/post">to post</Button>
-      <AppBar className={classes.root} position="static" elevation={0} style={{background: 'transparent', marginTop: '5vw'}}>
+      <Grid item xs={12} style={{marginTop: 10}}>
+        <BreadCrumbs style={{display: 'inlineBlock'}} />
+      </Grid>
+      <AppBar className={classes.root} position="static" elevation={0} style={{background: 'transparent', marginTop: '2vw'}}>
         <MuiThemeProvider theme={theme}>
           <Tabs
             value={value}
@@ -124,6 +146,12 @@ const BlogContainer = (props) => {
             textColor="primary"
             onChange={handleChange}
             aria-label="simple tabs example"
+            // TabIndicatorProps={{ style: {
+            //   width: '100px',
+            //   // left: '40px',
+            //   display: 'flex',
+            //   justifyContent: 'center',
+            // }}}
           >
             <Tab label="최신 포스트" {...a11yProps(0)} />
             <Tab label="인기 포스트" {...a11yProps(1)} />
@@ -131,8 +159,8 @@ const BlogContainer = (props) => {
           </Tabs>
         </MuiThemeProvider>
       </AppBar>
-      <TabPanel value={value} index={0}>
-        <Grid container spacing={0}>
+      <TabPanel className={classes.tab} value={value} index={0}>
+        <Grid container spacing={0} style={{padding: 0}}>
           {contentList}
         </Grid>
       </TabPanel>

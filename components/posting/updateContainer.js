@@ -1,12 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
 import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import dynamic from 'next/dynamic';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
-import router, { useRouter } from 'next/router'
+import router, { useRouter } from 'next/router';
 
 // import { ImageResize } from 'quill-image-resize-module';
 
@@ -61,36 +61,44 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-const PostContainer = () => {
-	
-	const [title, setTitle] = useState("")
-	const [content, setContent] = useState("")
-	const [writer, setwriter] = useState("")
+const UpadateContainer = (props) => {
+	// console.log(props.data)
+
+	const [title, setTitle] = useState('')
+	const [content, setContent] = useState(props.data.content)
+	const [writer, setwriter] = useState('')
+
+    useEffect(() => {
+        setTitle(props.data.title)
+        console.log(title, 'title check')
+    })
 
 	const handleTitle = (event) => {
 		setTitle(event.currentTarget.value)
+        console.log(event.currentTarget.value)
 	}
-
 	
 	const handleContent = (content) => {
 		setContent(content)
 	}
 	
-	const postBlog = async (event) => {
+	const blogPost = async (event) => {
 		event.preventDefault()
-		const response = await axios.post('/api/blog', {
+		const response = await axios.put('/api/blog', {
+            id: props.data.id,
 			title: title,
 			content: content,
 			writer: 'dev hong',
 		})
 		console.log(response, 'RESPONSE CHECK')
 		if (response.status === 200) {
-			alert('블로그 포스팅이 정상적으로 작동되었습니다.')
-			router.push('/blog')
+			alert('블로그 포스팅이 정상적으로 수정되었습니다.')
+			router.push(`/blog/${props.data.id}`)
 		} else {
 			alert('ERROR')
 		}
 	}
+
 	const classes = useStyles()
 
 	return (
@@ -102,6 +110,7 @@ const PostContainer = () => {
 					fullWidth
 					margin="normal"
 					onChange={handleTitle}
+                    defaultValue={props.data.title}
 				/>
 				<ReactQuill
 					className={classes.editor}
@@ -119,10 +128,10 @@ const PostContainer = () => {
 						variant="outlined"
 						// color="transparent"
 						endIcon={<SaveIcon />}
-						onClick={postBlog}
+						onClick={blogPost}
 						style={{marginLeft: 'auto', color: '#218e16', backgroundColor: 'white'}}
-						>
-						Submit
+					>
+						Save
 					</Button>
 				</div>
 			</form>
@@ -130,4 +139,4 @@ const PostContainer = () => {
 	)
 }
 
-export default PostContainer
+export default UpadateContainer
