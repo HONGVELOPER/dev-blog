@@ -71,7 +71,7 @@ const UpadateContainer = (props) => {
     useEffect(() => {
         setTitle(props.data.title)
         console.log(title, 'title check')
-    })
+    }, [])
 
 	const handleTitle = (event) => {
 		setTitle(event.currentTarget.value)

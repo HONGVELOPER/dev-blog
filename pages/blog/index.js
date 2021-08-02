@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '../../components/index/Header.js'
 import Container from '../../components/blog/Container.js';
+import Pagination from '../../components/blog/pagination.js';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,6 +17,7 @@ const Blog = ({ data }) => {
     <div>
       <AppBar></AppBar>
       <Container data={data}></Container>
+      {/* <Pagination /> */}
     </div>
   )
 }

@@ -23,13 +23,13 @@ blogFunctions.getPost = async function () {
 	try {
 		const response = []
 		const results = await sql_query(`
-			select * from dev_blog.post
+			select * from dev_blog.post order by P_ID desc
 		`)
 		for (const result of results) {
 			const final = {
 				id : result.P_ID,
 				title: result.P_TITLE,
-				content: result.P_CONTENT.replace(/(<([^>]+)>)/ig,"").substring(0, 80) + ' ···',
+				content: result.P_CONTENT.replace(/(<([^>]+)>)/ig,"").substring(0, 90) + ' ···',
 				view: result.P_VIEW,
 				writer: result.P_WRITER,
 				date: result.P_MOD_DT.split(' ')[0],
@@ -83,12 +83,19 @@ blogFunctions.updatePost = async function (data) {
 
 blogFunctions.deletePost = async function(id) {
 	let success = null
-	// console.log(parseInt(id))
-
 	try {
 		const result = await sql_query(`
 			delete from dev_blog.post where P_ID = ${id}
 		`)
+		// const length = await sql_query(`
+		// 	SELECT COUNT(P_ID) FROM dev_blog.post   
+		// `)
+		// console.log('length :', length)
+		// const idArrange = await sql_query(`
+		// 	SET @CNT = 0
+		// 	UPDATE dev_blog.post SET dev_blog.post.P_ID = @CNT:=@CNT+1
+		// 	ALTER TABLE dev_blog.post AUTO_INCREMENT=1
+		// `)
 		success = true
 	} catch (error) {
 		success = false

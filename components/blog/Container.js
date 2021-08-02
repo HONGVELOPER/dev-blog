@@ -15,6 +15,7 @@ import Link from 'next/link'
 import BreadCrumbs from '../../components/breadCrumbs.js';
 import AppBar from '@material-ui/core/AppBar';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+// import Pagination from 'react-js-pagination';
 
 const theme = createMuiTheme({
   palette: {
@@ -95,7 +96,7 @@ const BlogContainer = (props) => {
   const classes = useStyles()
   const [value, setValue] = useState(0)
 
-  const handleChange = (event, newValue) => {
+  const handleValueChange = (event, newValue) => {
     setValue(newValue);
   };
 
@@ -110,21 +111,32 @@ const BlogContainer = (props) => {
           <CardActionArea className={classes.hover}>
             <Link href={`blog/${content.id}`}>
               <CardContent style={{padding: 0, height: '250px'}}>
-                <Image src={'/images/sunho.png'} layout='fill' objectFit='fill' />
+                <Image src={'/images/image1.jpg'} layout='fill' objectFit='fill' />
               </CardContent>
             </Link>
           </CardActionArea>
-          <Divider variant="middle" />
+          {/* <Divider variant="middle" /> */}
           <div style={{Height: '200px', padding: '10px'}}>
             <Box className={classes.title}>
               <div>{content.title}</div>
             </Box>
-            <Box style={{height: '120px'}}>
+            <Box style={{height: '110px'}}>
               {content.content}
             </Box>
             <div className={classes.font}>
+              <div>
+                <span>written by </span>
+                <span style={{fontWeight: 400, fontSize: '12px'}}>{content.writer}</span>
+              </div>
               <span>{content.date}</span>
-              <span>&nbsp;&nbsp;&nbsp;view: {content.view}</span>
+              <span>
+                <span>
+                  &nbsp;&nbsp;&nbsp;view: 
+                </span>
+                {/* <span> */}
+                {content.view}
+                {/* </span> */}
+              </span>
             </div>
           </div>
         </Card>
@@ -134,7 +146,7 @@ const BlogContainer = (props) => {
 
   return (
     <Container>
-      <Button href="./blog/post">to post</Button>
+      {/* <Button href="./blog/post">to post</Button> */}
       <Grid item xs={12} style={{marginTop: 10}}>
         <BreadCrumbs style={{display: 'inlineBlock'}} />
       </Grid>
@@ -144,7 +156,7 @@ const BlogContainer = (props) => {
             value={value}
             indicatorColor="primary"
             textColor="primary"
-            onChange={handleChange}
+            onChange={handleValueChange}
             aria-label="simple tabs example"
             // TabIndicatorProps={{ style: {
             //   width: '100px',
@@ -162,6 +174,16 @@ const BlogContainer = (props) => {
       <TabPanel className={classes.tab} value={value} index={0}>
         <Grid container spacing={0} style={{padding: 0}}>
           {contentList}
+          {/* <Pagination
+            activePage={page}
+            itemsCountPerPage={3}
+            totalItemsCount={4}
+            prevPageText={"<"}
+            nextPageText={">"}
+            pageRangeDisplayed={5}
+            onChage={handlePageChange(page)}
+          >
+          </Pagination> */}
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
