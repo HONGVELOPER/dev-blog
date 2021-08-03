@@ -4,12 +4,21 @@ const blogFunctions = {}
 
 // 블로그 글 포스팅
 blogFunctions.blogPost = async function (postData) {
+	console.log(postData, 'post data ')
 	let success =  false
 	try {
-		await sql_query(`
+		const result = await sql_query(`
 			insert into dev_blog.post (P_TITLE, P_CONTENT, P_WRITER)
 			VALUE ('${postData.title}', '${postData.content}', '${postData.writer}');
 		`)
+		console.log(result, 'result')
+
+		for (const img of postData.img) {
+			await sql_query(`
+				insert into dev_blog.file (F_POST_ID, F_IMG)
+				VALUE (${result.insertId}, '${img}');
+			`)
+		}
 		success = true
 	} catch (error) {
 		success = false
@@ -25,6 +34,9 @@ blogFunctions.getPost = async function () {
 		const results = await sql_query(`
 			select * from dev_blog.post order by P_ID desc
 		`)
+		const images = await sql_query(`
+			select F_IMG from dev_blog.file
+		`)
 		for (const result of results) {
 			const final = {
 				id : result.P_ID,
@@ -33,6 +45,9 @@ blogFunctions.getPost = async function () {
 				view: result.P_VIEW,
 				writer: result.P_WRITER,
 				date: result.P_MOD_DT.split(' ')[0],
+			}
+			for(const img of images) {
+					
 			}
 			response.push(final)
 		}
@@ -45,11 +60,14 @@ blogFunctions.getPost = async function () {
 // 블로그 상세 페이지 위한 글 가져오기
 blogFunctions.getOnePost = async function (id) {
 	try {
-		const view = await sql_query(`
+		await sql_query(`
 			update dev_blog.post set P_VIEW = P_VIEW + 1 where P_ID = ${id}
 		`)
 		const result = await sql_query(`
 			select * from dev_blog.post where P_ID = ${id}
+		`)
+		const img = await sql_query(`
+			select F_IMG from dev_blog.file where F_POST_ID = ${id}
 		`)
 		const response = [{
 			id: result[0].P_ID,
@@ -58,6 +76,7 @@ blogFunctions.getOnePost = async function (id) {
 			view: result[0].P_VIEW,
 			writer: result[0].P_WRITER,
 			date: result[0].P_MOD_DT,
+			img: img[0].F_IMG,
 		}]
 		return response
 	} catch (error) {

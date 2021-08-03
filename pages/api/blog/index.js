@@ -5,8 +5,11 @@ const BlogHandler = async (req, res) => {
 	console.log(req.method, 'method check')
 	if (req.method === 'POST') {
 		try {
-			await blogFuncitons.blogPost(req.body)
-			return res.status(200).send({})
+			const result = await blogFuncitons.blogPost(req.body)
+			console.log(result, 'check')
+			if (result) {
+				return res.status(200).send({})
+			}
 		} catch (error) {
 			return res.status(500).json({ message: error.message })
 		}

@@ -69,7 +69,7 @@ function BlogDetailContainer(props)	 {
 					</div>
 				</Grid>
 				<Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-					<Image src={'/images/profile.jpg'} width={300} height={400} />
+					<Image src={'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-10-16.png'} width={1100} height={500} />
 				</Grid>
 				<Grid item xs={12}>
 					<div dangerouslySetInnerHTML={{__html: props.data.content}} />
