@@ -35,9 +35,10 @@ blogFunctions.getPost = async function () {
 			select * from dev_blog.post order by P_ID desc
 		`)
 		const images = await sql_query(`
-			select F_IMG from dev_blog.file
+			select * from dev_blog.file where F_ID in (select min(F_ID) from dev_blog.file group by F_POST_ID) order by F_ID desc
 		`)
 		for (const result of results) {
+			console.log(results.indexOf(result))
 			const final = {
 				id : result.P_ID,
 				title: result.P_TITLE,
@@ -45,10 +46,15 @@ blogFunctions.getPost = async function () {
 				view: result.P_VIEW,
 				writer: result.P_WRITER,
 				date: result.P_MOD_DT.split(' ')[0],
+				img: images[results.indexOf(result)].F_IMG
 			}
-			for(const img of images) {
-					
-			}
+			// 글 마다 1개의 사진을 가져오는 로직인데 블로그 전체를 가져오는 화면으로 자원이 소모가 많아
+			// img를 아래와 같이가 아니라 위처럼 index로 접근하여 Front로 보내주기로 결정.
+			// for (const img of images) {
+			// 	if (img.F_POST_ID === result.P_ID) {
+			// 		final.img = img.F_IMG
+			// 	}
+			// }
 			response.push(final)
 		}
 		return response
@@ -76,8 +82,10 @@ blogFunctions.getOnePost = async function (id) {
 			view: result[0].P_VIEW,
 			writer: result[0].P_WRITER,
 			date: result[0].P_MOD_DT,
-			img: img[0].F_IMG,
 		}]
+		if (img.length) {
+			response[0].img = img[0].F_IMG
+		}
 		return response
 	} catch (error) {
 		console.log(error)

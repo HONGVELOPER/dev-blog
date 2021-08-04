@@ -99,7 +99,7 @@ const BlogContainer = (props) => {
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  console.log(props, 'data')
   const contentList = props.data.map((content) => (
     <MuiThemeProvider theme={theme} key={content.id}>
       <Grid item xs={12} sm={6} md={4} style={{padding: 20, minWidth: 300}}>
@@ -111,7 +111,7 @@ const BlogContainer = (props) => {
           <CardActionArea className={classes.hover}>
             <Link href={`blog/${content.id}`}>
               <CardContent style={{padding: 0, height: '250px'}}>
-                <Image src={'/images/image1.jpg'} layout='fill' objectFit='fill' />
+                <Image src={`${content.img}`} layout='fill' objectFit='fill' />
               </CardContent>
             </Link>
           </CardActionArea>

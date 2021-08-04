@@ -38,39 +38,14 @@ export const modules = {
   },
 };
 
+const image = []
 function QuillEditor() {
 	const classes = useStyles()
-
+  
 	const [title, setTitle] = useState("")
-	const [content, setContent] = useState("")
-	const [writer, setwriter] = useState("")
-	const [image, setIamge] = useState([])
 	
 	const titleHandler = (event) => {
 		setTitle(event.currentTarget.value)
-	}
-
-	const contentHandler = (content) => {
-
-		setContent(content)
-		console.log(content)
-	}
-
-	const postBlog = async (event) => {
-		event.preventDefault()
-		const response = await axios.post('/api/blog', {
-			title: title,
-			content: content,
-			writer: 'dev hong',
-			img: image
-		})
-		console.log(response, 'RESPONSE CHECK')
-		if (response.status === 200) {
-			alert('블로그 포스팅이 정상적으로 작동되었습니다.')
-			router.push('/blog')
-		} else {
-			alert('ERROR')
-		}
 	}
   
   const Quill = typeof window == 'object' ? require('quill') : () => false
@@ -84,6 +59,7 @@ function QuillEditor() {
     input.setAttribute('accept', 'image/*')
     input.click()
     input.onchange = function () {
+      console.log('on change')
       const file = input.files[0]
       const fileName = file.name
 
@@ -94,30 +70,46 @@ function QuillEditor() {
         secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_KEY,
       }
 
-      const ReactS3Client = new S3(config);
+      const ReactS3Client = new S3(config)
 
       ReactS3Client.uploadFile(file, fileName).then((data) => {
 				console.log(data)
         if (data.status === 204) {
-					setIamge([...image, data.location])
-					console.log(image)
-          //커서 위치 받아오기 위함.
           const range = quillInstance.current.getSelection(true)
-          // 1.현재 커서 위치에 2. 이미지를 3.src="" 로 나타냄.
           quillInstance.current.insertEmbed(
             range.index,
             'image',
             `${data.location}`
           );
-
-          // 이미지 업로드 후 커서 이미지 한칸 옆으로 이동.
+          image.push(`${data.location}`)
+          console.log(image, 'image')
           quillInstance.current.setSelection(range.index + 1)
         } else {
           alert('error')
         }
-      });
-    };
-  };
+      })
+    }
+  }
+
+  const postBlog = async (event) => {
+		event.preventDefault()
+
+    console.log(image, 'array check')
+    
+		const response = await axios.post('/api/blog', {
+			title: title,
+			content: quillInstance.current.root.innerHTML,
+			writer: 'dev hong',
+			img: image
+		})
+		console.log(response, 'RESPONSE CHECK')
+		if (response.status === 200) {
+			alert('블로그 포스팅이 정상적으로 작동되었습니다.')
+			router.push('/blog')
+		} else {
+			alert('ERROR')
+		}
+	}
 
   useEffect(() => {
     if (quillElement.current) {
@@ -125,11 +117,11 @@ function QuillEditor() {
         theme: 'snow',
         placeholder: 'Please enter the contents.',
         modules: modules,
+        onchange
       });
     }
 
     const quill = quillInstance.current;
-
     const toolbar = quill.getModule('toolbar')
     toolbar.addHandler('image', onClickImageBtn)
   }, []);
@@ -145,7 +137,7 @@ function QuillEditor() {
 						margin="normal"
 						onChange={titleHandler}
 					/>
-					<div ref={quillElement} className={classes.editor} onChange={contentHandler} />
+					<div ref={quillElement} className={classes.editor} />
 					<div style={{display: 'flex', paddingTop: '50px'}}>
 						<Button variant="outlined" href="./" style={{color: '#218e16', backgroundColor: 'white'}}>
 							Back
@@ -165,4 +157,4 @@ function QuillEditor() {
   );
 }
 
-export default React.memo(QuillEditor);
+export default QuillEditor

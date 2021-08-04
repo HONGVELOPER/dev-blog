@@ -6,7 +6,6 @@ const BlogHandler = async (req, res) => {
 	if (req.method === 'POST') {
 		try {
 			const result = await blogFuncitons.blogPost(req.body)
-			console.log(result, 'check')
 			if (result) {
 				return res.status(200).send({})
 			}

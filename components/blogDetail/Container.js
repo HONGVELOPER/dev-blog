@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		// fontSize: '30px',
 		fontWeight: '100',
+	},
+	img: {
+		height: '400px',
+		width: '600px',
 	}
 }))
 
@@ -34,8 +38,7 @@ function BlogDetailContainer(props)	 {
     window.addEventListener('resize', function() {
       window.innerWidth < 720 ? setMobile(true) : setMobile(false)
     }, {passive: true})
-    // console.log(mobile, 'first')
-  })
+	})
 
 	const deletePost = async () => {
 		const response = await axios.delete('/api/blog', {
@@ -63,13 +66,10 @@ function BlogDetailContainer(props)	 {
 						<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
 					</div>
 					<div style={{marginBottom: '40px'}}>
-							<span>
-								{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
-							</span>
+						<span>
+							{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
+						</span>
 					</div>
-				</Grid>
-				<Grid item xs={12} style={{display: 'flex', justifyContent: 'center'}}>
-					<Image src={'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-10-16.png'} width={1100} height={500} />
 				</Grid>
 				<Grid item xs={12}>
 					<div dangerouslySetInnerHTML={{__html: props.data.content}} />
