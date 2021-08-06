@@ -1,8 +1,7 @@
-import blogFunctions from './blogFunction'
 import blogFuncitons from './blogFunction'
 
 const BlogHandler = async (req, res) => {
-	console.log(req.method, 'method check')
+	console.log(req.method, 'req method check')
 	if (req.method === 'POST') {
 		try {
 			const result = await blogFuncitons.blogPost(req.body)

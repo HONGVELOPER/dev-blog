@@ -38,7 +38,6 @@ blogFunctions.getPost = async function () {
 			select * from dev_blog.file where F_ID in (select min(F_ID) from dev_blog.file group by F_POST_ID) order by F_ID desc
 		`)
 		for (const result of results) {
-			console.log(results.indexOf(result))
 			const final = {
 				id : result.P_ID,
 				title: result.P_TITLE,
@@ -47,6 +46,7 @@ blogFunctions.getPost = async function () {
 				writer: result.P_WRITER,
 				date: result.P_MOD_DT.split(' ')[0],
 				img: images[results.indexOf(result)].F_IMG
+				// img: images[0].F_IMG
 			}
 			// 글 마다 1개의 사진을 가져오는 로직인데 블로그 전체를 가져오는 화면으로 자원이 소모가 많아
 			// img를 아래와 같이가 아니라 위처럼 index로 접근하여 Front로 보내주기로 결정.
@@ -75,6 +75,10 @@ blogFunctions.getOnePost = async function (id) {
 		const img = await sql_query(`
 			select F_IMG from dev_blog.file where F_POST_ID = ${id}
 		`)
+		const comment = await sql_query(`
+			select * from dev_blog.comment where C_POST_ID = ${id}
+		`)
+		console.log(comment)
 		const response = [{
 			id: result[0].P_ID,
 			title: result[0].P_TITLE,
@@ -85,6 +89,9 @@ blogFunctions.getOnePost = async function (id) {
 		}]
 		if (img.length) {
 			response[0].img = img[0].F_IMG
+		}
+		if (comment.length) {
+			response[0].comment = comment
 		}
 		return response
 	} catch (error) {
@@ -111,18 +118,27 @@ blogFunctions.updatePost = async function (data) {
 blogFunctions.deletePost = async function(id) {
 	let success = null
 	try {
-		const result = await sql_query(`
-			delete from dev_blog.post where P_ID = ${id}
+		await sql_query(`
+			delete from dev_blog.post where P_ID = ${id};
 		`)
-		// const length = await sql_query(`
-		// 	SELECT COUNT(P_ID) FROM dev_blog.post   
-		// `)
-		// console.log('length :', length)
-		// const idArrange = await sql_query(`
-		// 	SET @CNT = 0
-		// 	UPDATE dev_blog.post SET dev_blog.post.P_ID = @CNT:=@CNT+1
-		// 	ALTER TABLE dev_blog.post AUTO_INCREMENT=1
-		// `)
+		await sql_query(`
+			ALTER TABLE dev_blog.post AUTO_INCREMENT=1;
+		`)
+		await sql_query(`
+			SET @CNT = 0;
+		`)
+		await sql_query(`
+			UPDATE dev_blog.post SET dev_blog.post.P_ID = @CNT:=@CNT+1;
+		`)
+		await sql_query(`
+			ALTER TABLE dev_blog.file AUTO_INCREMENT=1;
+		`)
+		await sql_query(`
+			SET @CNT = 0;
+		`)
+		await sql_query(`
+			UPDATE dev_blog.file SET dev_blog.file.F_ID = @CNT:=@CNT+1;
+		`)
 		success = true
 	} catch (error) {
 		success = false

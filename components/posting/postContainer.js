@@ -18,18 +18,18 @@ const useStyles = makeStyles((theme) => ({
 export const modules = {
   toolbar: {
     container: [
-      ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+      ['bold', 'italic', 'underline', 'strike'],
       ['blockquote', 'code-block'],
 
       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-      [{ 'script': 'sub' }, { 'script': 'super' }], // superscript/subscript
-      [{ 'indent': '-1' }, { 'indent': '+1' }], // outdent/indent
-      [{ 'direction': 'rtl' }], // text direction
+      [{ 'script': 'sub' }, { 'script': 'super' }],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
 
-      [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+      [{ 'size': ['small', false, 'large', 'huge'] }],
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 
-      [{ 'color': [] }, { 'background': [] }], // dropdown with defaults from theme
+      [{ 'color': [] }, { 'background': [] }],
       [{ 'font': [] }],
       [{ 'align': [] }],
       ['link', 'image', 'formula'],
@@ -39,7 +39,7 @@ export const modules = {
 };
 
 const image = []
-function QuillEditor() {
+const QuillEditor = () => {
 	const classes = useStyles()
   
 	const [title, setTitle] = useState("")

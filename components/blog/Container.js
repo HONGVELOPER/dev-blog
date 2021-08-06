@@ -99,7 +99,6 @@ const BlogContainer = (props) => {
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
   };
-  console.log(props, 'data')
   const contentList = props.data.map((content) => (
     <MuiThemeProvider theme={theme} key={content.id}>
       <Grid item xs={12} sm={6} md={4} style={{padding: 20, minWidth: 300}}>
