@@ -19,7 +19,7 @@ const BlogHandler = async (req, res) => {
 				return res.status(200).json(result)
 			// 게시물 전체를 가져올 때
 			} else { 
-				const result = await blogFuncitons.getPost()
+				const result = await blogFuncitons.getAllPost()
 				return res.status(200).json(result)
 			}
 		} catch (error) {
@@ -28,9 +28,8 @@ const BlogHandler = async (req, res) => {
 		}
 	} else if (req.method === 'PUT') {
 		try {
-			const result = await blogFunctions.updatePost(req.body)
+			const result = await blogFuncitons.updatePost(req.body)
 			if (result) {
-				console.log('진입')
 				return res.status(200).send({})
 			}
 		} catch (error) {
@@ -39,7 +38,7 @@ const BlogHandler = async (req, res) => {
 		}
 	} else if (req.method === 'DELETE') {
 		try {
-			const result = await blogFunctions.deletePost(req.query.id)
+			const result = await blogFuncitons.deletePost(req.query.id)
 			if (result) {
 				return res.status(200).send({})
 			}

@@ -1,58 +1,12 @@
+import React, { useState, useEffect, useRef } from 'react';
+import S3 from 'react-aws-s3';
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState, useEffect } from 'react';
 import Container from '@material-ui/core/Container';
-import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
-import dynamic from 'next/dynamic';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
-import router, { useRouter } from 'next/router';
-
-// import { ImageResize } from 'quill-image-resize-module';
-
-const ReactQuill = dynamic(() => import("react-quill"), { ssr: false, loading: () => <p>Loading ...</p> });
-const {Quill} = ReactQuill
-// const ImageResize = dynamic(() => import('quill-image-resize-module'), { ssr: false, loading: () => <p>Loading ...</p> });
-// Quill.register('modules/imageResize', ImageResize);
-
-
-const modules = {
-  toolbar: [
-    [{ header: '1' }, { header: '2' }],
-    [{ size: [] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote', 'code'],
-    [
-      { list: 'ordered' },
-      { list: 'bullet' },
-      { indent: '-1' },
-      { indent: '+1' },
-    ],
-    ['link', 'image'],
-    ['clean'],
-  ],
-  clipboard: {
-    matchVisual: false,
-  },
-};
-
-const formats = [
-  'header',
-  'font',
-  'size',
-  'bold',
-  'italic',
-  'underline',
-  'strike',
-  'blockquote',
-  'list',
-  'bullet',
-  'indent',
-  'link',
-  'image',
-  'video',
-	'code',
-];
-
+import router from 'next/router';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	editor: {
@@ -61,81 +15,148 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
+export const modules = {
+	toolbar: {
+	  container: [
+		['bold', 'italic', 'underline', 'strike'],
+		['blockquote', 'code-block'],
+  
+		[{ 'list': 'ordered' }, { 'list': 'bullet' }],
+		[{ 'script': 'sub' }, { 'script': 'super' }],
+		[{ 'indent': '-1' }, { 'indent': '+1' }],
+		[{ 'direction': 'rtl' }],
+  
+		[{ 'size': ['small', false, 'large', 'huge'] }],
+		[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+  
+		[{ 'color': [] }, { 'background': [] }],
+		[{ 'font': [] }],
+		[{ 'align': [] }],
+		['link', 'image', 'formula'],
+		['clean'],
+	  ],
+	},
+};
+
+const image = []
 const UpadateContainer = (props) => {
-	// console.log(props.data)
+	// console.log(props.data, 'update props check')
+	const classes = useStyles()
+
+	const Quill = typeof window == 'object' ? require('quill') : () => false
+
+	const quillElement = useRef(null)
+  const quillInstance = useRef(null)
 
 	const [title, setTitle] = useState('')
-	const [content, setContent] = useState(props.data.content)
-	const [writer, setwriter] = useState('')
 
-    useEffect(() => {
-        setTitle(props.data.title)
-        console.log(title, 'title check')
-    }, [])
+	useEffect(() => {
+		setTitle(props.data.title)
+    if (quillElement.current) {
+      quillInstance.current = new Quill(quillElement.current, {
+        theme: 'snow',
+        placeholder: 'Please enter the contents.',
+        modules: modules,
+        onchange
+      });
+    }
+		
+    const quill = quillInstance.current;
+    const toolbar = quill.getModule('toolbar')
+    toolbar.addHandler('image', onClickImageBtn)
+		quill.root.innerHTML = props.data.content
+  }, []);
+
+	const onClickImageBtn = () => {
+    const input = document.createElement('input')
+    input.setAttribute('type', 'file')
+    input.setAttribute('accept', 'image/*')
+    input.click()
+    input.onchange = function () {
+      console.log('on change')
+      const file = input.files[0]
+      const fileName = file.name
+
+      const config = {
+        bucketName: process.env.NEXT_PUBLIC_S3_BUCKET_NAME,
+        region: process.env.NEXT_PUBLIC_S3_REGION,
+        accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY,
+        secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_KEY,
+      }
+
+      const ReactS3Client = new S3(config)
+
+      ReactS3Client.uploadFile(file, fileName).then((data) => {
+				console.log(data)
+        if (data.status === 204) {
+          const range = quillInstance.current.getSelection(true)
+          quillInstance.current.insertEmbed(
+            range.index,
+            'image',
+            `${data.location}`
+          );
+          image.push(`${data.location}`)
+          console.log(image, 'image')
+          quillInstance.current.setSelection(range.index + 1)
+        } else {
+          alert('error')
+        }
+      })
+    }
+  }
 
 	const handleTitle = (event) => {
 		setTitle(event.currentTarget.value)
-        console.log(event.currentTarget.value)
 	}
 	
-	const handleContent = (content) => {
-		setContent(content)
-	}
 	
 	const blogPost = async (event) => {
 		event.preventDefault()
 		const response = await axios.put('/api/blog', {
-            id: props.data.id,
+      id: props.data.id,
 			title: title,
-			content: content,
+			content: quillInstance.current.root.innerHTML,
 			writer: 'dev hong',
+			img: image,
 		})
 		console.log(response, 'RESPONSE CHECK')
 		if (response.status === 200) {
 			alert('블로그 포스팅이 정상적으로 수정되었습니다.')
 			router.push(`/blog/${props.data.id}`)
 		} else {
-			alert('ERROR')
+			alert('BLOG UPDATE FAIL ERROR')
 		}
 	}
 
-	const classes = useStyles()
-
 	return (
-		<Container className={classes.root}>
-			<form>
-				<TextField
-					placeholder="제목을 입력해주세요. "
-					helperText="필수 입력 사항입니다."
-					fullWidth
-					margin="normal"
-					onChange={handleTitle}
-                    defaultValue={props.data.title}
-				/>
-				<ReactQuill
-					className={classes.editor}
-					modules={modules}
-					formats={formats}
-					theme="snow"
-					value={content}
-					onChange={handleContent}
-				/>
-				<div style={{display: 'flex', paddingTop: '50px'}}>
-					<Button variant="outlined" href="./" style={{color: '#218e16', backgroundColor: 'white'}}>
-						Back
-					</Button>
-					<Button
-						variant="outlined"
-						// color="transparent"
-						endIcon={<SaveIcon />}
-						onClick={blogPost}
-						style={{marginLeft: 'auto', color: '#218e16', backgroundColor: 'white'}}
-					>
-						Save
-					</Button>
-				</div>
-			</form>
-		</Container>
+		<>
+			<Container className={classes.root}>
+				<form>
+					<TextField
+						placeholder="제목을 입력해주세요. "
+						helperText="필수 입력 사항입니다."
+						fullWidth
+						margin="normal"
+						onChange={handleTitle}
+						defaultValue={props.data.title}
+					/>
+					<div ref={quillElement} className={classes.editor}></div>
+					<div style={{display: 'flex', paddingTop: '50px'}}>
+						<Button variant="outlined" href="./" style={{color: '#218e16', backgroundColor: 'white'}}>
+							Back
+						</Button>
+						<Button
+							variant="outlined"
+							endIcon={<SaveIcon />}
+							onClick={blogPost}
+							style={{marginLeft: 'auto', color: '#218e16', backgroundColor: 'white'}}
+						>
+							Save
+						</Button>
+					</div>
+				</form>
+			</Container>
+		</>
 	)
 }
 

@@ -1,8 +1,18 @@
 import { sql_query } from '../../../lib/db'
+import S3 from 'react-aws-s3';
+
+const config = {
+	bucketName: process.env.S3_BUCKET_NAME,
+	region: process.env.S3_REGION,
+	accessKeyId: process.env.S3_ACCESS_KEY,
+	secretAccessKey: process.env.S3_SECRET_KEY,
+}
+
+const ReactS3Client = new S3(config)
 
 const blogFunctions = {}
 
-// 블로그 글 포스팅
+// 블로그 글 포스팅하기
 blogFunctions.blogPost = async function (postData) {
 	console.log(postData, 'post data ')
 	let success =  false
@@ -11,12 +21,9 @@ blogFunctions.blogPost = async function (postData) {
 			insert into dev_blog.post (P_TITLE, P_CONTENT, P_WRITER)
 			VALUE ('${postData.title}', '${postData.content}', '${postData.writer}');
 		`)
-		console.log(result, 'result')
-
 		for (const img of postData.img) {
 			await sql_query(`
-				insert into dev_blog.file (F_POST_ID, F_IMG)
-				VALUE (${result.insertId}, '${img}');
+				insert into dev_blog.file (F_POST_ID, F_IMG) VALUE (${result.insertId}, '${img}');
 			`)
 		}
 		success = true
@@ -28,7 +35,7 @@ blogFunctions.blogPost = async function (postData) {
 }
 
 // 블로그 글 전체 가져오기
-blogFunctions.getPost = async function () {
+blogFunctions.getAllPost = async function () {
 	try {
 		const response = []
 		const results = await sql_query(`
@@ -46,7 +53,7 @@ blogFunctions.getPost = async function () {
 				writer: result.P_WRITER,
 				date: result.P_MOD_DT.split(' ')[0],
 				img: images[results.indexOf(result)].F_IMG
-				// img: images[0].F_IMG
+				// img: images[0].F_IMG	
 			}
 			// 글 마다 1개의 사진을 가져오는 로직인데 블로그 전체를 가져오는 화면으로 자원이 소모가 많아
 			// img를 아래와 같이가 아니라 위처럼 index로 접근하여 Front로 보내주기로 결정.
@@ -63,7 +70,7 @@ blogFunctions.getPost = async function () {
 	}
 }
 
-// 블로그 상세 페이지 위한 글 가져오기
+// 블로그 상세 페이지 (내용 + 댓글) 가져오기
 blogFunctions.getOnePost = async function (id) {
 	try {
 		await sql_query(`
@@ -75,10 +82,10 @@ blogFunctions.getOnePost = async function (id) {
 		const img = await sql_query(`
 			select F_IMG from dev_blog.file where F_POST_ID = ${id}
 		`)
-		const comment = await sql_query(`
+		const comments = await sql_query(`
 			select * from dev_blog.comment where C_POST_ID = ${id}
 		`)
-		console.log(comment)
+		// console.log(comments, 'comment')
 		const response = [{
 			id: result[0].P_ID,
 			title: result[0].P_TITLE,
@@ -90,8 +97,21 @@ blogFunctions.getOnePost = async function (id) {
 		if (img.length) {
 			response[0].img = img[0].F_IMG
 		}
-		if (comment.length) {
-			response[0].comment = comment
+		if (comments.length) {
+			const result2 = []
+			for (const comment of comments) {
+				const final = {
+					id: comment.C_ID,
+					writer: comment.C_WRITER,
+					password: comment.C_PASSWORD,
+					content: comment.C_CONTENT,
+					depth: comment.C_DEPTH,
+					post_id: comment.C_POST_ID,
+					date: comment.C_MOD_DT,
+				}
+				result2.push(final)
+			}
+			response[0].comment = result2
 		}
 		return response
 	} catch (error) {
@@ -106,39 +126,61 @@ blogFunctions.updatePost = async function (data) {
 		const result = await sql_query(`
 			update dev_blog.post set P_TITLE = '${data.title}', P_CONTENT = '${data.content}', P_WRITER = '${data.writer}' where P_ID = ${data.id}
 		`)
-		console.log(result, 'result')
+		console.log(result, 'result check')
+		if (data.img.length) {
+			console.log('image 진입')
+			for (const img of data.img) {
+				await sql_query(`
+					insert into dev_blog.file (F_POST_ID, F_IMG) VALUE (${data.id}, '${img}');
+				`)
+			}
+		}
 		success = true
 	} catch (error) {
 		success = false
 		console.log(error)
 	}
 	return success
-}
+} 
 
+// 블로그 상세 페이지 삭제
 blogFunctions.deletePost = async function(id) {
 	let success = null
 	try {
-		await sql_query(`
-			delete from dev_blog.post where P_ID = ${id};
+		const deleteInfo = await sql_query(`
+			select F_IMG from dev_blog.file where F_POST_ID = ${id};
 		`)
-		await sql_query(`
-			ALTER TABLE dev_blog.post AUTO_INCREMENT=1;
-		`)
-		await sql_query(`
-			SET @CNT = 0;
-		`)
-		await sql_query(`
-			UPDATE dev_blog.post SET dev_blog.post.P_ID = @CNT:=@CNT+1;
-		`)
-		await sql_query(`
-			ALTER TABLE dev_blog.file AUTO_INCREMENT=1;
-		`)
-		await sql_query(`
-			SET @CNT = 0;
-		`)
-		await sql_query(`
-			UPDATE dev_blog.file SET dev_blog.file.F_ID = @CNT:=@CNT+1;
-		`)
+		// await sql_query(`
+		// 	delete from dev_blog.post where P_ID = ${id};
+		// `)
+		// await sql_query(`
+		// 	ALTER TABLE dev_blog.post AUTO_INCREMENT=1;
+		// `)
+		// await sql_query(`
+		// 	SET @CNT = 0;
+		// `)
+		// await sql_query(`
+		// 	UPDATE dev_blog.post SET dev_blog.post.P_ID = @CNT:=@CNT+1;
+		// `)
+		// await sql_query(`
+		// 	ALTER TABLE dev_blog.file AUTO_INCREMENT=1;
+		// `)
+		// await sql_query(`
+		// 	SET @CNT = 0;
+		// `)
+		// await sql_query(`
+		// 	UPDATE dev_blog.file SET dev_blog.file.F_ID = @CNT:=@CNT+1;
+		// `)
+		console.log(deleteInfo, 'delete Info')
+		for (const file of deleteInfo) {
+			const result = file.F_IMG.split('.com/')[1]
+			console.log(result, 'result')
+			// console.log(file.F_IMG, 'CHECK')
+			console.log(ReactS3Client, 'CLINE')
+			await ReactS3Client.deleteFile(result).then((response) => {
+				console.log(response)
+			})
+		}
 		success = true
 	} catch (error) {
 		success = false

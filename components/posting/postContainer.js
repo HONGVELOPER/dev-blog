@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import S3 from 'react-aws-s3';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import axios from 'axios';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import router from 'next/router';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	editor: {
@@ -39,19 +39,34 @@ export const modules = {
 };
 
 const image = []
-const QuillEditor = () => {
+const postContainer = () => {
 	const classes = useStyles()
-  
-	const [title, setTitle] = useState("")
-	
-	const titleHandler = (event) => {
-		setTitle(event.currentTarget.value)
-	}
   
   const Quill = typeof window == 'object' ? require('quill') : () => false
 
   const quillElement = useRef(null)
   const quillInstance = useRef(null)
+
+	const [title, setTitle] = useState("")
+
+  useEffect(() => {
+    if (quillElement.current) {
+      quillInstance.current = new Quill(quillElement.current, {
+        theme: 'snow',
+        placeholder: 'Please enter the contents.',
+        modules: modules,
+        onchange
+      });
+    }
+
+    const quill = quillInstance.current;
+    const toolbar = quill.getModule('toolbar')
+    toolbar.addHandler('image', onClickImageBtn)
+  }, []);
+	
+	const titleHandler = (event) => {
+		setTitle(event.currentTarget.value)
+	}
 
   const onClickImageBtn = () => {
     const input = document.createElement('input')
@@ -71,6 +86,7 @@ const QuillEditor = () => {
       }
 
       const ReactS3Client = new S3(config)
+      console.log(ReactS3Client, 'S3 CLINET')
 
       ReactS3Client.uploadFile(file, fileName).then((data) => {
 				console.log(data)
@@ -91,11 +107,19 @@ const QuillEditor = () => {
     }
   }
 
-  const postBlog = async (event) => {
+  const blogPost = async (event) => {
 		event.preventDefault()
 
     console.log(image, 'array check')
     
+
+    // const formData = new FormData()
+    // formData.append('title', title)
+    // formData.append('content', quillInstance.current.root.innerHTML)
+    // formData.append('writer', 'dev hong')
+    // if (image.length) {
+    //   formData.append('img', image)
+    // }
 		const response = await axios.post('/api/blog', {
 			title: title,
 			content: quillInstance.current.root.innerHTML,
@@ -107,24 +131,9 @@ const QuillEditor = () => {
 			alert('블로그 포스팅이 정상적으로 작동되었습니다.')
 			router.push('/blog')
 		} else {
-			alert('ERROR')
+			alert('BLOG POST FAIL ERROR')
 		}
 	}
-
-  useEffect(() => {
-    if (quillElement.current) {
-      quillInstance.current = new Quill(quillElement.current, {
-        theme: 'snow',
-        placeholder: 'Please enter the contents.',
-        modules: modules,
-        onchange
-      });
-    }
-
-    const quill = quillInstance.current;
-    const toolbar = quill.getModule('toolbar')
-    toolbar.addHandler('image', onClickImageBtn)
-  }, []);
 
   return (
     <>
@@ -145,7 +154,7 @@ const QuillEditor = () => {
 						<Button
 							variant="outlined"
 							endIcon={<SaveIcon />}
-							onClick={postBlog}
+							onClick={blogPost}
 							style={{marginLeft: 'auto', color: '#218e16', backgroundColor: 'white'}}
 							>
 							Submit
@@ -157,4 +166,4 @@ const QuillEditor = () => {
   );
 }
 
-export default QuillEditor
+export default postContainer

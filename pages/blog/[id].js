@@ -10,7 +10,7 @@ const BlogDetail = ({ data }) => {
 		<div>
 			<Header />
 			<DetailContainer data={data} />
-			<Comment />
+			<Comment data={data.comment} />
 		</div>
 	)	
 }
