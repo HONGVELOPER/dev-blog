@@ -1,5 +1,6 @@
 import { sql_query } from '../../../lib/db'
-import S3 from 'react-aws-s3';
+// import S3 from 'react-aws-s3';
+import aws from 'aws-sdk';
 
 const config = {
 	bucketName: process.env.S3_BUCKET_NAME,
