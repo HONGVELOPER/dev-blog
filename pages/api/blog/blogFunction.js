@@ -1,15 +1,11 @@
-import { sql_query } from '../../../lib/db'
-// import S3 from 'react-aws-s3';
-import aws from 'aws-sdk';
+import { sql_query } from '../../../lib/db';
+import formidable from 'formidable';
 
-const config = {
-	bucketName: process.env.S3_BUCKET_NAME,
-	region: process.env.S3_REGION,
-	accessKeyId: process.env.S3_ACCESS_KEY,
-	secretAccessKey: process.env.S3_SECRET_KEY,
+export const config = {
+	api: {
+	  bodyParser: false,
+	}
 }
-
-const ReactS3Client = new S3(config)
 
 const blogFunctions = {}
 

@@ -73,37 +73,51 @@ const postContainer = () => {
     input.setAttribute('type', 'file')
     input.setAttribute('accept', 'image/*')
     input.click()
-    input.onchange = function () {
+    input.onchange = async function () {
       console.log('on change')
       const file = input.files[0]
-      const fileName = file.name
 
-      const config = {
-        bucketName: process.env.NEXT_PUBLIC_S3_BUCKET_NAME,
-        region: process.env.NEXT_PUBLIC_S3_REGION,
-        accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY,
-        secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_KEY,
-      }
+      const formData = new FormData()
+      formData.append('files', file)
 
-      const ReactS3Client = new S3(config)
-      console.log(ReactS3Client, 'S3 CLINET')
+      console.log(formData[0], 'zero')
 
-      ReactS3Client.uploadFile(file, fileName).then((data) => {
-				console.log(data)
-        if (data.status === 204) {
-          const range = quillInstance.current.getSelection(true)
-          quillInstance.current.insertEmbed(
-            range.index,
-            'image',
-            `${data.location}`
-          );
-          image.push(`${data.location}`)
-          console.log(image, 'image')
-          quillInstance.current.setSelection(range.index + 1)
-        } else {
-          alert('error')
+      console.log(formData, 'formData check')
+
+      const image = await axios.post('/api/blog', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
         }
       })
+      console.log(image, 'image')
+      // const fileName = file.name
+
+      // const config = {
+      //   bucketName: process.env.NEXT_PUBLIC_S3_BUCKET_NAME,
+      //   region: process.env.NEXT_PUBLIC_S3_REGION,
+      //   accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY,
+      //   secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_KEY,
+      // }
+
+      // const ReactS3Client = new S3(config)
+      // console.log(ReactS3Client, 'S3 CLINET')
+
+      // ReactS3Client.uploadFile(file, fileName).then((data) => {
+			// 	console.log(data)
+      //   if (data.status === 204) {
+      //     const range = quillInstance.current.getSelection(true)
+      //     quillInstance.current.insertEmbed(
+      //       range.index,
+      //       'image',
+      //       `${data.location}`
+      //     );
+      //     image.push(`${data.location}`)
+      //     console.log(image, 'image')
+      //     quillInstance.current.setSelection(range.index + 1)
+      //   } else {
+      //     alert('error')
+      //   }
+      // })
     }
   }
 
