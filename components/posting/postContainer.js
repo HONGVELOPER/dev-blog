@@ -78,67 +78,59 @@ const postContainer = () => {
       const file = input.files[0]
 
       const formData = new FormData()
-      formData.append('files', file)
+      formData.append('img', file)
 
-      console.log(formData[0], 'zero')
-
-      console.log(formData, 'formData check')
-
-      const image = await axios.post('/api/blog', formData, {
+      const image = await axios.post('/api/image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
-      console.log(image, 'image')
-      // const fileName = file.name
-
-      // const config = {
-      //   bucketName: process.env.NEXT_PUBLIC_S3_BUCKET_NAME,
-      //   region: process.env.NEXT_PUBLIC_S3_REGION,
-      //   accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY,
-      //   secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_KEY,
-      // }
-
-      // const ReactS3Client = new S3(config)
-      // console.log(ReactS3Client, 'S3 CLINET')
-
-      // ReactS3Client.uploadFile(file, fileName).then((data) => {
-			// 	console.log(data)
-      //   if (data.status === 204) {
-      //     const range = quillInstance.current.getSelection(true)
-      //     quillInstance.current.insertEmbed(
-      //       range.index,
-      //       'image',
-      //       `${data.location}`
-      //     );
-      //     image.push(`${data.location}`)
-      //     console.log(image, 'image')
-      //     quillInstance.current.setSelection(range.index + 1)
-      //   } else {
-      //     alert('error')
-      //   }
-      // })
+      // const range = quillInstance.current.getSelection(true)
+      // quillInstance.current.insertEmbed(
+      //   range.index,
+      //   'image',
+      //   'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-07-10.png'
+      // );
+      // quillInstance.current.insertEmbed(
+      //   range.index,
+      //   'image',
+      //   'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-09-10+(3).png'
+      // );
+      // image.push('https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-07-10.png')
+      // console.log(image, 'image')
+      // quillInstance.current.setSelection(range.index + 1)
+      if (image.status === 200) {
+        const range = quillInstance.current.getSelection(true)
+        quillInstance.current.insertEmbed(
+          range.index,
+          'image',
+          `${image.data.location}`
+        );
+        image.push(`${image.data.location}`)
+        console.log(image, 'image')
+        quillInstance.current.setSelection(range.index + 1)
+      } else {
+        alert('error')
+      }
     }
   }
 
   const blogPost = async (event) => {
 		event.preventDefault()
 
-    console.log(image, 'array check')
-    
-
-    // const formData = new FormData()
-    // formData.append('title', title)
-    // formData.append('content', quillInstance.current.root.innerHTML)
-    // formData.append('writer', 'dev hong')
-    // if (image.length) {
-    //   formData.append('img', image)
-    // }
+    const imageSet = new Set()
+    const imgReg = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g
+    while (imgReg.test(quillInstance.current.root.innerHTML)) {
+      imageSet.add(RegExp.$2.trim())
+    }
+    console.log(imageSet, 'imgSet check')
+    const imageArray = Array.from(imageSet)
 		const response = await axios.post('/api/blog', {
 			title: title,
 			content: quillInstance.current.root.innerHTML,
 			writer: 'dev hong',
-			img: image
+			img: image,
+      imgSet: imageArray,
 		})
 		console.log(response, 'RESPONSE CHECK')
 		if (response.status === 200) {

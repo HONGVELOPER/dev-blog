@@ -1,22 +1,10 @@
 import blogFuncitons from './blogFunction'
-import formidable from 'formidable';
-
-export const config = {
-	api: {
-	  bodyParser: false,
-	}
-}
 
 const BlogHandler = async (req, res) => {
 	console.log(req.method, 'req method check')
 	if (req.method === 'POST') {
 		try {
-			const form = new formidable.IncomingForm()
-			form.parse(req, (err, fields, files) => {
-				console.log(files.files.File)
-			})
-			// console.log(req, 'body check')
-			// return req
+			console.log(req.body, 'body check')
 			// const result = await blogFuncitons.blogPost(req.body)
 			// if (result) {	
 			// 	return res.status(200).send({})

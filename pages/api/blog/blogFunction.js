@@ -1,11 +1,4 @@
 import { sql_query } from '../../../lib/db';
-import formidable from 'formidable';
-
-export const config = {
-	api: {
-	  bodyParser: false,
-	}
-}
 
 const blogFunctions = {}
 
