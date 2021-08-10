@@ -8,14 +8,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import Image from 'next/image'
-import Divider from '@material-ui/core/Divider';
-import Button from '@material-ui/core/Button';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Link from 'next/link'
 import BreadCrumbs from '../../components/breadCrumbs.js';
 import AppBar from '@material-ui/core/AppBar';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-// import Pagination from 'react-js-pagination';
 
 const theme = createMuiTheme({
   palette: {
@@ -89,10 +86,13 @@ const useStyles = makeStyles((theme) => ({
       // border: '1px solid black'
     }
   },
+  img: {
+    objectFit: "fill",
+  }
 }))
 
 const BlogContainer = (props) => {
-  // console.log(props)
+  console.log(props, 'props check')
   const classes = useStyles()
   const [value, setValue] = useState(0)
 
@@ -105,12 +105,12 @@ const BlogContainer = (props) => {
         <Card
           variant="outlined"
           className={classes.card}
-          style={{height: '450px'}}
+          style={{height: '450px', maxWidth: '400px'}}
         >
           <CardActionArea className={classes.hover}>
             <Link href={`blog/${content.id}`}>
               <CardContent style={{padding: 0, height: '250px'}}>
-                <Image src={`${content.img}`} layout='fill' objectFit='fill' />
+                <img src={`${content.img}`} alt="card index" style={{display: 'block', height: '100%', width: 'auto'}} />
               </CardContent>
             </Link>
           </CardActionArea>
@@ -145,7 +145,6 @@ const BlogContainer = (props) => {
 
   return (
     <Container>
-      {/* <Button href="./blog/post">to post</Button> */}
       <Grid item xs={12} style={{marginTop: 10}}>
         <BreadCrumbs style={{display: 'inlineBlock'}} />
       </Grid>

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import S3 from 'react-aws-s3';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import TextField from '@material-ui/core/TextField';
@@ -55,7 +54,6 @@ const postContainer = () => {
         theme: 'snow',
         placeholder: 'Please enter the contents.',
         modules: modules,
-        onchange
       });
     }
 
@@ -74,40 +72,24 @@ const postContainer = () => {
     input.setAttribute('accept', 'image/*')
     input.click()
     input.onchange = async function () {
-      console.log('on change')
       const file = input.files[0]
 
       const formData = new FormData()
       formData.append('img', file)
 
-      const image = await axios.post('/api/image', formData, {
+      const result = await axios.post('/api/image/uploadFile', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
-      // const range = quillInstance.current.getSelection(true)
-      // quillInstance.current.insertEmbed(
-      //   range.index,
-      //   'image',
-      //   'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-07-10.png'
-      // );
-      // quillInstance.current.insertEmbed(
-      //   range.index,
-      //   'image',
-      //   'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-09-10+(3).png'
-      // );
-      // image.push('https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/2020-07-10.png')
-      // console.log(image, 'image')
-      // quillInstance.current.setSelection(range.index + 1)
-      if (image.status === 200) {
+      if (result.status === 200) {
         const range = quillInstance.current.getSelection(true)
         quillInstance.current.insertEmbed(
           range.index,
           'image',
-          `${image.data.location}`
+          `${result.data.location}`
         );
-        image.push(`${image.data.location}`)
-        console.log(image, 'image')
+        image.push(`${result.data.location}`)
         quillInstance.current.setSelection(range.index + 1)
       } else {
         alert('error')
@@ -123,15 +105,24 @@ const postContainer = () => {
     while (imgReg.test(quillInstance.current.root.innerHTML)) {
       imageSet.add(RegExp.$2.trim())
     }
-    console.log(imageSet, 'imgSet check')
     const imageArray = Array.from(imageSet)
+    const uploadFile = image.filter(x => imageArray.includes(x))
+
 		const response = await axios.post('/api/blog', {
 			title: title,
 			content: quillInstance.current.root.innerHTML,
 			writer: 'dev hong',
-			img: image,
-      imgSet: imageArray,
+			img: uploadFile,
 		})
+    
+    const deleteFile = image.filter(x => !imageArray.includes(x))
+    if (deleteFile.length) {
+      const response2 = await axios.put('/api/image/deleteFile', {
+        deleteFiles: deleteFile,
+      })
+      console.log(response2, 'RESPONSE 2 CHECK')
+    }
+
 		console.log(response, 'RESPONSE CHECK')
 		if (response.status === 200) {
 			alert('블로그 포스팅이 정상적으로 작동되었습니다.')

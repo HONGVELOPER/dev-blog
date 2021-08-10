@@ -37,8 +37,8 @@ const ImageHandler = async (req, res) => {
 					} else {
 						location = data.Location
 						console.log(location, 'result check')
-						return res.status(200).send({ location })
 					}
+					return res.status(200).send({ location })
 				})
 			})
         } catch (error) {
