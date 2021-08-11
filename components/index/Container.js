@@ -6,7 +6,7 @@ import Image from 'next/image'
 const useStyles = makeStyles((theme) => ({
   box: {
     position: 'relative',
-    height: '25vw',
+    height: '35vw',
     minHeight: '150px',
   },
   bgImage: {
@@ -14,14 +14,20 @@ const useStyles = makeStyles((theme) => ({
     zIndex: -1,
   },
   bgText: {
-    margin: 0,
-    marginBottom: '8vw',
-    paddingLeft: '15vw',
+    // margin: 0,
+    // marginBottom: '8vw',
+    // paddingLeft: '15vw',
   },
   bgTextMobile: {
-    marginBottom: '5vw',
-    paddingLeft: '15vw',
+    // marginBottom: '5vw',
+    // paddingLeft: '15vw',
   },
+  introduce: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white'
+  }
 }))
 
 const container = () => {
@@ -48,33 +54,35 @@ const container = () => {
   return (
     <Box className={classes.box}>
       <div>
-        <Image className={classes.bgImage} src={'/images/indexImage.jpg'} layout='fill'></Image>
+        <Image className={classes.bgImage} src={'/images/main.jpg'} layout='fill'></Image>
       </div>
-      {mobile ? (
-        <section className={classes.bgTextMobile}>
-          <Box>
-            <div style={{fontSize: '4vw', paddingTop: '11vw', color:'#218e16', fontWeight: 500}}>
-              안녕하세요,
-            </div>
-            <div style={{fontSize: '2vw', marginTop: '1vw'}}>
-              웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
-              Next js 로 웹 애플리케이션을 구축합니다.
-            </div>
-          </Box>
-        </section>
-      ) : (
-        <section className={classes.bgText}>
-          <Box>
-            <div style={{fontSize: '40px', paddingTop: '12.5vw', color:'#218e16', fontWeight: 500}}>
-              안녕하세요,
-            </div>
-            <div style={{fontSize: '20px', marginTop: '1vw'}}>
-              웹 브라우저로 사람을 연결하는 개발자 홍영진입니다.<br />
-              Next js 로 웹 애플리케이션을 구축합니다.
-            </div>
-          </Box>
-        </section>
-      )}
+      <div className={classes.introduce}>
+        {mobile ? (
+          <section className={classes.bgTextMobile}>
+            <Box>
+              <div style={{fontSize: '4vw', fontWeight: 500}}>
+                안녕하세요,
+              </div>
+              <div style={{fontSize: '2vw'}}>
+                웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
+                Next js 로 웹 애플리케이션을 구축합니다.
+              </div>
+            </Box>
+          </section>
+        ) : (
+          <section className={classes.bgText}>
+            <Box>
+              <div style={{fontSize: '40px', fontWeight: 500}}>
+                안녕하세요,
+              </div>
+              <div style={{fontSize: '20px', marginTop: '1vw'}}>
+                웹 브라우저로 사람을 연결하는 개발자 홍영진입니다.<br />
+                Next js 로 웹 애플리케이션을 구축합니다.
+              </div>
+            </Box>
+          </section>
+        )}
+      </div>
       {/* <section className={classes.project}>
         <Card variant='outlined'>
           <CardContent>

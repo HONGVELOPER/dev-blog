@@ -1,8 +1,15 @@
-function Introduce() {
+import AppBar from '../components/index/Header.js';
+import Container from '../components/about/Container.js';
+
+const About = () => {
   return (
-    <div>Introduce Page</div> 
-    
+    <> 
+      <div>
+        <AppBar></AppBar>
+        <Container></Container>
+      </div>
+    </>
   )
 }
 
-export default Introduce
+export default About
