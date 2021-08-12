@@ -68,7 +68,7 @@ const skill = () => {
 							<Image src={'/images/backend2.png'} width={100} height={100} />
 							<div style={{paddingTop: '0.7vw'}}>
 								<div style={{fontSize: '1vw', paddingBottom: '1vw'}}>Back-End</div>
-								SpringBoot·NodeJS API 구축<br />
+								NodeJS API 구축<br />
 								MySQL DB 스키마 설계
 							</div>
 						</Box>
@@ -102,7 +102,7 @@ const skill = () => {
 							<Image src={'/images/backend2.png'} width={100} height={100} />
 							<div style={{paddingTop: '0.7vw'}}>
 								<div style={{fontSize: '1vw', paddingBottom: '1vw'}}>Back-End</div>
-								SpringBoot·NodeJS API 구축<br />
+								NodeJS API 구축<br />
 								MySQL DB 스키마 설계
 							</div>
 						</Box>

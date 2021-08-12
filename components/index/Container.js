@@ -6,27 +6,26 @@ import Image from 'next/image'
 const useStyles = makeStyles((theme) => ({
   box: {
     position: 'relative',
-    height: '35vw',
-    minHeight: '150px',
+    height: '600px',
+    // minHeight: '150px',
+  },
+  boxMobile: {
+    position: 'relative',
+    height: '250px',
+    // minHeight: '15/0x',
   },
   bgImage: {
-    border: '1px solid black',
     zIndex: -1,
   },
-  bgText: {
-    // margin: 0,
-    // marginBottom: '8vw',
-    // paddingLeft: '15vw',
-  },
-  bgTextMobile: {
-    // marginBottom: '5vw',
-    // paddingLeft: '15vw',
-  },
-  introduce: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'white'
+  indexText: {
+    textAlign: 'center',
+    paddingTop: '30vh',
+    // display: 'flex',
+    height: '37vw',
+    minHeight: '35vw',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    color: 'white',
   }
 }))
 
@@ -45,44 +44,41 @@ const container = () => {
     console.log(mobile, 'first')
   })
 
-  const hello = () => (
-    <div>
-      Hello,  
-    </div>
-  )
-
   return (
-    <Box className={classes.box}>
-      <div>
-        <Image className={classes.bgImage} src={'/images/main.jpg'} layout='fill'></Image>
-      </div>
-      <div className={classes.introduce}>
+    <>
+      <section>
         {mobile ? (
-          <section className={classes.bgTextMobile}>
-            <Box>
-              <div style={{fontSize: '4vw', fontWeight: 500}}>
+          <Box className={classes.boxMobile}>
+            <div>
+              <Image className={classes.bgImage} src={'/images/main.jpg'} layout='fill' objectFit="cover" />
+            </div>
+            <div className={classes.indexText}>
+              <div style={{fontSize: '4.5vw', fontWeight: 500}}>
                 안녕하세요,
               </div>
-              <div style={{fontSize: '2vw'}}>
+              <div style={{fontSize: '2.5vw', fontWeight: 300}}>
                 웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
                 Next js 로 웹 애플리케이션을 구축합니다.
               </div>
-            </Box>
-          </section>
+            </div>
+          </Box>
         ) : (
-          <section className={classes.bgText}>
-            <Box>
-              <div style={{fontSize: '40px', fontWeight: 500}}>
+          <Box className={classes.box}>
+            <div>
+              <Image className={classes.bgImage} src={'/images/main.jpg'} layout='fill' objectFit="cover" />
+            </div>
+            <div className={classes.indexText}>
+              <div style={{fontSize: '45px', fontWeight: 500}}>
                 안녕하세요,
               </div>
-              <div style={{fontSize: '20px', marginTop: '1vw'}}>
-                웹 브라우저로 사람을 연결하는 개발자 홍영진입니다.<br />
+              <div style={{fontSize: '25px', fontWeight: 300}}>
+                웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
                 Next js 로 웹 애플리케이션을 구축합니다.
               </div>
-            </Box>
-          </section>
+            </div>
+          </Box>
         )}
-      </div>
+      </section>
       {/* <section className={classes.project}>
         <Card variant='outlined'>
           <CardContent>
@@ -90,7 +86,7 @@ const container = () => {
           </CardContent>
         </Card>
       </section> */}
-    </Box>
+    </>
   )
 }
 

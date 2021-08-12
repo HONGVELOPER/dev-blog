@@ -78,7 +78,7 @@ const Header = () => {
         About
       </Button>
       {/* <Button href="../project" style={{display: 'block'}}>Project</Button>   */}
-      {/* <Button href="../blog" style={{display: 'block'}}>Blog</Button>   */}
+      <Button href="../blog" style={{display: 'block'}}>Blog</Button>  
       <Button href="https://github.com/Young-Jin1003" style={{display: 'block'}}>Github</Button>
     </div>
   )
@@ -94,7 +94,7 @@ const Header = () => {
                     <MenuIcon />
                   </IconButton>
                   <Box className={classes.mobileBox}>
-                    <Button className={classes.logoButton} href="/blog">
+                    <Button className={classes.logoButton} href="/">
                       <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
                     </Button>
                   </Box>
@@ -106,13 +106,13 @@ const Header = () => {
             ) : (
               <Grid container spacing={2}>
                 <Grid item xs={10}>
-                  <Button href="/blog">
+                  <Button href="/">
                     <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong</Button>
                   <Button href="../about" style={{marginLeft: '4vw', fontWeight: 50}}>
                     About
                   </Button>
                   {/* <Button href="../project" style={{marginLeft: '0.5vw', fontWeight: 50}}>Project</Button>   */}
-                  {/* <Button href="../blog" style={{marginLeft: '0.5vw', fontWeight: 50}}>Blog</Button>   */}
+                  <Button href="../blog" style={{marginLeft: '0.5vw', fontWeight: 50}}>Blog</Button>  
                   <Button href="https://github.com/Young-Jin1003" style={{marginLeft: '0.5vw', fontWeight: 50}}>Github</Button>
                 </Grid>
                 <Grid item xs={2}>
