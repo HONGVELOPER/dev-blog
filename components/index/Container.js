@@ -1,30 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Image from 'next/image'
+import Image from 'next/image';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   box: {
     position: 'relative',
-    height: '600px',
-    // minHeight: '150px',
-  },
-  boxMobile: {
-    position: 'relative',
-    height: '250px',
-    // minHeight: '15/0x',
+    minHeight: '175px',
   },
   bgImage: {
     zIndex: -1,
   },
   indexText: {
-    textAlign: 'center',
-    paddingTop: '30vh',
-    // display: 'flex',
+    display: 'flex',
     height: '37vw',
-    minHeight: '35vw',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
     color: 'white',
   }
 }))
@@ -32,7 +24,12 @@ const useStyles = makeStyles((theme) => ({
 const container = () => {
   const classes = useStyles()
   const [mobile, setMobile] = useState(null)
-  const divide = 1000
+  const divide = 800
+  const hello = <div>안녕하세요,</div>
+  const introduce = <div>
+    웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
+    Next js 로 웹 애플리케이션을 구축합니다. 
+  </div>
 
   useEffect(() => {
     if (mobile === null) {
@@ -41,51 +38,32 @@ const container = () => {
     window.addEventListener('resize', function() {
       window.innerWidth < divide ? setMobile(true) : setMobile(false)
     }, {passive: true})
-    console.log(mobile, 'first')
   })
 
   return (
     <>
-      <section>
-        {mobile ? (
-          <Box className={classes.boxMobile}>
-            <div>
-              <Image className={classes.bgImage} src={'/images/main.jpg'} layout='fill' objectFit="cover" />
-            </div>
-            <div className={classes.indexText}>
-              <div style={{fontSize: '4.5vw', fontWeight: 500}}>
-                안녕하세요,
-              </div>
-              <div style={{fontSize: '2.5vw', fontWeight: 300}}>
-                웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
-                Next js 로 웹 애플리케이션을 구축합니다.
-              </div>
-            </div>
-          </Box>
-        ) : (
-          <Box className={classes.box}>
-            <div>
-              <Image className={classes.bgImage} src={'/images/main.jpg'} layout='fill' objectFit="cover" />
-            </div>
-            <div className={classes.indexText}>
-              <div style={{fontSize: '45px', fontWeight: 500}}>
-                안녕하세요,
-              </div>
-              <div style={{fontSize: '25px', fontWeight: 300}}>
-                웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
-                Next js 로 웹 애플리케이션을 구축합니다.
-              </div>
-            </div>
-          </Box>
-        )}
-      </section>
-      {/* <section className={classes.project}>
-        <Card variant='outlined'>
-          <CardContent>
-            <div>hi</div>
-          </CardContent>
-        </Card>
-      </section> */}
+      <Box className={classes.box}>
+        <div className={classes.bgImage}>
+          <Image src={'/images/main.jpg'} layout='fill' objectFit="cover" />
+        </div>
+        <div className={classes.indexText}>
+          {mobile ? (
+            <>
+              <Box style={{position: 'relative'}}>
+                <Typography style={{fontSize: '4.5vw'}}>{hello}</Typography>
+                <Typography style={{fontSize: '2.5vw'}}>{introduce}</Typography>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Box style={{position: 'relative'}}>
+                <Typography style={{fontSize: '45px', fontWeight: 500}}>{hello}</Typography>
+                <Typography style={{fontSize: '25px'}}>{introduce}</Typography>
+              </Box>
+            </>
+          )}
+        </div>
+      </Box>
     </>
   )
 }

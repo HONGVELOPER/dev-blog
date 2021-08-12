@@ -50,13 +50,14 @@ const Header = () => {
   const classes = useStyles()
   const [mobile, setMobile] = useState(null)
   const [navBar, setNavBar] = useState({ left: false })
+  const divide = 800
   
   useEffect(() => {
     if (mobile === null) {
-      window.innerWidth < 720 ? setMobile(true) : setMobile(false)
+      window.innerWidth < divide ? setMobile(true) : setMobile(false)
     }
     window.addEventListener('resize', function() {
-      window.innerWidth < 720 ? setMobile(true) : setMobile(false)
+      window.innerWidth < divide ? setMobile(true) : setMobile(false)
     }, {passive: true})
     // console.log(mobile, 'first')
   })

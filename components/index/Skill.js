@@ -40,7 +40,6 @@ const skill = () => {
     window.addEventListener('resize', function() {
       window.innerWidth < divide ? setMobile(true) : setMobile(false)
     }, {passive: true})
-    console.log(mobile, 'first')
   })
 
   return (
@@ -48,14 +47,12 @@ const skill = () => {
 			{mobile ? (
 				<section>
 					<div className={classes.skill}>
-						<div style={{color: '#218e16'}}>Skills</div>
-						<div style={{fontSize: '1.6vw', paddingTop: '1vw', fontWeight: 50}}>
-							웹 개발 파트별로 정리한 간략한 기술 스택입니다.<br />
-							분야별 기술에 대하여 더 자세한 내용은 소개 페이지에서 확인 하실 수 있습니다.
+						<div style={{color: '#218e16', fontSize: '4vw'}}>Skills</div>
+						<div style={{fontSize: '2.5vw', paddingTop: '1vw', fontWeight: 50}}>
+							웹 개발을 하며 사용해본 기술 스택입니다.
 						</div>
 					</div>
 					<div className={classes.detailImg}>
-						{/* <Box className={classes.detailBox} style={{marginRight: '13vw'}}> */}
 						<Box style={{marginLeft: '8vw'}}>
 							<Image src={'/images/frontend4.png'} width={100} height={100} />
 							<div style={{paddingTop: '0.7vw'}}>
@@ -84,10 +81,9 @@ const skill = () => {
 				</section>
 			) : (
 				<section className={classes.skill}>
-					<div style={{color: '#218e16'}}>Skills</div>
+					<div style={{color: '#218e16', fontSize: '29px', fontWeight: 600}}>Skills</div>
 					<div style={{fontSize: '15px', paddingTop: '1vw', fontWeight: 50}}>
-						웹 개발 파트별로 정리한 간략한 기술 스택입니다.<br />
-						분야별 기술에 대하여 더 자세한 내용은 소개 페이지에서 확인 하실 수 있습니다.
+						웹 개발을 하며 사용해본 기술 스택입니다.
 					</div>
 					<div className={classes.detailImg}>
 						<Box className={classes.detailBox} style={{marginRight: '13vw'}}>
