@@ -11,13 +11,14 @@ const useStyles = makeStyles((theme) => ({
   },
   bgImage: {
     zIndex: -1,
+    opacity: 0.75,
   },
   indexText: {
     display: 'flex',
     height: '37vw',
-    alignItems: 'center',
-    justifyContent: 'center',
-    color: 'white',
+    alignItems: 'start',
+    justifyContent: 'start',
+    color: 'black',
   }
 }))
 
@@ -44,21 +45,22 @@ const container = () => {
     <>
       <Box className={classes.box}>
         <div className={classes.bgImage}>
+          {/* <Image src={'/images/min2.jpg'} layout='fill' objectFit="cover" />/ */}
           <Image src={'/images/main.jpg'} layout='fill' objectFit="cover" />
         </div>
         <div className={classes.indexText}>
           {mobile ? (
             <>
-              <Box style={{position: 'relative'}}>
-                <Typography style={{fontSize: '4.5vw'}}>{hello}</Typography>
-                <Typography style={{fontSize: '2.5vw'}}>{introduce}</Typography>
+              <Box style={{position: 'relative', marginTop: '3.5vw', marginLeft: '5vw'}}>
+                <Typography style={{fontSize: '4.5vw', fontWeight: 600, color: '#218e16'}}>{hello}</Typography>
+                <Typography style={{fontSize: '2.5vw', fontWeight: 500}}>{introduce}</Typography>
               </Box>
             </>
           ) : (
             <>
-              <Box style={{position: 'relative'}}>
-                <Typography style={{fontSize: '45px', fontWeight: 500}}>{hello}</Typography>
-                <Typography style={{fontSize: '25px'}}>{introduce}</Typography>
+              <Box style={{position: 'relative', marginTop: '3.5vw', marginLeft: '5vw'}}>
+                <Typography style={{fontSize: '45px', fontWeight: 600, color: '#218e16'}}>{hello}</Typography>
+                <Typography style={{fontSize: '25px', fontWeight: 500}}>{introduce}</Typography>
               </Box>
             </>
           )}

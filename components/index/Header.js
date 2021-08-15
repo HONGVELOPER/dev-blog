@@ -12,15 +12,12 @@ import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 
 
-// header 반응형 수정해야함 데스크탑일때랑, 패드 이하일때 분기시켜서 font Size 수정
-
 const useStyles = makeStyles((theme) => ({
   header: {
     height: '60px',
     marginTop: '2%',
     marginLeft: '2%',
     fontWeight: 100,
-    // border: '1px solid black'
   },
   login: {
     fontWeight: 50,
@@ -105,23 +102,18 @@ const Header = () => {
                 </Grid>
               </Grid>
             ) : (
-              <Grid container spacing={2}>
-                <Grid item xs={10}>
-                  <Button href="/">
-                    <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong</Button>
-                  <Button href="../about" style={{marginLeft: '4vw', fontWeight: 50}}>
+              <Grid container spacing={2} style={{marginTop: '1px',}}>
+                <Button href="/">
+                  <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
+                </Button>
+                <div style={{display: 'flex', marginLeft: 'auto', marginRight: '50px'}}>
+                  <Button href="../about" style={{fontWeight: 50}}>
                     About
                   </Button>
                   {/* <Button href="../project" style={{marginLeft: '0.5vw', fontWeight: 50}}>Project</Button>   */}
-                  <Button href="../blog" style={{marginLeft: '0.5vw', fontWeight: 50}}>Blog</Button>  
-                  <Button href="https://github.com/Young-Jin1003" style={{marginLeft: '0.5vw', fontWeight: 50}}>Github</Button>
-                </Grid>
-                <Grid item xs={2}>
-                  <Button className={classes.login}>
-                    <Avatar />
-                    <span>Login</span>
-                  </Button>
-                </Grid>
+                  <Button href="../blog" style={{marginLeft: '20px', fontWeight: 50}}>Blog</Button>  
+                  <Button href="https://github.com/Young-Jin1003" style={{marginLeft: '20px', fontWeight: 50}}>Github</Button>
+                </div>
               </Grid>
             )}
           </div>
