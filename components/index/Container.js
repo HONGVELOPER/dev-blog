@@ -45,8 +45,7 @@ const container = () => {
     <>
       <Box className={classes.box}>
         <div className={classes.bgImage}>
-          {/* <Image src={'/images/min2.jpg'} layout='fill' objectFit="cover" />/ */}
-          <Image src={'/images/main.jpg'} layout='fill' objectFit="cover" />
+          <Image src={'/images/main.jpg'} layout='fill' objectFit="cover" quality={60} />
         </div>
         <div className={classes.indexText}>
           {mobile ? (
