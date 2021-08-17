@@ -2,23 +2,26 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Image from 'next/image';
-import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme) => ({
   box: {
     position: 'relative',
-    minHeight: '175px',
+    height: '90vh',
+    width: '99vw',
+    padding: 10
   },
   bgImage: {
     zIndex: -1,
-    opacity: 0.75,
+    opacity: 0.5,
   },
   indexText: {
-    display: 'flex',
-    height: '37vw',
-    alignItems: 'start',
-    justifyContent: 'start',
-    color: 'black',
+    margin: 0,
+    fontSize: '2rem',
+    lineHeight: '3rem',
+    textAlign: 'center',
+    paddingTop: '40vh',
+    textShadow: '1px 1px 1px #3c5c5e',
+    color: 'white'
   }
 }))
 
@@ -45,21 +48,21 @@ const container = () => {
     <>
       <Box className={classes.box}>
         <div className={classes.bgImage}>
-          <Image src={'/images/main.jpg'} layout='fill' objectFit="cover" quality={60} />
+          <Image src={'/images/main.jpg'} layout='fill' objectFit="cover" quality={60}/>
         </div>
         <div className={classes.indexText}>
           {mobile ? (
             <>
               <Box style={{position: 'relative', marginTop: '3.5vw', marginLeft: '5vw'}}>
-                <Typography style={{fontSize: '4.5vw', fontWeight: 600, color: '#218e16'}}>{hello}</Typography>
-                <Typography style={{fontSize: '2.5vw', fontWeight: 500}}>{introduce}</Typography>
+                <div style={{fontSize: '6vw', fontWeight: 600, color: '#218e16'}}>{hello}</div>
+                <div style={{fontSize: '4vw', fontWeight: 600}}>{introduce}</div>
               </Box>
             </>
           ) : (
             <>
               <Box style={{position: 'relative', marginTop: '3.5vw', marginLeft: '5vw'}}>
-                <Typography style={{fontSize: '45px', fontWeight: 600, color: '#218e16'}}>{hello}</Typography>
-                <Typography style={{fontSize: '25px', fontWeight: 500}}>{introduce}</Typography>
+                <div style={{fontSize: '45px', fontWeight: 600, color: '#218e16'}}>{hello}</div>
+                <div style={{fontSize: '25px', fontWeight: 500}}>{introduce}</div>
               </Box>
             </>
           )}

@@ -10,27 +10,10 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
-  box: {
-    height: '30vw',
-		// backgroundColor: '#e38100'
-  },
   skill: {
     marginTop: '6vw',
     textAlign: 'center',
     fontSize: '1.5vw',
-  },
-	skillMobile: {
-
-	},
-  detailImg: {
-    marginTop: '4vw',
-    height: '5vw',
-  },
-  detailBox: {
-    display: 'inline-block',
-    '& div': {
-      fontSize: '0.7vw',
-    }
   },
 	skillImage: {
 		display: 'flex',
@@ -38,10 +21,10 @@ const useStyles = makeStyles((theme) => ({
 		alignItems: 'center',
 		fontSize: 30,
 		fontWeight: 300,
-	}
+	},
 }))
 
-const skill = () => {
+const skill = (props) => {
   const classes = useStyles()
   const [mobile, setMobile] = useState(null)
   const divide = 800
@@ -55,10 +38,15 @@ const skill = () => {
     }, {passive: true})
   })
 
+	if (props.toSkill) {
+		console.log('data in')
+		document.querySelector('.skill').scrollIntoView({behavior: 'smooth'})
+	}
+
   return (
-    <Container className={classes.box}>
+    <Container>
 			<section className={classes.skill}>
-				<div style={{color: '#218e16', fontSize: '29px', fontWeight: 600}}>Skills</div>
+				<div className='skill' style={{color: '#218e16', fontSize: '29px', fontWeight: 600}}>Skills</div>
 				<div style={{fontSize: '15px', paddingTop: '1vw', fontWeight: 50}}>
 					웹 개발을 하며 사용해본 기술 스택입니다.
 				</div>
@@ -73,21 +61,17 @@ const skill = () => {
 								<Image src={'/images/frontend/html.png'} width={100} height={100} />
 								<Image src={'/images/frontend/javascript.png'} width={100} height={100} />
 								<Image src={'/images/frontend/css.png'} width={100} height={100} />
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/frontend/react.svg'} width={120} height={90} />
-									<span>React</span>
+								<div className={classes.skillImage} style={{marginRight: 15}}>
+									<Image src={'/images/frontend/react2.svg'} width={200} height={100} />
 								</div>
 								<div className={classes.skillImage}>
-									<Image src={'/images/frontend/next2.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>Next js</span>
+									<Image src={'/images/frontend/next2.svg'} width={180} height={80} />
 								</div>
 								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/frontend/vue.svg'} width={90} height={90} />
-									<span style={{padding: 10}}>Vue</span>
+									<Image src={'/images/frontend/vue2.svg'} width={200} height={90} />
 								</div>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/frontend/nuxt.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>Nuxt</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/frontend/nuxt2.svg'} width={200} height={110} />
 								</div>
 								<div className={classes.skillImage} style={{marginRight: 30}}>
 									<Image src={'/images/frontend/vuetify.svg'} width={90} height={90} />
@@ -102,48 +86,41 @@ const skill = () => {
 					</Grid>
 					<Grid item xs={12} sm={6} md={4}>
 						<Card>
-							<Typography variant="h6" gutterBottom>
+							<Typography variant="h6" gutterBottom style={{color: '#fa7d00', fontSize: '25px'}}>
 								Back-End
 							</Typography>
 							<Divider />
 							<CardContent>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/backend/node.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>Node js</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/backend/node.svg'} width={200} height={100} />
 								</div>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/backend/express.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>Express</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/backend/express.svg'} width={200} height={100} />
 								</div>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/backend/mysql.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>MySQL</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/backend/mysql.svg'} width={200} height={100} />
 								</div>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/backend/sequelize.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>Sequelize</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/backend/sequelize.svg'} width={200} height={100} />
 								</div>
 							</CardContent>
 						</Card>
 					</Grid>
 					<Grid item xs={12} sm={6} md={4}>
 						<Card>
-							<Typography variant="h6" gutterBottom>
+							<Typography variant="h6" gutterBottom style={{color: '#fa7d00', fontSize: '25px'}}>
 								DevOps
 							</Typography>
 							<Divider />
 							<CardContent>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/devops/aws.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>AWS</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/devops/amazon.svg'} width={200} height={100} />
 								</div>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/devops/docker.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>Docker</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/devops/docker.svg'} width={200} height={100} />
 								</div>
-								<div className={classes.skillImage} style={{marginRight: 30}}>
-									<Image src={'/images/devops/github.svg'} width={100} height={100} />
-									<span style={{padding: 10}}>GitHub</span>
+								<div className={classes.skillImage}>
+									<Image src={'/images/devops/github.svg'} width={200} height={100} />
 								</div>
 							</CardContent>
 						</Card>
