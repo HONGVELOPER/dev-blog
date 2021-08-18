@@ -2,6 +2,7 @@ import Header from '../components/index/Header.js'
 import IndexContainer from '../components/index/Container.js'
 import Skill from '../components/index/Skill.js'
 import About from '../components/index/About.js'
+import Footer from '../components/index/Footer.js'
 import { useState } from "react"
 
 function Home() {
@@ -24,6 +25,7 @@ function Home() {
       <IndexContainer />
       <About toAbout={abLocation} scrollChange={abScroll} />
       <Skill toSkill={skLocation} scrollChange={skScroll} />
+      <Footer />
     </div>
   )
 }

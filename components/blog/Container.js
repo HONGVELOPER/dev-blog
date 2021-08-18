@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -7,7 +7,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
-import Image from 'next/image'
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Link from 'next/link'
 import BreadCrumbs from '../../components/breadCrumbs.js';
@@ -63,42 +62,56 @@ function a11yProps(index) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    // flexGrow: 1,
   },
-  font: {
-    fontSize: '10px',
-    fontWeight: 200,
+  bottom: {
+    display: 'block',
+    '&:focus': {
+      '&:after': {
+        content: "''",
+        display: 'block',
+        width: '60px',
+        borderBottom: '3px solid #218e16',
+        margin: '10px auto'
+      },
+    }
   },
-  title: {
+  img: {
+    objectFit: "fill",
+  },
+  blogTitle: {
     marginBottom: '20px',
     fontSize: '17px',
     fontWeight: 600,
   },
-  tab: {
-    "& div": {
-      padding: 0
-    },
+  blogWriter: {
+    fontSize: '10px',
+    fontWeight: 200,
   },
   hover: {
     marginBottom: 5,
     "&:hover": {
       opacity: 0.6,
-      // border: '1px solid black'
     }
   },
-  img: {
-    objectFit: "fill",
-  }
+  
 }))
 
 const BlogContainer = (props) => {
-  console.log(props, 'props check')
+  // console.log(props, 'props check')
   const classes = useStyles()
   const [value, setValue] = useState(0)
+  const focusRef = useRef(null)
 
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
   };
+
+
+  useEffect(() => {
+    focusRef.current.focus()
+  }, [])
+
   const contentList = props.data.map((content) => (
     <MuiThemeProvider theme={theme} key={content.id}>
       <Grid item xs={12} sm={6} md={4} style={{padding: 20, minWidth: 300}}>
@@ -116,13 +129,13 @@ const BlogContainer = (props) => {
           </CardActionArea>
           {/* <Divider variant="middle" /> */}
           <div style={{Height: '200px', padding: '10px'}}>
-            <Box className={classes.title}>
+            <Box className={classes.blogTitle}>
               <div>{content.title}</div>
             </Box>
             <Box style={{height: '110px'}}>
               {content.content}
             </Box>
-            <div className={classes.font}>
+            <div className={classes.blogWriter}>
               <div>
                 <span>written by </span>
                 <span style={{fontWeight: 400, fontSize: '12px'}}>{content.writer}</span>
@@ -152,43 +165,24 @@ const BlogContainer = (props) => {
         <MuiThemeProvider theme={theme}>
           <Tabs
             value={value}
-            indicatorColor="primary"
             textColor="primary"
             onChange={handleValueChange}
-            aria-label="simple tabs example"
-            // TabIndicatorProps={{ style: {
-            //   width: '100px',
-            //   // left: '40px',
-            //   display: 'flex',
-            //   justifyContent: 'center',
-            // }}}
+            TabIndicatorProps={{ style: {
+              display: 'none',
+            }}}
           >
-            <Tab label="최신 포스트" {...a11yProps(0)} />
-            <Tab label="인기 포스트" {...a11yProps(1)} />
-            <Tab label="Tag" {...a11yProps(2)} />
+            <Tab ref={focusRef} label="인기 포스트" {...a11yProps(0)} className={classes.bottom} />
+            <Tab label="최신 포스트" {...a11yProps(1)} className={classes.bottom} />
           </Tabs>
         </MuiThemeProvider>
       </AppBar>
       <TabPanel className={classes.tab} value={value} index={0}>
         <Grid container spacing={0} style={{padding: 0}}>
           {contentList}
-          {/* <Pagination
-            activePage={page}
-            itemsCountPerPage={3}
-            totalItemsCount={4}
-            prevPageText={"<"}
-            nextPageText={">"}
-            pageRangeDisplayed={5}
-            onChage={handlePageChange(page)}
-          >
-          </Pagination> */}
         </Grid>
       </TabPanel>
       <TabPanel value={value} index={1}>
         Item Two
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        Item Three
       </TabPanel>
     </Container>
   )

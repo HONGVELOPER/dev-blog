@@ -28,14 +28,13 @@ const breadCrumble = (props) => {
 			<Link key={path} href={`/blog/${path}`} style={{color: '#000000'}}>Post</Link>
 		)
 	))
-	// console.log(list)
 	list[list.length - 1].props.style.color="#218e16"
 	
 
 	return (
 		<div>
 			<Breadcrumbs className={classes.breadCrumbs} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
-				<Link href="/home" style={{color: '#000000'}}>
+				<Link href="/" style={{color: '#000000'}}>
           Home
         </Link>
 				{list}
