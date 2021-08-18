@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -21,13 +22,20 @@ const useStyles = makeStyles((theme) => ({
 	}
 }))
 
-const about = () => {
+const about = (props) => {
 
 	const classes = useStyles()
 
+	useEffect(() => {
+		if (props.toAbout) {
+			document.querySelector('.about').scrollIntoView({behavior: 'smooth'})
+			props.scrollChange(false)
+		}
+	})
+
 	return (
 		<Container className={classes.root}>
-			<Grid container spacing={2}>
+			<Grid container spacing={2} className='about'>
 				<Grid item xs={4} className={classes.about}>
 					About Me
 				</Grid>

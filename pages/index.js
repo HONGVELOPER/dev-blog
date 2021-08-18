@@ -6,21 +6,26 @@ import { useState } from "react"
 
 function Home() {
   
-  const [location, setLocation] = useState(null)
+  const [abLocation, setAbLocation] = useState(null)
+  const [skLocation, setSkLocation] = useState(null)
 
-  function scroll(condition) {
-    setLocation(condition)
+  function abScroll(condition) {
+    setAbLocation(condition)
   }
+
+  function skScroll(condition) {
+    setSkLocation(condition)
+  }
+
 
   return (
     <div> 
-      <Header scrollChange={scroll} />
+      <Header toAbout={abScroll} toSkill={skScroll} />
       <IndexContainer />
-      <Skill toSkill={location} />
-      <About />
+      <About toAbout={abLocation} scrollChange={abScroll} />
+      <Skill toSkill={skLocation} scrollChange={skScroll} />
     </div>
   )
-
 }
 
 export default Home

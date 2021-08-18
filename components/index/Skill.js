@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 const skill = (props) => {
   const classes = useStyles()
   const [mobile, setMobile] = useState(null)
+	const [scroll, setScroll] = useState(props.toSkill)
   const divide = 800
 
   useEffect(() => {
@@ -38,10 +39,13 @@ const skill = (props) => {
     }, {passive: true})
   })
 
-	if (props.toSkill) {
-		console.log('data in')
-		document.querySelector('.skill').scrollIntoView({behavior: 'smooth'})
-	}
+	useEffect(() => {
+		if (props.toSkill) {
+			// console.log('data in')
+			document.querySelector('.skill').scrollIntoView({behavior: 'smooth'})
+			props.scrollChange(false)
+		}
+	})
 
   return (
     <Container>

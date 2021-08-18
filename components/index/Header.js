@@ -57,8 +57,12 @@ const Header = (props) => {
     // console.log(mobile, 'first')
   })
 
-  const toSkill = () => {
-    props.scrollChange(true)
+  const moveToAbout = () => {
+    props.toAbout(true)
+  }
+
+  const moveToSkill = () => {
+    props.toSkill(true)
   }
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -109,10 +113,10 @@ const Header = (props) => {
                 <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
               </Button>
               <div style={{display: 'flex', marginLeft: 'auto', marginRight: '50px'}}>
-                <Button href="../about" style={{fontWeight: 50}}>
+                <Button onClick={moveToAbout} style={{fontWeight: 50}}>
                   About
                 </Button>
-                <Button id="skill" onClick={toSkill} style={{fontWeight: 50, marginLeft: '20px'}}>
+                <Button onClick={moveToSkill} style={{fontWeight: 50, marginLeft: '20px'}}>
                   Skill
                 </Button>
                 <Button href="../blog" style={{marginLeft: '20px', fontWeight: 50}}>Blog</Button>  
