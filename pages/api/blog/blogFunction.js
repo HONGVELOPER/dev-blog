@@ -38,14 +38,17 @@ blogFunctions.getAllPost = async function () {
 			select * from dev_blog.file where F_ID in (select min(F_ID) from dev_blog.file group by F_POST_ID) order by F_ID desc
 		`)
 		for (const result of results) {
+			const temp = result.P_MOD_DT.split(' ')[0]
+			const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
 			const final = {
 				id : result.P_ID,
 				title: result.P_TITLE,
 				content: result.P_CONTENT.replace(/(<([^>]+)>)/ig,"").substring(0, 90) + ' ···',
 				view: result.P_VIEW,
 				writer: result.P_WRITER,
-				date: result.P_MOD_DT.split(' ')[0],
+				date: dateEdit,
 			}
+			console.log(final.date.split('-'), 'date')
 			if (images.length) {
 				for (const img of images) {
 					if (img.F_POST_ID === result.P_ID) {

@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
+import { useRouter } from 'next/router';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -51,22 +52,34 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Header = (props) => {
+
+  const router = useRouter()
   const classes = useStyles()
   const [mobile, setMobile] = useState(null)
   const [navBar, setNavBar] = useState({ left: false })
   const divide = 800
   
   useEffect(() => {
+    // const refer = document.referrer
+    // console.log(refer, 'check')
+    // console.log(window.history, 'history')
     if (mobile === null) {
       window.innerWidth < divide ? setMobile(true) : setMobile(false)
+    } else {
+      window.addEventListener('resize', function() {
+        window.innerWidth < divide ? setMobile(true) : setMobile(false)
+      }, {passive: true})
     }
-    window.addEventListener('resize', function() {
-      window.innerWidth < divide ? setMobile(true) : setMobile(false)
-    }, {passive: true})
   })
 
   const moveToAbout = () => {
-    props.toAbout(true)
+    // console.log('진입', router)
+    if (router.pathname !== "/") {
+      router.push('/')
+    } else {
+      // console.log('여기는?')
+      props.toAbout(true)
+    }
   }
 
   const moveToSkill = () => {

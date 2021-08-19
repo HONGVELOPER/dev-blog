@@ -6,6 +6,8 @@ import Footer from '../components/index/Footer.js'
 import { useState } from "react"
 
 function Home() {
+
+  console.log('index rendering')
   
   const [abLocation, setAbLocation] = useState(null)
   const [skLocation, setSkLocation] = useState(null)

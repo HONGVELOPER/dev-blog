@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import MailIcon from '@material-ui/icons/Mail';
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
 		textAlign: 'center',
 		paddingTop: '20px',
 		fontSize: '18px',
+		fontWeight: 400,
 	},
 	icon: {
 		textAlign: 'center',
@@ -53,9 +55,11 @@ const footer = () => {
 							<FacebookIcon color="inherit" fontSize="large" />
 						</Button>
 					</div>
-					<div className={classes.text}>
-						Copyright ⓒ 2021 DEVHONG All Rights Reserved.
-					</div>
+					<Grid container className={classes.text}>
+						<Grid item xs={12}>
+							Copyright ⓒ 2021 DEVHONG All Rights Reserved.
+						</Grid>
+					</Grid>
 				</Container>
 			</div>
 		</>

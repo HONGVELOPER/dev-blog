@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   box: {
@@ -26,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const container = () => {
+
+
+  // const router = useRouter()
+  // console.log(router, 'index container router')
   const classes = useStyles()
   const [mobile, setMobile] = useState(null)
   const divide = 800
@@ -38,10 +43,11 @@ const container = () => {
   useEffect(() => {
     if (mobile === null) {
       window.innerWidth < divide ? setMobile(true) : setMobile(false)
+    } else {
+      window.addEventListener('resize', function() {
+        window.innerWidth < divide ? setMobile(true) : setMobile(false)
+      }, {passive: true})
     }
-    window.addEventListener('resize', function() {
-      window.innerWidth < divide ? setMobile(true) : setMobile(false)
-    }, {passive: true})
   })
 
   return (
