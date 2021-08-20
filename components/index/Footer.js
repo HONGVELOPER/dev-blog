@@ -42,16 +42,16 @@ const footer = () => {
 			<div className={classes.root}>
 				<Container>
 					<div className={classes.icon}>
-						<Button className={classes.hover} href="">
+						<Button className={classes.hover} href="https://github.com/Young-Jin1003">
 							<GitHubIcon color="inherit" fontSize="large" />
 						</Button>
 						<Button className={classes.hover}>
 							<MailIcon color="inherit" fontSize="large" />
 						</Button>
-						<Button className={classes.hover}>
+						<Button className={classes.hover} href="https://www.instagram.com/dudwls.h/">
 							<InstagramIcon color="inherit" fontSize="large" />
 						</Button>
-						<Button className={classes.hover}>
+						<Button className={classes.hover} href="https://www.facebook.com/profile.php?id=100006042941738">
 							<FacebookIcon color="inherit" fontSize="large" />
 						</Button>
 					</div>

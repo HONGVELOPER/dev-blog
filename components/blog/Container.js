@@ -11,7 +11,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import Link from 'next/link'
 import BreadCrumbs from '../../components/breadCrumbs.js';
 import AppBar from '@material-ui/core/AppBar';
-import EmojiPeopleIcon from '@material-ui/icons/EmojiPeople';
+import FaceIcon from '@material-ui/icons/Face';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -127,11 +127,9 @@ const BlogContainer = (props) => {
               {content.content}
             </Box>
             <Grid container className={classes.blogWriter}>
-              <Grid item xs={1} style={{paddingTop: '2px'}}>
-                <EmojiPeopleIcon style={{border: '1px solid #218e16', borderRadius: '3px'}} color="primary" />
-              </Grid>
-              <Grid item xs={11}>
-                <Box style={{marginLeft: '10px'}}>
+              <Grid item xs={12} style={{paddingTop: '2px', display: 'block'}}>
+                <FaceIcon style={{border: '1px solid black', borderRadius: '6px'}} />
+                <Box style={{marginLeft: '5px', display: 'inline-block'}}>
                   <div>
                     <span style={{fontWeight: 500, fontSize: '12px'}}>{content.writer}님이 작성함</span>
                   </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Divider from '@material-ui/core/Divider';
@@ -108,11 +108,52 @@ const commentContainer = (props) => {
 		}
 	}
 
+	const commentRef = createRef()
+
+	useEffect(() => {
+		const utterances = document.createElement('script')
+
+		const utterancesConfig = {
+			src: 'https://utteranc.es/client.js',
+			repo: 'Young-Jin1003/dev-blog',
+			theme: 'github-light',
+			'issue-term' : 'title',
+			async: true,
+			crossorigin: 'anonymous',
+		}
+
+		Object.entries(utterancesConfig).forEach(([key, value]) => {
+			utterances.setAttribute(key, value)
+		})
+
+		commentRef.current.appendChild(utterances)
+	}, [])
+
+	// const Utterances = () => {
+	// 	<section
+	// 		ref={(elem) => {
+	// 			if (!elem) {
+	// 				return 
+	// 			}
+	// 			const scriptElem = document.createElement('script');
+	// 			scriptElem.src = 'https://utteranc.es/client.js';
+	// 			scriptElem.async = true;
+	// 			scriptElem.setAttribute('repo', 'Young-Jin1003/dev-blog');
+	// 			scriptElem.setAttribute('issue-term', 'title');
+	// 			scriptElem.setAttribute('theme', 'github-light');
+	// 			scriptElem.setAttribute('label', 'comments');
+	// 			scriptElem.crossOrigin = 'anonymous';
+	// 			elem.appendChild(scriptElem);
+	// 		}}
+	// 	/>
+	// }
+
 	return (
 		<Container>
 			<h3 style={{marginBottom: 5}}>Comments</h3>
 			<Divider />
-			{commentList}
+			<div className="comments" ref={commentRef}></div>
+			{/* {commentList}
 			<Divider />
 			<div style={{paddingBottom: '50px', paddingTop: '10px'}}>
 				<div style={{paddingBottom: 10}}>
@@ -145,8 +186,8 @@ const commentContainer = (props) => {
 					onClick={commentPost}
 				>
 					Save
-				</Button>
-			</div>
+				</Button> */}
+			{/* </div> */}
 		</Container>
 	)
 }

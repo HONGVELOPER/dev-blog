@@ -57,7 +57,7 @@ const skill = (props) => {
 					</div>
 					<Grid container spacing={5} style={{marginTop: 30}}>
 						<Grid item xs={12} sm={6} md={4}>
-							<Card>
+							<Card variant="outlined">
 								<Typography variant="h6" gutterBottom style={{color: '#fa7d00', fontSize: '25px'}}>
 									Front-End
 								</Typography>

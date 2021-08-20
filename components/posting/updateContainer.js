@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	editor: {
-		height: '500px',
+		height: '67vh',
 		marginTop: '10px',
 	}
 }))
@@ -160,7 +160,7 @@ const UpadateContainer = (props) => {
 						defaultValue={props.data.title}
 					/>
 					<div ref={quillElement} className={classes.editor}></div>
-					<div style={{display: 'flex', paddingTop: '50px'}}>
+					<div style={{display: 'flex', paddingTop: '20px'}}>
 						<Button variant="outlined" href="./" style={{color: '#218e16', backgroundColor: 'white'}}>
 							Back
 						</Button>

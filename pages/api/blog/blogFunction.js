@@ -48,7 +48,6 @@ blogFunctions.getAllPost = async function () {
 				writer: result.P_WRITER,
 				date: dateEdit,
 			}
-			console.log(final.date.split('-'), 'date')
 			if (images.length) {
 				for (const img of images) {
 					if (img.F_POST_ID === result.P_ID) {
