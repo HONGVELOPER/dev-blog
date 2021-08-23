@@ -78,13 +78,15 @@ blogFunctions.getOnePost = async function (id) {
 		const comments = await sql_query(`
 			select * from dev_blog.comment where C_POST_ID = ${id}
 		`)
+		const temp = result[0].P_MOD_DT.split(' ')[0]
+		const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
 		const response = [{
 			id: result[0].P_ID,
 			title: result[0].P_TITLE,
 			content: result[0].P_CONTENT,
 			view: result[0].P_VIEW,
 			writer: result[0].P_WRITER,
-			date: result[0].P_MOD_DT,
+			date: dateEdit,
 		}]
 		if (img.length) {
 			response[0].img = img

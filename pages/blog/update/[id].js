@@ -1,15 +1,30 @@
+import React, { useState } from 'react'
 import Header from '../../../components/index/Header.js'
 import UpdateContainer from '../../../components/posting/updateContainer.js'
+import Modal from '../../../components/posting/modal.js'
 import axios from 'axios';
 
 
 const BlogUpdate = ({data}) => {
-	// const classes = useStyles()
+
+	const [show, setShow] = useState(false)
+
+	const showHandler = () => {
+		setShow(true)
+	}
 	
 	return (
 		<div>
-			<Header />
-			<UpdateContainer data={data} />	
+			{show ? (
+				<>
+					<Header />
+					<UpdateContainer data={data} />	
+				</>
+			) : (
+				<>
+					<Modal />
+				</>
+			)}
 		</div>
 	)
 }
