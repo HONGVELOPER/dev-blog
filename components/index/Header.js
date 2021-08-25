@@ -60,9 +60,6 @@ const Header = (props) => {
   const divide = 800
   
   useEffect(() => {
-    // const refer = document.referrer
-    // console.log(refer, 'check')
-    // console.log(window.history, 'history')
     if (mobile === null) {
       window.innerWidth < divide ? setMobile(true) : setMobile(false)
     } else {
@@ -77,7 +74,6 @@ const Header = (props) => {
     if (router.pathname !== "/") {
       router.push('/')
     } else {
-      // console.log('여기는?')
       props.toAbout(true)
     }
   }

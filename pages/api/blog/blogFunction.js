@@ -5,7 +5,7 @@ const blogFunctions = {}
 
 // 블로그 글 포스팅하기
 blogFunctions.blogPost = async function (postData) {
-	// console.log(postData, 'post data ')
+	console.log(postData, 'post data ')
 	let success =  null
 	try {
 		const result = await sql_query(`
@@ -55,6 +55,9 @@ blogFunctions.getAllPost = async function () {
 					}
 				}
 			}
+			if (!final.img) {
+				final.img = 'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/developer-5063843_1920.jpg'
+			}
 			response.push(final)
 		}
 		return response
@@ -91,22 +94,22 @@ blogFunctions.getOnePost = async function (id) {
 		if (img.length) {
 			response[0].img = img
 		}
-		if (comments.length) {
-			const result2 = []
-			for (const comment of comments) {
-				const final = {
-					id: comment.C_ID,
-					writer: comment.C_WRITER,
-					password: comment.C_PASSWORD,
-					content: comment.C_CONTENT,
-					depth: comment.C_DEPTH,
-					post_id: comment.C_POST_ID,
-					date: comment.C_MOD_DT,
-				}
-				result2.push(final)
-			}
-			response[0].comment = result2
-		}
+		// if (comments.length) {
+		// 	const result2 = []
+		// 	for (const comment of comments) {
+		// 		const final = {
+		// 			id: comment.C_ID,
+		// 			writer: comment.C_WRITER,
+		// 			password: comment.C_PASSWORD,
+		// 			content: comment.C_CONTENT,
+		// 			depth: comment.C_DEPTH,
+		// 			post_id: comment.C_POST_ID,
+		// 			date: comment.C_MOD_DT,
+		// 		}
+		// 		result2.push(final)
+		// 	}
+		// 	response[0].comment = result2
+		// }
 		return response
 	} catch (error) {
 		console.log(error)
@@ -192,5 +195,22 @@ blogFunctions.deletePost = async function(id) {
 	return success
 }
 
+
+// update, delete 비밀번호 확인
+blogFunctions.passwordCheck = async function(data) {
+	console.log('password 진입')
+	let success = null
+	try {
+		if (data.password === process.env.ADMIN_KEY) {
+			success = true
+		} else {
+			success = false
+		}
+	} catch (error) {
+		success = false
+		console.log(error)
+	}
+	return success
+}
 
 export default blogFunctions

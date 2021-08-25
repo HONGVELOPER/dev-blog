@@ -17,23 +17,21 @@ const useStyles = makeStyles((theme) => ({
 export const modules = {
 	toolbar: {
 	  container: [
-		['bold', 'italic', 'underline', 'strike'],
-		['blockquote', 'code-block'],
-  
-		[{ 'list': 'ordered' }, { 'list': 'bullet' }],
-		[{ 'script': 'sub' }, { 'script': 'super' }],
-		[{ 'indent': '-1' }, { 'indent': '+1' }],
-		[{ 'direction': 'rtl' }],
-  
-		[{ 'size': ['small', false, 'large', 'huge'] }],
-		[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-  
-		[{ 'color': [] }, { 'background': [] }],
-		[{ 'font': [] }],
-		[{ 'align': [] }],
-		['link', 'image', 'formula'],
-		['clean'],
-	  ],
+      [{ 'size': ['small', false, 'large', 'huge'] }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'font': [] }],
+
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],,
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'align': [] }],
+      ['link', 'image'],
+      ['clean'],
+    ],
 	},
 };
 
@@ -53,11 +51,13 @@ const UpadateContainer = (props) => {
 
 	useEffect(() => {
 		setTitle(props.data.title)
-		for(const i of props.data.img) {
-			image.push(i.F_IMG)
-			imageCopy.push(i.F_IMG)
+		if (props.data.img) {
+			for(const i of props.data.img) {
+				image.push(i.F_IMG)
+				imageCopy.push(i.F_IMG)
+			}
+			// console.log(image)
 		}
-		console.log(image)
     if (quillElement.current) {
       quillInstance.current = new Quill(quillElement.current, {
         theme: 'snow',

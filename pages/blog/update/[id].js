@@ -7,10 +7,11 @@ import axios from 'axios';
 
 const BlogUpdate = ({data}) => {
 
+
 	const [show, setShow] = useState(false)
 
-	const showHandler = () => {
-		setShow(true)
+	function showHandler(showResult) {
+		setShow(showResult)
 	}
 	
 	return (
@@ -22,7 +23,7 @@ const BlogUpdate = ({data}) => {
 				</>
 			) : (
 				<>
-					<Modal />
+					<Modal passwordCheck={showHandler} />
 				</>
 			)}
 		</div>
@@ -38,7 +39,7 @@ export async function getServerSideProps(context) {
 			id: context.query.id,
 		}
 	})
-	// console.log(response.data[0], 'response check')
+	console.log(response.data[0], 'response check hererere')
 	return {
 	  props: {
 			data: response.data[0],
