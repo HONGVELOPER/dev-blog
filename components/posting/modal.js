@@ -44,27 +44,30 @@ const modal = (props) => {
 		setPassword(e.target.value)
 	}
 
-	useEffect(() => {
-		document.querySelector('.modalButton').click()
-	}, [])
+	// useEffect(() => {
+	// 	document.querySelector('.modalButton').click()
+	// }, [])
 
 	const passwordCheck = async () => {
 		console.log(password, 'password check')
 		const response = await axios.post('/api/blog', {
 			password: password,
 		})
+		console.log(response, 'response check')
 
-		if (response) {
+		if (response.data.result) {
 			console.log(props, 'check')
 			props.passwordCheck(true)
+		} else {
+			alert('다시 입력해주세요.')
 		}
 	}
 
 	return (
 		<>
-			<Container>
+			<Container style={{paddingLeft: 8}}>
 				<Button className='modalButton' onClick={openHandler}>
-					Enter your Password
+					Welcome to my blog
 				</Button>
 				<Modal
 					open={open}

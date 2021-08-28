@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../../components/index/Header.js'
 import UpdateContainer from '../../../components/posting/updateContainer.js'
 import Modal from '../../../components/posting/modal.js'
@@ -13,6 +13,10 @@ const BlogUpdate = ({data}) => {
 	function showHandler(showResult) {
 		setShow(showResult)
 	}
+
+	useEffect(() => {
+		document.querySelector('.modalButton').click()
+	}, [])
 	
 	return (
 		<div>

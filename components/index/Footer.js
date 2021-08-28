@@ -11,7 +11,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: '#218e16',
-		height: '250px',
+		height: '200px',
 		display: 'flex',
 		alignItems: 'center'
 	},
@@ -64,7 +64,6 @@ const footer = () => {
 			</div>
 		</>
 	)
-
 }
 
 export default footer

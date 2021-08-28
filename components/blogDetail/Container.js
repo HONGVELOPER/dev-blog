@@ -3,21 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import BreadCrumbs from '../breadCrumbs.js';
 import Grid from '@material-ui/core/Grid';
-import Image from 'next/image'
 import Button from '@material-ui/core/Button';
-import Link from 'next/link';
 import axios from 'axios';
-import router from 'next/router'
+import router from 'next/router';
+import Modal from '../posting/modal';
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		// display: 'flex',
-	},
-	crumble: {
-		// paddingTop: '100px',
-	},
 	title: {
-		// fontSize: '30px',
 		fontWeight: '100',
 	},
 	img: {
@@ -31,6 +23,12 @@ function BlogDetailContainer(props)	 {
 	const classes = useStyles()
 	const [mobile, setMobile] = useState(null)
 
+	const [show, setShow] = useState(false)
+
+	function showHandler(showResult) {
+		setShow(showResult)
+	}
+
 	useEffect(() => {
     if (mobile === null) {
       window.innerWidth < 720 ? setMobile(true) : setMobile(false)
@@ -41,6 +39,7 @@ function BlogDetailContainer(props)	 {
 	})
 
 	const deletePost = async () => {
+		
 		const response = await axios.delete('/api/blog', {
 			params: {
 				id: props.data.id
@@ -78,14 +77,17 @@ function BlogDetailContainer(props)	 {
 					<Button href="/blog" varaint="text">←Back</Button>
 				</div>
 				<div>
-					<Link href={`/blog/update/${props.data.id}`}>
-						<Button variant="text">Update</Button>
-					</Link>
-				</div>
-				<div>
-				<Button	variant="text" onClick={deletePost}>
-					delete
-				</Button>
+					{show ? (
+						<>
+							<Button	variant="text" onClick={deletePost}>
+								delete
+							</Button>
+						</>
+					) : (
+						<>
+							<Modal passwordCheck={showHandler} />
+						</>
+					)}
 				</div>
 			</Grid>
 		</Container>
