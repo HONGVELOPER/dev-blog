@@ -8,18 +8,18 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
+	paper: {
 		textAlign: 'center',
-    width: 600,
+		width: 600,
 		height: 400,
-    backgroundColor: theme.palette.background.paper,
-    border: '2px solid #000',
-  },
-  modal: {
+		backgroundColor: theme.palette.background.paper,
+		border: '2px solid #000',
+	},
+	modal: {
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-  },
+	},
 	password: {
 		width: 400,
 		marginTop: 100,
@@ -29,24 +29,20 @@ const useStyles = makeStyles((theme) => ({
 const modal = (props) => {
 
 	const classes = useStyles()
-  const [open, setOpen] = useState(false)
+  	const [open, setOpen] = useState(false)
 	const [password, setPassword] = useState('')
 
-  const openHandler = () => {
-    setOpen(true)
-  }
+	const openHandler = () => {
+		setOpen(true)
+	}
 
-  const closeHandler = () => {
-    setOpen(false)
-  }
+	const closeHandler = () => {
+		setOpen(false)
+	}
 
 	const passwordHandler = (e) => {
 		setPassword(e.target.value)
 	}
-
-	// useEffect(() => {
-	// 	document.querySelector('.modalButton').click()
-	// }, [])
 
 	const passwordCheck = async () => {
 		console.log(password, 'password check')
@@ -65,7 +61,7 @@ const modal = (props) => {
 
 	return (
 		<>
-			<Container style={{paddingLeft: 8}}>
+			<Container style={{paddingLeft: 0}}>
 				<Button className='modalButton' onClick={openHandler}>
 					Welcome to my blog
 				</Button>

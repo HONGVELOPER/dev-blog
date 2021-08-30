@@ -47,7 +47,10 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: '#218e16',
       backgroundColor: "#FFF"
-    }
+    },
+    // "&:visited": {
+    //   color: '#218e16',
+    // }
   },
 }))
 
@@ -79,7 +82,12 @@ const Header = (props) => {
   }
 
   const moveToSkill = () => {
-    props.toSkill(true)
+    if (router.pathname !== "/") {
+      router.push('/')
+    } else {
+      // props.toAbout(true)
+      props.toSkill(true)
+    }
   }
 
   const toggleDrawer = (anchor, open) => (event) => {

@@ -64,6 +64,8 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   bottom: {
     display: 'block',
+    marginLeft: '15px',
+    height: '20px',
     '&:hover': {
       '&:after': {
         content: "''",
@@ -71,15 +73,16 @@ const useStyles = makeStyles((theme) => ({
         width: '60px',
         borderBottom: '3px solid #218e16',
         margin: '10px auto'
-      },
+      }, 
     }
   },
   img: {
     objectFit: "fill",
   },
   blogTitle: {
-    marginBottom: '10px',
-    fontSize: '17px',
+    marginTop: '10px',
+    marginBottom: '15px',
+    fontSize: '24px',
     fontWeight: 600,
   },
   blogWriter: {
@@ -90,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: 5,
     "&:hover": {
       opacity: 0.6,
-    }
+    },
   },
 }))
 
@@ -108,9 +111,10 @@ const BlogContainer = (props) => {
     <MuiThemeProvider theme={theme} key={content.id}>
       <Grid item xs={12} sm={6} md={4} style={{padding: 20, minWidth: 300}}>
         <Card
+          // elevation={0}
           variant="outlined"
           className={classes.card}
-          style={{height: '440px', maxWidth: '400px'}}
+          style={{height: '450px', maxWidth: '400px'}}
         >
           <CardActionArea className={classes.hover}>
             <Link href={`blog/${content.id}`}>
@@ -123,7 +127,7 @@ const BlogContainer = (props) => {
             <Box className={classes.blogTitle}>
               <div>{content.title}</div>
             </Box>
-            <Box style={{height: '110px', color: "#73716b"}}>
+            <Box style={{height: '95px', color: "#73716b", fontSize: '12px'}}>
               {content.content}
             </Box>
             <Grid container className={classes.blogWriter}>
@@ -133,7 +137,7 @@ const BlogContainer = (props) => {
                   <div>
                     <span style={{fontWeight: 500, fontSize: '12px'}}>{content.writer}님이 작성함</span>
                   </div>
-                  <div style={{fontWeight: 500, fontSize: '12px', bottom: '2px', position: 'relative'}}>
+                  <div style={{fontWeight: 500, fontSize: '12px', bottom: '1px', position: 'relative'}}>
                     {content.date} &nbsp;&nbsp;조회수: <span style={{fontSize: '12px'}}>{content.view}</span>
                   </div>
                 </Box>
@@ -147,7 +151,7 @@ const BlogContainer = (props) => {
 
   return (
     <Container>
-      <Grid item xs={12} style={{marginTop: 10}}>
+      <Grid item xs={12} style={{marginTop: 10, marginLeft: 30}}>
         <BreadCrumbs style={{display: 'inlineBlock'}} />
       </Grid>
       <AppBar className={classes.root} position="static" elevation={0} style={{background: 'transparent', marginTop: '2vw'}}>
@@ -160,13 +164,13 @@ const BlogContainer = (props) => {
               display: 'none',
             }}}
           >
-            <Tab ref={focusRef} label="인기 포스트" {...a11yProps(0)} className={classes.bottom} />
-            <Tab label="최신 포스트" {...a11yProps(1)} className={classes.bottom} />
+            <Tab ref={focusRef} label="Popular Posts" {...a11yProps(0)} className={classes.bottom} />
+            <Tab label="Latest Posts" {...a11yProps(1)} className={classes.bottom} />
           </Tabs>
         </MuiThemeProvider>
       </AppBar>
       <TabPanel className={classes.tab} value={value} index={0}>
-        <Grid container spacing={0} style={{padding: 0}}>
+        <Grid container spacing={3} style={{padding: 0}}>
           {contentList}
         </Grid>
       </TabPanel>

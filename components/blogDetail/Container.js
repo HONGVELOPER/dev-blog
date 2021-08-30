@@ -9,6 +9,9 @@ import router from 'next/router';
 import Modal from '../posting/modal';
 
 const useStyles = makeStyles((theme) => ({
+	// root: {
+  //   flexGrow: 1,
+  // },
 	title: {
 		fontWeight: '100',
 	},
@@ -56,7 +59,7 @@ function BlogDetailContainer(props)	 {
 
 	return (
 		<Container className={classes.root}>
-			<Grid container direction="column" spacing={2} style={{marginTop: '0px'}}>
+			<Grid container spacing={2} style={{marginTop: '0px'}}>
 				<Grid item xs={12}>
 					<BreadCrumbs />
 				</Grid>
@@ -70,26 +73,29 @@ function BlogDetailContainer(props)	 {
 						</span>
 					</div>
 				</Grid>
-				<Grid item xs={12}>
+				<Grid item xs={9}>
 					<div dangerouslySetInnerHTML={{__html: props.data.content}} />
 				</Grid>
-				<div>
-					<Button href="/blog" varaint="text">←Back</Button>
-				</div>
-				<div>
-					{show ? (
-						<>
-							<Button	variant="text" onClick={deletePost}>
-								delete
-							</Button>
-						</>
-					) : (
-						<>
-							<Modal passwordCheck={showHandler} />
-						</>
-					)}
-				</div>
+				<Grid item xs={2} style={{display: 'inlineblock', marginLeft: '30px'}}>
+					check
+				</Grid>
 			</Grid>
+			<div>
+				<Button href="/blog" varaint="text">← Back</Button>
+			</div>
+			<div>
+				{show ? (
+					<>
+						<Button	variant="text" onClick={deletePost}>
+							delete
+						</Button>
+					</>
+				) : (
+					<>
+						<Modal passwordCheck={showHandler} />
+					</>
+				)}
+			</div>
 		</Container>
 	)
 }
