@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 const useStyles = makeStyles((theme) => ({
   box: {
     position: 'relative',
-    height: '90vh',
+    height: '100vh',
     width: '99vw',
     padding: 10
   },

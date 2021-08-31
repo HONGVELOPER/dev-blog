@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -14,25 +14,26 @@ import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		backgroundColor: '#218e16',
+		// backgroundColor: '#218e16',
+		backgroundColor: 'transparent',
 		height: '210px',
 		display: 'flex',
 		alignItems: 'center'
 	},
-	text: {
+	footerText: {
 		textAlign: 'center',
 		paddingTop: '20px',
 		fontSize: '18px',
 		fontWeight: 400,
-		color: 'white',
+		color: 'black',
 	},
 	icon: {
 		textAlign: 'center',
 	},
 	hover: {
-		color: 'white',
+		color: 'black',
 		'&:hover': {
-			color: 'black',
+			color: '#218e16',
 			backgroundColor: 'transparent'
 		}
 	},
@@ -40,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-		backgroundColor: 'white',
 	},
 	paper: {
 		textAlign: 'center',
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 	text: {
 		width: 400,
-		marginTop: 100,
+		marginTop: 30,
 	}
 }))
 
@@ -66,7 +66,6 @@ const footer = () => {
 	const [text, setText] = useState('')
 
 	const openHandler = () => {
-		console.log('진입')
 		setOpen(true)
 	}
 
@@ -83,8 +82,6 @@ const footer = () => {
 	}
 
 	const mailSend = async () => {
-		console.log(title, 'title')
-		console.log(text, 'check')
 		const response = await axios.post('/api/mail', {
 			title: title,
 			text: text,
@@ -113,30 +110,31 @@ const footer = () => {
 							open={open}
 							onClose={closeHandler}
 							className={classes.modal}
-							aria-labelledby="simple-modal-title"
-							aria-describedby="simple-modal-description"
+							// aria-labelledby="simple-modal-title"
+							// aria-describedby="simple-modal-description"
 						>
 							<div className={classes.paper}>
-								<div style={{padding: 30}}>
-									Enter your Text
+								<div style={{padding: 30, fontSize: '20px'}}>
+									Contect&nbsp; with&nbsp; Me
 								</div>
 								<Divider variant="middle" />
 								<TextField
-									// required
 									className={classes.title}
-									label="Enter your title"
+									label="제목을 입력해주세요."
 									onChange={titleHandler}
 									defaultValue={title}
 								/>
 								<TextField
-									// required
 									className={classes.text}
-									label="Enter your text"
+									variant="outlined"
+									label="내용을 입력해주세요."
 									onChange={textHandler}
 									defaultValue={text}
+									multiline
+									rows={6}
 								/>
-								<div style={{marginTop: 100, display: 'flex', marginLeft: 100, marginRight: 100}}>
-									<Button href="/blog">Back</Button>
+								<div style={{marginTop: 50, marginLeft: 100, marginRight: 100}}>
+									<Button onClick={closeHandler}>Back</Button>
 									<Button style={{marginLeft: 'auto'}} onClick={mailSend}>Send</Button>
 								</div>
 							</div>
@@ -148,7 +146,7 @@ const footer = () => {
 							<FacebookIcon color="inherit" fontSize="large" />
 						</Button>
 					</div>
-					<Grid container className={classes.text}>
+					<Grid container className={classes.footerText}>
 						<Grid item xs={12}>
 							Copyright ⓒ 2021 DEV HONG All Rights Reserved.
 						</Grid>

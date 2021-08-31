@@ -13,10 +13,15 @@ import { useRouter } from 'next/router';
 
 
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    backgroundColor: 'white',
+    height: '100px'
+  },
   header: {
-    height: '60px',
+    height: '65px',
     marginTop: '2%',
-    marginLeft: '2%',
+    marginLeft: '15%',
+    marginRight: '12%',
     fontWeight: 100,
   },
   mobileBox: {
@@ -31,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 200,
     padding: '10px',
     width: '250px',
-    // backgroundColor: '#218e16'
   },
   hover: {
     fontWeight: 70,
@@ -48,10 +52,13 @@ const useStyles = makeStyles((theme) => ({
       color: '#218e16',
       backgroundColor: "#FFF"
     },
-    // "&:visited": {
-    //   color: '#218e16',
-    // }
   },
+  home: {
+    "&:hover": {
+      color: '#218e16',
+      backgroundColor: "#FFF"
+    },
+  }
 }))
 
 const Header = (props) => {
@@ -114,7 +121,7 @@ const Header = (props) => {
 
   return (
     <Container>
-      <AppBar elevation={0} position="static" color="transparent">
+      <AppBar elevation={0} position="fixed" color="transparent" className={classes.appBar}>
         <div className={classes.header}>
           {mobile ? (
             <Grid container spacing={2} style={{minWidth: '325px'}}>
@@ -122,7 +129,7 @@ const Header = (props) => {
                 <IconButton color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
                   <MenuIcon />
                 </IconButton>
-                <Box className={classes.mobileBox}>
+                <Box className={classes.home}>
                   <Button className={classes.logoButton} href="/">
                     <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
                   </Button>
@@ -134,7 +141,7 @@ const Header = (props) => {
             </Grid>
           ) : (
             <Grid container spacing={2} style={{marginTop: '1px',}}>
-              <Button href="/">
+              <Button href="/" className={classes.home}>
                 <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
               </Button>
               <div style={{display: 'flex', marginLeft: 'auto', marginRight: '50px'}}>

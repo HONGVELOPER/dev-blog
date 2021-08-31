@@ -19,7 +19,7 @@ const Blog = ({ data }) => {
     <div>
       <AppBar />
       <Container data={data} />
-      <Footer />
+      <Footer style={{backgroundColor: "white"}} />
     </div>
   )
 }
