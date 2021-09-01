@@ -30,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
   logoButton: {
     margin: '0 auto',
     bottom: '45px',
+    display: 'flex',
+    justifyContent: 'center',
   },
   list: {
     fontSize: '7vw',
@@ -153,7 +155,7 @@ const Header = (props) => {
             </Grid>
           )}
         </div>
-        <Divider></Divider>
+        <Divider style={{backgroundColor: '#218e16'}} />
         <Drawer anchor={'left'} open={navBar.left} onClose={toggleDrawer('left', false)}>
           {list('left')}
         </Drawer>
