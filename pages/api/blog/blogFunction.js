@@ -66,7 +66,7 @@ blogFunctions.getAllPost = async function () {
 	}
 }
 
-// 블로그 상세 페이지 (내용 + 댓글) 가져오기
+// 블로그 상세 페이지 (내용) 가져오기
 blogFunctions.getOnePost = async function (id) {
 	try {
 		await sql_query(`
@@ -77,9 +77,6 @@ blogFunctions.getOnePost = async function (id) {
 		`)
 		const img = await sql_query(`
 			select F_IMG from dev_blog.file where F_POST_ID = ${id}
-		`)
-		const comments = await sql_query(`
-			select * from dev_blog.comment where C_POST_ID = ${id}
 		`)
 		const temp = result[0].P_MOD_DT.split(' ')[0]
 		const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
@@ -94,22 +91,6 @@ blogFunctions.getOnePost = async function (id) {
 		if (img.length) {
 			response[0].img = img
 		}
-		// if (comments.length) {
-		// 	const result2 = []
-		// 	for (const comment of comments) {
-		// 		const final = {
-		// 			id: comment.C_ID,
-		// 			writer: comment.C_WRITER,
-		// 			password: comment.C_PASSWORD,
-		// 			content: comment.C_CONTENT,
-		// 			depth: comment.C_DEPTH,
-		// 			post_id: comment.C_POST_ID,
-		// 			date: comment.C_MOD_DT,
-		// 		}
-		// 		result2.push(final)
-		// 	}
-		// 	response[0].comment = result2
-		// }
 		return response
 	} catch (error) {
 		console.log(error)

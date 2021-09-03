@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '2rem',
     lineHeight: '3rem',
     textAlign: 'center',
-    paddingTop: '40vh',
+    paddingTop: '20vh',
     textShadow: '1px 1px 1px #3c5c5e',
     color: 'white'
   }
@@ -28,17 +28,12 @@ const useStyles = makeStyles((theme) => ({
 
 const container = () => {
 
-
-  // const router = useRouter()
-  // console.log(router, 'index container router')
   const classes = useStyles()
+  
   const [mobile, setMobile] = useState(null)
   const divide = 800
-  const hello = <div>안녕하세요,</div>
-  const introduce = <div>
-    웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.<br />
-    Next js 로 웹 애플리케이션을 구축합니다. 
-  </div>
+  // const hello = <div>안녕하세요,</div>
+  const introduce =  '안녕하세요.\n웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.\n Next js 로 웹 애플리케이션을 구축합니다.'
 
   useEffect(() => {
     if (mobile === null) {
@@ -59,14 +54,14 @@ const container = () => {
         <div className={classes.indexText}>
           {mobile ? (
             <>
-              <Box style={{position: 'relative', marginTop: '3.5vw', marginLeft: '5vw'}}>
+              <Box style={{position: 'relative', marginLeft: '5vw'}}>
                 <div style={{fontSize: '6vw', fontWeight: 600, color: '#218e16'}}>{hello}</div>
                 <div style={{fontSize: '4vw', fontWeight: 600}}>{introduce}</div>
               </Box>
             </>
           ) : (
             <>
-              <Box style={{position: 'relative', marginTop: '3.5vw', marginLeft: '5vw'}}>
+              <Box style={{position: 'relative', marginLeft: '5vw'}}>
                 <div style={{fontSize: '45px', fontWeight: 600, color: '#218e16'}}>{hello}</div>
                 <div style={{fontSize: '25px', fontWeight: 500}}>{introduce}</div>
               </Box>

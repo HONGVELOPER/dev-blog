@@ -7,6 +7,7 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import router from 'next/router';
 import Modal from '../posting/modal';
+import parse from 'html-react-parser';
 
 const useStyles = makeStyles((theme) => ({
 	// root: {
@@ -33,12 +34,12 @@ function BlogDetailContainer(props)	 {
 	}
 
 	useEffect(() => {
-    if (mobile === null) {
-      window.innerWidth < 720 ? setMobile(true) : setMobile(false)
-    }
-    window.addEventListener('resize', function() {
-      window.innerWidth < 720 ? setMobile(true) : setMobile(false)
-    }, {passive: true})
+		if (mobile === null) {
+		window.innerWidth < 720 ? setMobile(true) : setMobile(false)
+		}
+		window.addEventListener('resize', function() {
+		window.innerWidth < 720 ? setMobile(true) : setMobile(false)
+		}, {passive: true})
 	})
 
 	const deletePost = async () => {
@@ -74,7 +75,10 @@ function BlogDetailContainer(props)	 {
 					</div>
 				</Grid>
 				<Grid item xs={9}>
-					<div dangerouslySetInnerHTML={{__html: props.data.content}} />
+					<div>
+						{parse(props.data.content)}
+					</div>
+					{/* <div dangerouslySetInnerHTML={{__html: props.data.content}} /> */}
 				</Grid>
 				<Grid item xs={2} style={{display: 'inlineblock', marginLeft: '30px'}}>
 					check

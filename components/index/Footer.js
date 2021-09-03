@@ -14,8 +14,8 @@ import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	root: {
-		// backgroundColor: '#218e16',
-		backgroundColor: 'transparent',
+		backgroundColor: '#218e16',
+		// backgroundColor: 'black',
 		height: '210px',
 		display: 'flex',
 		alignItems: 'center'
@@ -25,15 +25,15 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: '20px',
 		fontSize: '18px',
 		fontWeight: 400,
-		color: 'black',
+		color: 'white',
 	},
 	icon: {
 		textAlign: 'center',
 	},
 	hover: {
-		color: 'black',
+		color: 'white',
 		'&:hover': {
-			color: '#218e16',
+			color: 'black',
 			backgroundColor: 'transparent'
 		}
 	},
@@ -110,8 +110,6 @@ const footer = () => {
 							open={open}
 							onClose={closeHandler}
 							className={classes.modal}
-							// aria-labelledby="simple-modal-title"
-							// aria-describedby="simple-modal-description"
 						>
 							<div className={classes.paper}>
 								<div style={{padding: 30, fontSize: '20px'}}>

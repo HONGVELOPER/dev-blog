@@ -62,6 +62,13 @@ function a11yProps(index) {
 }
 
 const useStyles = makeStyles((theme) => ({
+  card: {
+    transition: '0.5s',
+    "&:hover": {
+      opacity: 0.5,
+      transform: 'translateY(-10px)',
+    },
+  },
   bottom: {
     display: 'block',
     marginLeft: '15px',
@@ -89,12 +96,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '10px',
     fontWeight: 200,
   },
-  hover: {
-    marginBottom: 5,
-    "&:hover": {
-      opacity: 0.6,
-    },
-  },
 }))
 
 const BlogContainer = (props) => {
@@ -110,41 +111,41 @@ const BlogContainer = (props) => {
   const contentList = props.data.map((content) => (
     <MuiThemeProvider theme={theme} key={content.id}>
       <Grid item xs={12} sm={6} md={4} style={{padding: 20, minWidth: 300}}>
-        <Card
-          // elevation={0}
-          variant="outlined"
-          className={classes.card}
-          style={{height: '450px', maxWidth: '400px'}}
-        >
-          <CardActionArea className={classes.hover}>
-            <Link href={`blog/${content.id}`}>
+        <Link href={`blog/${content.id}`}>
+          <Card
+            // elevation={0}
+            variant="outlined"
+            className={classes.card}
+            style={{height: '450px', maxWidth: '400px'}}
+          >
+            <CardActionArea>
               <CardContent style={{padding: 0, height: '250px'}}>
                 <img src={`${content.img}`} alt="card index" style={{display: 'block', height: '100%', width: 'auto'}} />
               </CardContent>
-            </Link>
-          </CardActionArea>
-          <Box style={{Height: '200px', padding: '5px'}}>
-            <Box className={classes.blogTitle}>
-              <div>{content.title}</div>
+            </CardActionArea>
+            <Box style={{Height: '200px', padding: '5px'}}>
+              <Box className={classes.blogTitle}>
+                <div>{content.title}</div>
+              </Box>
+              <Box style={{height: '95px', color: "#73716b", fontSize: '12px'}}>
+                {content.content}
+              </Box>
+              <Grid container className={classes.blogWriter}>
+                <Grid item xs={12} style={{paddingTop: '2px', display: 'block'}}>
+                  <SpaIcon />
+                  <Box style={{marginLeft: '5px', display: 'inline-block'}}>
+                    <div>
+                      <span style={{fontWeight: 500, fontSize: '12px'}}>{content.writer}님이 작성함</span>
+                    </div>
+                    <div style={{fontWeight: 500, fontSize: '12px', bottom: '1px', position: 'relative'}}>
+                      {content.date} &nbsp;&nbsp;조회수: <span style={{fontSize: '12px'}}>{content.view}</span>
+                    </div>
+                  </Box>
+                </Grid>
+              </Grid> 
             </Box>
-            <Box style={{height: '95px', color: "#73716b", fontSize: '12px'}}>
-              {content.content}
-            </Box>
-            <Grid container className={classes.blogWriter}>
-              <Grid item xs={12} style={{paddingTop: '2px', display: 'block'}}>
-                <SpaIcon />
-                <Box style={{marginLeft: '5px', display: 'inline-block'}}>
-                  <div>
-                    <span style={{fontWeight: 500, fontSize: '12px'}}>{content.writer}님이 작성함</span>
-                  </div>
-                  <div style={{fontWeight: 500, fontSize: '12px', bottom: '1px', position: 'relative'}}>
-                    {content.date} &nbsp;&nbsp;조회수: <span style={{fontSize: '12px'}}>{content.view}</span>
-                  </div>
-                </Box>
-              </Grid>
-            </Grid> 
-          </Box>
-        </Card>
+          </Card>
+        </Link>
       </Grid>
     </MuiThemeProvider>
   ))

@@ -9,10 +9,21 @@ import CardContent from '@material-ui/core/CardContent';
 import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles((theme) => ({
-  skill: {
-    marginTop: '3vw',
-    fontSize: '1.5vw',
-  },
+	root: {
+		marginTop: '3vw',
+		fontSize: '1.5vw',
+	},
+  	skill: {
+		fontSize: '32px',
+		textAlign: 'center',
+		'&::after': {
+			content: "''",
+			display: 'block',
+			width: '60px',
+			borderBottom: '3px solid #218e16',
+			margin: '10px auto'
+		}
+	},
 	card: {
 		borderRadius: 10,
 		boxShadow: '3px 3px 3px #3c5c5e',
@@ -56,7 +67,7 @@ const Skill2 = (props) => {
 		'html',
 		'css',
 		'react',
-		'next2',
+		'next',
 		'material-ui',
 		'vue',
 		'nuxt',
@@ -107,7 +118,7 @@ const Skill2 = (props) => {
   return (
 		<>
 			<Container>
-				<section className={classes.skill}>
+				<section className={classes.root}>
 					<div className='skill' style={{color: '#218e16', fontSize: '29px', fontWeight: 600}}>Skills</div>
 					<div style={{fontSize: '15px', paddingTop: '1vw', fontWeight: 50}}>
 						웹 개발을 하며 사용해본 기술 스택입니다.

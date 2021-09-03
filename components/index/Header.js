@@ -14,14 +14,14 @@ import { useRouter } from 'next/router';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
+    position: 'sticky',
     backgroundColor: 'white',
-    height: '100px'
   },
   header: {
     height: '65px',
     marginTop: '2%',
-    marginLeft: '15%',
-    marginRight: '12%',
+    marginLeft: '13%',
+    marginRight: '9%',
     fontWeight: 100,
   },
   mobileBox: {
@@ -32,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
     bottom: '45px',
     display: 'flex',
     justifyContent: 'center',
+    width: '100px',
+    // "&:hover": {
+    //   color: '#218e16',
+    //   backgroundColor: "#FFF",
+    // }
   },
   list: {
     fontSize: '7vw',
@@ -40,15 +45,18 @@ const useStyles = makeStyles((theme) => ({
     width: '250px',
   },
   hover: {
+    height: '75px',
     fontWeight: 70,
     marginLeft: 20,
+    transition: '0.5s',
     "&:hover": {
       color: '#218e16',
-      backgroundColor: "#FFF"
+      backgroundColor: "#FFF",
+      transform: 'translateY(-5px)',
     }
   },
   mobileHover: {
-    display: 'block',
+    display: 'block', 
     fontWeight: 70,
     "&:hover": {
       color: '#218e16',
@@ -56,11 +64,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   home: {
+    transition: '0.5s',
     "&:hover": {
       color: '#218e16',
-      backgroundColor: "#FFF"
+      backgroundColor: "#FFF",
+      transform: 'translateY(-5px)',
     },
-  }
+  },
 }))
 
 const Header = (props) => {
@@ -94,7 +104,6 @@ const Header = (props) => {
     if (router.pathname !== "/") {
       router.push('/')
     } else {
-      // props.toAbout(true)
       props.toSkill(true)
     }
   }
@@ -114,7 +123,7 @@ const Header = (props) => {
     >
       <div>
         <Button className={classes.mobileHover} onClick={moveToAbout}>About</Button>
-        <Button className={classes.mobileHover}onClick={moveToSkill}>Skill</Button>
+        <Button className={classes.mobileHover} onClick={moveToSkill}>Skill</Button>
         <Button className={classes.mobileHover} href="../blog" >Blog</Button>
         <Button className={classes.mobileHover} href="https://github.com/Young-Jin1003">Github</Button>
       </div>
@@ -123,12 +132,12 @@ const Header = (props) => {
 
   return (
     <Container>
-      <AppBar elevation={0} position="fixed" color="transparent" className={classes.appBar}>
+      <AppBar elevation={0} color="transparent" className={classes.appBar}>
         <div className={classes.header}>
           {mobile ? (
             <Grid container spacing={2} style={{minWidth: '325px'}}>
               <Grid item xs={12}>
-                <IconButton color="inherit" aria-label="menu" onClick={toggleDrawer('left', true)}>
+                <IconButton color="inherit" onClick={toggleDrawer('left', true)} className={classes.home}>
                   <MenuIcon />
                 </IconButton>
                 <Box className={classes.home}>
@@ -148,7 +157,7 @@ const Header = (props) => {
               </Button>
               <div style={{display: 'flex', marginLeft: 'auto', marginRight: '50px'}}>
                 <Button className={classes.hover} onClick={moveToAbout}>About</Button>
-                <Button className={classes.hover}onClick={moveToSkill}>Skill</Button>
+                <Button className={classes.hover} onClick={moveToSkill}>Skill</Button>
                 <Button className={classes.hover} href="../blog" >Blog</Button>
                 <Button className={classes.hover} href="https://github.com/Young-Jin1003">Github</Button>
               </div>
