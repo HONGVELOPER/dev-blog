@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 		paddingTop: '12vh',
 		paddingBottom: '11vh',
 		paddingLeft: '6vw',
+		minHeight: '520px',
 	},
 	mobileIndexText: {
 		fontSize: '6vw',
@@ -66,9 +67,6 @@ const Container2 = () => {
 					let temp = introduce[i++]
 					text.innerHTML += temp === '\n' ? '<br />': temp
 					if (i > introduce.length) {
-						setInterval(function () {
-							console.log('쉬엇다가~')
-						}, 3000)
 						text.textContent = ''
 						i = 0
 					}
@@ -81,18 +79,18 @@ const Container2 = () => {
   	return (
     <>
 		<Container className={classes.root}>
-			<Grid container style={{height: '56vh'}}>
+			<Grid container>
 				<MuiThemeProvider theme={theme}>
 					<Grid item xs={12} md={5}>
 						{mobile ? (
 							<div className={classes.mobileIndexText}>
-								{/* 안녕하세요,<br />
+								안녕하세요,<br />
 								웹 브라우저로 생각을
 								표현하는<br />
 								개발자 <span style={{color: '#218e16'}}>홍영진</span>입니다.
 								<div style={{fontSize: '3vw', marginTop: '20px'}}>
 									성장하는 개발자가 될 것입니다.
-								</div> */}
+								</div>
 							</div>
 						) : (
 							<div className={classes.indexText}>

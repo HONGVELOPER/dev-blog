@@ -9,13 +9,13 @@ blogFunctions.blogPost = async function (postData) {
 	let success =  null
 	try {
 		const result = await sql_query(`
-			insert into dev_blog.post (P_TITLE, P_CONTENT, P_WRITER)
+			insert into devhong_db.post (P_TITLE, P_CONTENT, P_WRITER)
 			VALUE ('${postData.title}', '${postData.content}', '${postData.writer}');
 		`)
 		if (postData.img.length) {
 			for (const img of postData.img) {
 				await sql_query(`
-					insert into dev_blog.file (F_POST_ID, F_IMG) VALUE (${result.insertId}, '${img}');
+					insert into devhong_db.file (F_POST_ID, F_IMG) VALUE (${result.insertId}, '${img}');
 				`)
 			}
 		}
@@ -30,12 +30,14 @@ blogFunctions.blogPost = async function (postData) {
 // 블로그 글 전체 가져오기
 blogFunctions.getAllPost = async function () {
 	try {
+		console.log('진입??????\n\n\n\n')
 		const response = []
 		const results = await sql_query(`
-			select * from dev_blog.post order by P_ID desc
+			select * from devhong_db.post order by P_ID desc
 		`)
+		console.log(results, '??\n\n\n\n\n\n\n')
 		const images = await sql_query(`
-			select * from dev_blog.file where F_ID in (select min(F_ID) from dev_blog.file group by F_POST_ID) order by F_ID desc
+			select * from devhong_db.file where F_ID in (select min(F_ID) from devhong_db.file group by F_POST_ID) order by F_ID desc
 		`)
 		for (const result of results) {
 			const temp = result.P_MOD_DT.split(' ')[0]
@@ -70,13 +72,13 @@ blogFunctions.getAllPost = async function () {
 blogFunctions.getOnePost = async function (id) {
 	try {
 		await sql_query(`
-			update dev_blog.post set P_VIEW = P_VIEW + 1 where P_ID = ${id}
+			update devhong_db.post set P_VIEW = P_VIEW + 1 where P_ID = ${id}
 		`)
 		const result = await sql_query(`
-			select * from dev_blog.post where P_ID = ${id}
+			select * from devhong_db.post where P_ID = ${id}
 		`)
 		const img = await sql_query(`
-			select F_IMG from dev_blog.file where F_POST_ID = ${id}
+			select F_IMG from devhong_db.file where F_POST_ID = ${id}
 		`)
 		const temp = result[0].P_MOD_DT.split(' ')[0]
 		const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
@@ -102,12 +104,12 @@ blogFunctions.updatePost = async function (updateData) {
 	let success = null
 	try {
 		await sql_query(`
-			update dev_blog.post set P_TITLE = '${updateData.title}', P_CONTENT = '${updateData.content}', P_WRITER = '${updateData.writer}' where P_ID = ${updateData.id}
+			update devhong_db.post set P_TITLE = '${updateData.title}', P_CONTENT = '${updateData.content}', P_WRITER = '${updateData.writer}' where P_ID = ${updateData.id}
 		`)
 		if (updateData.img.length) {
 			for (const img of updateData.img) {
 				await sql_query(`
-					insert into dev_blog.file (F_POST_ID, F_IMG) VALUE (${updateData.id}, '${img}');
+					insert into devhong_db.file (F_POST_ID, F_IMG) VALUE (${updateData.id}, '${img}');
 				`)
 			}
 		}
@@ -124,28 +126,28 @@ blogFunctions.deletePost = async function(id) {
 	let success = null
 	try {
 		const deleteInfo = await sql_query(`
-			select F_IMG from dev_blog.file where F_POST_ID = ${id};
+			select F_IMG from devhong_db.file where F_POST_ID = ${id};
 		`)
 		await sql_query(`
-			delete from dev_blog.post where P_ID = ${id};
+			delete from devhong_db.post where P_ID = ${id};
 		`)
 		await sql_query(`
-			ALTER TABLE dev_blog.post AUTO_INCREMENT=1;
-		`)
-		await sql_query(`
-			SET @CNT = 0;
-		`)
-		await sql_query(`
-			UPDATE dev_blog.post SET dev_blog.post.P_ID = @CNT:=@CNT+1;
-		`)
-		await sql_query(`
-			ALTER TABLE dev_blog.file AUTO_INCREMENT=1;
+			ALTER TABLE devhong_db.post AUTO_INCREMENT=1;
 		`)
 		await sql_query(`
 			SET @CNT = 0;
 		`)
 		await sql_query(`
-			UPDATE dev_blog.file SET dev_blog.file.F_ID = @CNT:=@CNT+1;
+			UPDATE devhong_db.post SET devhong_db.post.P_ID = @CNT:=@CNT+1;
+		`)
+		await sql_query(`
+			ALTER TABLE devhong_db.file AUTO_INCREMENT=1;
+		`)
+		await sql_query(`
+			SET @CNT = 0;
+		`)
+		await sql_query(`
+			UPDATE devhong_db.file SET devhong_db.file.F_ID = @CNT:=@CNT+1;
 		`)
 		if (deleteInfo.length) {
 			const deleteFiles = deleteInfo.map(delFile => delFile.F_IMG.split('com/')[1])

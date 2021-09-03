@@ -12,16 +12,16 @@ const ImageHandler = async (req, res) => {
             if (req.body.deleteFilesInDB) {
                 for (const deleteFile of req.body.deleteFilesInDB) {
                     await sql_query(`   
-                        delete from dev_blog.file where F_IMG = '${deleteFile}';
+                        delete from devhong_db.file where F_IMG = '${deleteFile}';
                     `)
                     await sql_query(`
-                        ALTER TABLE dev_blog.file AUTO_INCREMENT=1;
+                        ALTER TABLE devhong_db.file AUTO_INCREMENT=1;
                     `)
                     await sql_query(`
                         SET @CNT = 0;
                     `)
                     await sql_query(`
-                        UPDATE dev_blog.file SET dev_blog.file.F_ID = @CNT:=@CNT+1;
+                        UPDATE devhong_db.file SET devhong_db.file.F_ID = @CNT:=@CNT+1;
                     `)
                 }
             }
