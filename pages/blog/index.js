@@ -30,10 +30,12 @@ const Blog = ({ data }) => {
   )
 }
 
-export async function getServerSidePorps() {
+export default Blog
+
+export async function getServerSideProps() {
   console.log('ssr rendering start')
   const response = await axios.get('https://developerhong.com/api/blog')
-  console.log(response, 'check')
+  // console.log(response.data, 'response check')
   return {
     props: {
       data: response.data,
@@ -41,4 +43,3 @@ export async function getServerSidePorps() {
   }
 }
 
-export default Blog
