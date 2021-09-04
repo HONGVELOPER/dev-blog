@@ -18,7 +18,7 @@ const BlogDetail = ({ data }) => {
 export default BlogDetail
 
 export async function getServerSideProps(context) {
-	const response = await axios.get('http://localhost:3000/api/blog', {
+	const response = await axios.get('https://developerhong.com/api/blog', {
 		params: {
 			id: context.query.id,
 		}
