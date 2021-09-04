@@ -27,7 +27,7 @@ const BlogHandler = async (req, res) => {
 				return res.status(200).json(result)
 			// 게시물 전체를 가져올 때
 			} else { 
-				result = {
+				const result = {
 					id: 1,
 					title: 'rds 연결 ...',
 					content: '<p>됐나요 ?</p>',
