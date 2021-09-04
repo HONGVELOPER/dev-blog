@@ -27,14 +27,16 @@ const BlogHandler = async (req, res) => {
 				return res.status(200).json(result)
 			// 게시물 전체를 가져올 때
 			} else { 
-				const result = {
-					id: 1,
-					title: 'rds 연결 ...',
-					content: '<p>됐나요 ?</p>',
-					view: 1,
-					writer: 'dev hong',
-					date: '2021년09월03일'
-				} 
+				const result = [
+					{
+						id: 1,
+						title: 'rds 연결 ...',
+						content: '<p>됐나요 ?</p>',
+						view: 1,
+						writer: 'dev hong',
+						date: '2021년09월03일'
+					}
+				]
 				// const result = await blogFuncitons.getAllPost()
 				return res.status(200).json(result)
 			}
