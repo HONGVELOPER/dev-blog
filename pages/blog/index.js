@@ -4,17 +4,6 @@ import Footer from '../../components/index/Footer.js'
 import axios from 'axios';
 import React from 'react';
 
-// export default function Blog({ data }) {
-//   console.log(data, 'check')
-//   return (
-//     <div>
-//       <AppBar />
-//       <Container data={data} />
-//       <Footer style={{backgroundColor: "white"}} />
-//     </div>
-//   )
-// }
-
 // export async function getServerSidePorps() {
 //   console.log('ssr rendering start')
 //   try {
@@ -30,8 +19,6 @@ import React from 'react';
 //   }
 // }
 
-// // export default Blog
-
 const Blog = ({ data }) => {
 
   return (
@@ -43,12 +30,14 @@ const Blog = ({ data }) => {
   )
 }
 
-Blog.getInitialProps = async () => {
+export async function getServerSidePorps() {
+  console.log('ssr rendering start')
   const response = await axios.get('https://developerhong.com/api/blog')
+  console.log(response, 'check')
   return {
-    data: response.data
-    // entries: data.entries,
-    // posts: data.posts,
+    props: {
+      data: response.data,
+    }
   }
 }
 
