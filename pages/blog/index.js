@@ -44,7 +44,7 @@ const Blog = ({ data }) => {
 }
 
 Blog.getInitialProps = async () => {
-  const response = await axios.get('http://localhost:3000/api/blog/')
+  const response = await axios.get('http://developerhong/api/blog/')
   return {
     data: response.data
     // entries: data.entries,
@@ -53,14 +53,3 @@ Blog.getInitialProps = async () => {
 }
 
 export default Blog
-
-// export async function getServerSideProps() {
-//   console.log('ssr rendering start')
-//   const response = await axios.get('http://localhost:3000/api/blog')
-//   // console.log(response.data, 'response check')
-//   return {
-//     props: {
-//       data: response.data,
-//     }
-//   }
-// }
