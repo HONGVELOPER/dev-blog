@@ -4,36 +4,63 @@ import Footer from '../../components/index/Footer.js'
 import axios from 'axios';
 import React from 'react';
 
+// export default function Blog({ data }) {
+//   console.log(data, 'check')
+//   return (
+//     <div>
+//       <AppBar />
+//       <Container data={data} />
+//       <Footer style={{backgroundColor: "white"}} />
+//     </div>
+//   )
+// }
+
+// export async function getServerSidePorps() {
+//   console.log('ssr rendering start')
+//   try {
+//     const response = await axios.get('http://localhost:3000/api/blog')
+//     console.log(response, 'check')
+//     return {
+//       props: {
+//         data: response.data,
+//       }
+//     }
+//   } catch {
+//     console.log('blog index page render fail')
+//   }
+// }
+
+// // export default Blog
+
 const Blog = ({ data }) => {
-  const data2 = [
-    {
-      id: 2,
-      title: 'rds ',
-      content: 'check ···',
-      view: 0,
-      writer: 'dev hong',
-      date: '2021년09월04일',
-      img: 'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/developer-5063843_1920.jpg'        
-    },
-  ]
+
   return (
     <div>
       <AppBar />
-      <Container data={data2} />
+      <Container data={data} />
       <Footer style={{backgroundColor: "white"}} />
     </div>
   )
 }
 
-// Blog.getInitialProps = async () => {
-//   console.log('ssr rendering start')
-//   const response = await axios.get('http://localhost:3000/api/blog')
-//   console.log(response.data, 'check')
-//   return {
-//     // props: {
-//     data: response.data,
-//     // }
-//   }
-// }
+Blog.getInitialProps = async () => {
+  const response = await axios.get('http://localhost:3000/api/blog/')
+  return {
+    data: response.data
+    // entries: data.entries,
+    // posts: data.posts,
+  }
+}
 
 export default Blog
+
+// export async function getServerSideProps() {
+//   console.log('ssr rendering start')
+//   const response = await axios.get('http://localhost:3000/api/blog')
+//   // console.log(response.data, 'response check')
+//   return {
+//     props: {
+//       data: response.data,
+//     }
+//   }
+// }
