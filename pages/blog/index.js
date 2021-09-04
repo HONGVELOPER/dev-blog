@@ -8,7 +8,7 @@ const Blog = ({ data }) => {
   return (
     <div>
       <AppBar />
-      {/* <Container data={data} /> */}
+      <Container data={data} />
       <Footer style={{backgroundColor: "white"}} />
     </div>
   )
@@ -16,13 +16,12 @@ const Blog = ({ data }) => {
 
 export default Blog
 
-// export async function getServerSideProps() {
-//   console.log('ssr rendering start')
-//   const response = await axios.get('http://localhost:3000/api/blog')
-//   // console.log(response.data, 'response check')
-//   return {
-//     props: {
-//       data: response.data,
-//     }
-//   }
-// }
+export async function getServerSideProps() {
+  console.log('ssr rendering start')
+  const response = await axios.get('http://localhost:3000/api/blog')
+  return {
+    props: {
+      data: response.data,
+    }
+  }
+}
