@@ -17,7 +17,7 @@ const BlogHandler = async (req, res) => {
 		} catch (error) {
 			return res.status(500).json({ message: error.message })
 		}
-	} else if (req.method === 'get') {
+	} else if (req.method === 'GET') {
 		console.log('get method start')
 		try {
 			// 게시물 1개 가져올 때
@@ -27,7 +27,15 @@ const BlogHandler = async (req, res) => {
 				return res.status(200).json(result)
 			// 게시물 전체를 가져올 때
 			} else { 
-				const result = await blogFuncitons.getAllPost()
+				result = {
+					id: 1,
+					title: 'rds 연결 ...',
+					content: '<p>됐나요 ?</p>',
+					view: 1,
+					writer: 'dev hong',
+					date: '2021년09월03일'
+				} 
+				// const result = await blogFuncitons.getAllPost()
 				return res.status(200).json(result)
 			}
 		} catch (error) {
