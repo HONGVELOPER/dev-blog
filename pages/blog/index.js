@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const Blog = ({ data }) => {
 
+
   return (
     <div>
       <AppBar />
@@ -14,14 +15,15 @@ const Blog = ({ data }) => {
   )
 }
 
-export default Blog
-
-export async function getServerSideProps() {
+Blog.getInitialProps = async() => {
   console.log('ssr rendering start')
   const response = await axios.get('http://localhost:3000/api/blog')
+  console.log(response.data, 'check')
   return {
-    props: {
-      data: response.data,
-    }
+    // props: {
+    data: response.data,
+    // }
   }
 }
+
+export default Blog
