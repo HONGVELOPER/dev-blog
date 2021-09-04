@@ -44,7 +44,7 @@ const Blog = ({ data }) => {
 }
 
 Blog.getInitialProps = async () => {
-  const response = await axios.get('http://developerhong/api/blog/')
+  const response = await axios.get('https://developerhong.com/api/blog')
   return {
     data: response.data
     // entries: data.entries,
