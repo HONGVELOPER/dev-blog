@@ -17,7 +17,7 @@ const BlogHandler = async (req, res) => {
 		} catch (error) {
 			return res.status(500).json({ message: error.message })
 		}
-	} else if (req.method === 'GET') {
+	} else if (req.method === 'get') {
 		console.log('get method start')
 		try {
 			// 게시물 1개 가져올 때
