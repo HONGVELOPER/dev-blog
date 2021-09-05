@@ -62,9 +62,7 @@ const modal = (props) => {
 	return (
 		<>
 			<Container style={{paddingLeft: 0}}>
-				<Button className='modalButton' onClick={openHandler}>
-					Welcome to my blog
-				</Button>
+				<Button className='modalButton' onClick={openHandler} style={{cursor: 'default'}} />
 				<Modal
 					open={open}
 					onClose={closeHandler}

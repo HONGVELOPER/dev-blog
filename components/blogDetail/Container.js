@@ -10,9 +10,6 @@ import Modal from '../posting/modal';
 import parse from 'html-react-parser';
 
 const useStyles = makeStyles((theme) => ({
-	// root: {
-  //   flexGrow: 1,
-  // },
 	title: {
 		fontWeight: '100',
 	},
@@ -23,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function BlogDetailContainer(props)	 {
-	// console.log(props, 'props check')
 	const classes = useStyles()
 	const [mobile, setMobile] = useState(null)
 
@@ -68,7 +64,7 @@ function BlogDetailContainer(props)	 {
 					<div className={classes.title}>
 						<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
 					</div>
-					<div style={{marginBottom: '40px'}}>
+					<div style={{marginTop: '10px', marginBottom: '35px', fontWeight: '100'}}>
 						<span>
 							{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
 						</span>
@@ -84,9 +80,9 @@ function BlogDetailContainer(props)	 {
 					check
 				</Grid>
 			</Grid>
-			<div>
-				<Button href="/blog" varaint="text">← Back</Button>
-			</div>
+			{/* <div> */}
+				{/* <Button href="/blog" varaint="text">뒤로 가기</Button> */}
+			{/* </div> */}
 			<div>
 				{show ? (
 					<>
