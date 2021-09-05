@@ -9,7 +9,7 @@ import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Link from 'next/link'
-import BreadCrumbs from '../../components/breadCrumbs.js';
+import BreadCrumbs from '../../components/index/breadCrumbs.js';
 import AppBar from '@material-ui/core/AppBar';
 import SpaIcon from '@material-ui/icons/Spa';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -74,13 +74,14 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: '15px',
     height: '20px',
     '&:hover': {
+      transition: '0.5s',
       '&:after': {
         content: "''",
         display: 'block',
         width: '60px',
         borderBottom: '3px solid #218e16',
         margin: '10px auto'
-      }, 
+      },
     }
   },
   img: {
@@ -110,7 +111,7 @@ const BlogContainer = (props) => {
 
   const contentList = props.data.map((content) => (
     <MuiThemeProvider theme={theme} key={content.id}>
-      <Grid item xs={12} sm={6} md={4} style={{padding: 20, minWidth: 300}}>
+      <Grid item xs={12} sm={6} md={4} style={{padding: 10, minWidth: 300}}>
         <Link href={`blog/${content.id}`}>
           <Card
             // elevation={0}
@@ -165,8 +166,8 @@ const BlogContainer = (props) => {
               display: 'none',
             }}}
           >
-            <Tab ref={focusRef} label="Popular Posts" {...a11yProps(0)} className={classes.bottom} />
-            <Tab label="Latest Posts" {...a11yProps(1)} className={classes.bottom} />
+            <Tab ref={focusRef} label="인기 게시물" {...a11yProps(0)} className={classes.bottom} />
+            <Tab label="최근 게시물" {...a11yProps(1)} className={classes.bottom} />
           </Tabs>
         </MuiThemeProvider>
       </AppBar>

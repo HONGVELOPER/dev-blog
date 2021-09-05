@@ -1,5 +1,5 @@
 import AppBar from '../../components/index/Header.js'
-import Container from '../../components/blog/Container.js';
+import BlogContainer from '../../components/blog/Container.js';
 import Footer from '../../components/index/Footer.js'
 import axios from 'axios';
 
@@ -7,7 +7,7 @@ const Blog = ({ data }) => {
   return (
     <div>
       <AppBar />
-      <Container data={data} />
+      <BlogContainer data={data} />
       <Footer style={{backgroundColor: "white"}} />
     </div>
   )

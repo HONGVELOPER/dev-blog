@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   header: {
     height: '65px',
     marginTop: '2%',
-    marginLeft: '13%',
-    marginRight: '9%',
+    // marginLeft: '13%',
+    // marginRight: '9%',
     fontWeight: 100,
   },
   mobileBox: {
@@ -33,10 +33,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'center',
     width: '100px',
-    // "&:hover": {
-    //   color: '#218e16',
-    //   backgroundColor: "#FFF",
-    // }
+    transition: '0.5s',
+    "&:hover": {
+      color: '#218e16',
+      backgroundColor: "#FFF",
+      // transform: 'translateY(-5px)',
+    }
   },
   list: {
     fontSize: '7vw',
@@ -92,7 +94,6 @@ const Header = (props) => {
   })
 
   const moveToAbout = () => {
-    // console.log('진입', router)
     if (router.pathname !== "/") {
       router.push('/')
     } else {
@@ -135,16 +136,14 @@ const Header = (props) => {
       <AppBar elevation={0} color="transparent" className={classes.appBar}>
         <div className={classes.header}>
           {mobile ? (
-            <Grid container spacing={2} style={{minWidth: '325px'}}>
+            <Grid container spacing={2}>
               <Grid item xs={12}>
                 <IconButton color="inherit" onClick={toggleDrawer('left', true)} className={classes.home}>
                   <MenuIcon />
                 </IconButton>
-                <Box className={classes.home}>
                   <Button className={classes.logoButton} href="/">
                     <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
                   </Button>
-                </Box>
                 <Drawer anchor={'left'} open={navBar.left} onClose={toggleDrawer('left', false)}>
                   {list('left')}
                 </Drawer>
@@ -152,10 +151,10 @@ const Header = (props) => {
             </Grid>
           ) : (
             <Grid container spacing={2} style={{marginTop: '1px',}}>
-              <Button href="/" className={classes.home}>
+              <Button href="/" className={classes.home} style={{marginLeft: '2.2%'}}>
                 <span style={{color: '#218e16'}}>DEV</span>&nbsp;Hong
               </Button>
-              <div style={{display: 'flex', marginLeft: 'auto', marginRight: '50px'}}>
+              <div style={{display: 'flex', marginLeft: 'auto', marginRight: '9%'}}>
                 <Button className={classes.hover} onClick={moveToAbout}>About</Button>
                 <Button className={classes.hover} onClick={moveToSkill}>Skill</Button>
                 <Button className={classes.hover} href="../blog" >Blog</Button>

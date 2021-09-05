@@ -1,8 +1,6 @@
 import Header from '../components/index/Header.js'
 import IndexContainer from '../components/index/Container.js'
-import IndexContainer2 from '../components/index/Container2.js'
 import Skill from '../components/index/Skill.js'
-import Skill2 from '../components/index/Skill2.js'
 import About from '../components/index/About.js'
 import Footer from '../components/index/Footer.js'
 import { useState } from "react"
@@ -26,9 +24,9 @@ function Home() {
   return (
     <div> 
       <Header toAbout={abScroll} toSkill={skScroll} />
-      <IndexContainer2 />
+      <IndexContainer />
       <About toAbout={abLocation} scrollChange={abScroll} />
-      <Skill2 toSkill={skLocation} scrollChange={skScroll} />
+      <Skill toSkill={skLocation} scrollChange={skScroll} />
       <Footer />
     </div>
   )

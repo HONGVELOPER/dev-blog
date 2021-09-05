@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -15,7 +15,6 @@ import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		backgroundColor: '#218e16',
-		// backgroundColor: 'black',
 		height: '210px',
 		display: 'flex',
 		alignItems: 'center'
@@ -64,6 +63,18 @@ const footer = () => {
 	const [open, setOpen] = useState(false)
 	const [title, setTitle] = useState('')
 	const [text, setText] = useState('')
+	const [mobile, setMobile] = useState(null)
+	const divide = 800
+
+	useEffect(() => {
+		if (mobile === null) {
+		  	window.innerWidth < divide ? setMobile(true) : setMobile(false)
+		} else {
+		  	window.addEventListener('resize', function() {
+				window.innerWidth < divide ? setMobile(true) : setMobile(false)
+		  	}, {passive: true})
+		}
+	})
 
 	const openHandler = () => {
 		setOpen(true)
@@ -146,7 +157,11 @@ const footer = () => {
 					</div>
 					<Grid container className={classes.footerText}>
 						<Grid item xs={12}>
-							Copyright ⓒ 2021 DEV HONG All Rights Reserved.
+							{mobile ? (
+								<div>Copyright ⓒ 2021 <br/>DEV HONG All Rights Reserved.</div>
+							) : (
+								<div>Copyright ⓒ 2021 DEV HONG All Rights Reserved.</div>
+							)}
 						</Grid>
 					</Grid>
 				</Container>
