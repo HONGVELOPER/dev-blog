@@ -38,7 +38,7 @@ const BlogUpdate = ({data}) => {
 export default BlogUpdate
 
 export async function getServerSideProps(context) {
-	const response = await axios.get('https://developerhong.com/api/blog', {
+	const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog`, {
 		params: {
 			id: context.query.id,
 		}
