@@ -119,11 +119,9 @@ const BlogContainer = (props) => {
             className={classes.card}
             style={{height: '450px', maxWidth: '400px'}}
           >
-            <CardActionArea>
-              <CardContent style={{padding: 0, height: '250px'}}>
-                <img src={`${content.img}`} alt="card index" style={{display: 'block', height: '100%', width: 'auto'}} />
-              </CardContent>
-            </CardActionArea>
+            <CardContent style={{padding: 0, height: '250px'}}>
+              <img src={`${content.img}`} alt="card index" style={{display: 'block', height: '100%', width: 'auto'}} />
+            </CardContent>
             <Box style={{Height: '200px', padding: '5px'}}>
               <Box className={classes.blogTitle}>
                 <div>{content.title}</div>
