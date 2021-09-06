@@ -9,7 +9,7 @@ export const config = {
 }
 
 const params = {
-	Bucket: 'dev-hong-bucket',
+	Bucket: 'devhong-s3',
 	ACL: 'public-read',
 }
 

@@ -2,7 +2,7 @@ import { sql_query } from '../../../lib/db';
 import AWS from 'aws-sdk';
 
 const params = {
-	Bucket: 'dev-hong-bucket',
+	Bucket: 'devhong-s3',
 }
 
 const ImageHandler = async (req, res) => {

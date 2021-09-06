@@ -7,7 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Grid from '@material-ui/core/Grid';
-import CardActionArea from '@material-ui/core/CardActionArea';
+import Divider from '@material-ui/core/Divider';
 import Link from 'next/link'
 import BreadCrumbs from '../../components/index/breadCrumbs.js';
 import AppBar from '@material-ui/core/AppBar';
@@ -129,6 +129,7 @@ const BlogContainer = (props) => {
             <CardContent style={{padding: 0, height: '250px'}}>
               <img src={`${content.img}`} alt="card index" style={{display: 'block', height: '100%', width: 'auto'}} />
             </CardContent>
+            <Divider variant="middle" style={{position: 'relative', top: 7}} />
             <Box style={{padding: '5px'}}>
               <Box className={classes.blogTitle}>
                 <div>{content.title}</div>
