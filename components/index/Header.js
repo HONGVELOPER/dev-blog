@@ -20,8 +20,9 @@ const useStyles = makeStyles((theme) => ({
   header: {
     height: '65px',
     marginTop: '2%',
-    // marginLeft: '13%',
-    // marginRight: '9%',
+    "& .MuiTouchRipple-root span":{
+      backgroundColor: '#FFF',
+    },
     fontWeight: 100,
   },
   mobileBox: {
@@ -37,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       color: '#218e16',
       backgroundColor: "#FFF",
-      // transform: 'translateY(-5px)',
     }
   },
   list: {
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
       color: '#218e16',
       backgroundColor: "#FFF",
       transform: 'translateY(-5px)',
-    }
+    },
   },
   mobileHover: {
     display: 'block', 

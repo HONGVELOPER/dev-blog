@@ -88,12 +88,20 @@ const useStyles = makeStyles((theme) => ({
     objectFit: "fill",
   },
   blogTitle: {
-    marginTop: '10px',
+    marginTop: '5px',
     marginBottom: '15px',
     fontSize: '24px',
     fontWeight: 600,
+    height: '70px',
+  },
+  blogContent: {
+    // paddingTop: '20px',
+    height: '45px',
+    color: '#73716b',
+    fontSize: '12px',
   },
   blogWriter: {
+    marginTop: '20px',
     fontSize: '10px',
     fontWeight: 200,
   },
@@ -114,19 +122,18 @@ const BlogContainer = (props) => {
       <Grid item xs={12} sm={6} md={4} style={{padding: 10, minWidth: 300}}>
         <Link href={`blog/${content.id}`}>
           <Card
-            // elevation={0}
-            variant="outlined"
+            elevation={5}
             className={classes.card}
             style={{height: '450px', maxWidth: '400px'}}
-          >
+          > 
             <CardContent style={{padding: 0, height: '250px'}}>
               <img src={`${content.img}`} alt="card index" style={{display: 'block', height: '100%', width: 'auto'}} />
             </CardContent>
-            <Box style={{Height: '200px', padding: '5px'}}>
+            <Box style={{padding: '5px'}}>
               <Box className={classes.blogTitle}>
                 <div>{content.title}</div>
               </Box>
-              <Box style={{height: '95px', color: "#73716b", fontSize: '12px'}}>
+              <Box className={classes.blogContent}>
                 {content.content}
               </Box>
               <Grid container className={classes.blogWriter}>

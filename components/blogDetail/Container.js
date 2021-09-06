@@ -70,19 +70,16 @@ function BlogDetailContainer(props)	 {
 						</span>
 					</div>
 				</Grid>
-				<Grid item xs={9}>
+				<Grid item xs={12}>
 					<div>
 						{parse(props.data.content)}
 					</div>
 					{/* <div dangerouslySetInnerHTML={{__html: props.data.content}} /> */}
 				</Grid>
-				<Grid item xs={2} style={{display: 'inlineblock', marginLeft: '30px'}}>
+				{/* <Grid item xs={2} style={{display: 'inlineblock', marginLeft: '30px'}}>
 					check
-				</Grid>
+				</Grid> */}
 			</Grid>
-			{/* <div> */}
-				{/* <Button href="/blog" varaint="text">뒤로 가기</Button> */}
-			{/* </div> */}
 			<div>
 				{show ? (
 					<>
