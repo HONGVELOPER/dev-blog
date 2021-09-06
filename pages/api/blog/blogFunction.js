@@ -58,7 +58,7 @@ blogFunctions.getAllPost = async function () {
 				}
 			}
 			if (!final.img) {
-				final.img = 'https://dev-hong-bucket.s3.ap-northeast-2.amazonaws.com/developer-5063843_1920.jpg'
+				final.img = 'https://devhong-s3.s3.ap-northeast-2.amazonaws.com/developer-5063843_1920.jpg'
 			}
 			response.push(final)
 		}
