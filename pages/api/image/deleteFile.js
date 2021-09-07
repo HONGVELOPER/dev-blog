@@ -8,19 +8,21 @@ const params = {
 const ImageHandler = async (req, res) => {
     if (req.method === 'PUT') {
 		try {
+
+            console.log(req.body, 'first')
             if (req.body.deleteFilesInDB) {
                 for (const deleteFile of req.body.deleteFilesInDB) {
                     await sql_query(`   
-                        delete from devhong_db.file where F_IMG = '${deleteFile}';
+                        delete from ${process.env.DB_DATABASE}.file where F_IMG = '${deleteFile}';
                     `)
                     await sql_query(`
-                        ALTER TABLE devhong_db.file AUTO_INCREMENT=1;
+                        ALTER TABLE ${process.env.DB_DATABASE}.file AUTO_INCREMENT=1;
                     `)
                     await sql_query(`
                         SET @CNT = 0;
                     `)
                     await sql_query(`
-                        UPDATE devhong_db.file SET devhong_db.file.F_ID = @CNT:=@CNT+1;
+                        UPDATE ${process.env.DB_DATABASE}.file SET ${process.env.DB_DATABASE}.file.F_ID = @CNT:=@CNT+1;
                     `)
                 }
             }
@@ -38,6 +40,7 @@ const ImageHandler = async (req, res) => {
                         success = false
                     } else {
                         success = true
+                        console.log(data, 'data check')
                         return res.status(200).send({})
                     }
                 })
