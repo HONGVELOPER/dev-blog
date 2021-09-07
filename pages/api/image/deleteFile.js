@@ -8,7 +8,6 @@ const params = {
 const ImageHandler = async (req, res) => {
     if (req.method === 'PUT') {
 		try {
-
             console.log(req.body, 'first')
             if (req.body.deleteFilesInDB) {
                 for (const deleteFile of req.body.deleteFilesInDB) {
@@ -26,25 +25,25 @@ const ImageHandler = async (req, res) => {
                     `)
                 }
             }
-            const result = req.body.deleteFiles.map(delFile => delFile.split('com/')[1])
+            const results = req.body.deleteFiles.map(delFile => delFile.split('com/')[1])
             const s3 = new AWS.S3({
                 accessKeyId: process.env.S3_ACCESS_KEY,
                 secretAccessKey: process.env.S3_SECRET_KEY,
                 region: process.env.S3_REGION,
             })
-            for (const i of result) {
-                params.Key = i
+            let success = null
+            for (const result of results) {
+                params.Key = result
                 s3.deleteObject(params, function(err, data) {
-                    let success = null
                     if (err) {
                         success = false
                     } else {
                         success = true
                         console.log(data, 'data check')
-                        return res.status(200).send({})
                     }
                 })
             }
+            return res.status(200).send(success)
 		} catch (error) {
             console.log(error)
             return res.status(500).json({ message: error.message })
