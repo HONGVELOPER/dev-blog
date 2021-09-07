@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -95,7 +95,6 @@ const useStyles = makeStyles((theme) => ({
     height: '70px',
   },
   blogContent: {
-    // paddingTop: '20px',
     height: '45px',
     color: '#73716b',
     fontSize: '12px',
@@ -108,7 +107,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const BlogContainer = (props) => {
-  // console.log(props, 'props check')
   const classes = useStyles()
   const [value, setValue] = useState(0)
   const focusRef = useRef(null)

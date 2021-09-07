@@ -30,12 +30,10 @@ blogFunctions.blogPost = async function (postData) {
 // 블로그 글 전체 가져오기
 blogFunctions.getAllPost = async function () {
 	try {
-		console.log('진입??????\n\n\n\n')
 		const response = []
 		const results = await sql_query(`
 			select * from ${process.env.DB_DATABASE}.post inner join ${process.env.DB_DATABASE}.file on ${process.env.DB_DATABASE}.post.P_ID = ${process.env.DB_DATABASE}.file.F_POST_ID where F_ID in (select min(F_ID) from ${process.env.DB_DATABASE}.file group by F_POST_ID)  order by P_ID desc
 		`)
-		console.log(results, '??\n\n\n\n\n\n\n')
 		for (const result of results) {
 			const temp = result.P_MOD_DT.split(' ')[0]
 			const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
@@ -144,7 +142,7 @@ blogFunctions.deletePost = async function(id) {
 		if (deleteInfo.length) {
 			const deleteFiles = deleteInfo.map(delFile => delFile.F_IMG.split('com/')[1])
 			const params = {
-				Bucket: 'dev-hong-bucket'
+				Bucket: 'devhong-s3'
 			}
 			const s3 = new AWS.S3({
                 accessKeyId: process.env.S3_ACCESS_KEY,
@@ -173,7 +171,6 @@ blogFunctions.deletePost = async function(id) {
 
 // update, delete 비밀번호 확인
 blogFunctions.passwordCheck = async function(data) {
-	console.log('password 진입')
 	let success = null
 	try {
 		if (data.password === process.env.ADMIN_KEY) {

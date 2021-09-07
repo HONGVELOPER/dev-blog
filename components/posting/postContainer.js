@@ -115,13 +115,10 @@ const postContainer = () => {
     
     const deleteFile = image.filter(x => !imageArray.includes(x))
     if (deleteFile.length) {
-      const response2 = await axios.put('/api/image/deleteFile', {
+      await axios.put('/api/image/deleteFile', {
         deleteFiles: deleteFile,
       })
-      console.log(response2, 'RESPONSE 2 CHECK')
     }
-
-		console.log(response, 'RESPONSE CHECK')
 		if (response.status === 200) {
 			alert('블로그 포스팅이 정상적으로 작동되었습니다.')
 			router.push('/blog')

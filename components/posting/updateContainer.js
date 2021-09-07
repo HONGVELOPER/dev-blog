@@ -39,7 +39,6 @@ const image = []
 const imageCopy = []
 const uploadImage = []
 const UpadateContainer = (props) => {
-	// console.log(props.data, 'update props check')
 	const classes = useStyles()
 
 	const Quill = typeof window == 'object' ? require('quill') : () => false
@@ -56,7 +55,6 @@ const UpadateContainer = (props) => {
 				image.push(i.F_IMG)
 				imageCopy.push(i.F_IMG)
 			}
-			// console.log(image)
 		}
     if (quillElement.current) {
       quillInstance.current = new Quill(quillElement.current, {
@@ -96,8 +94,7 @@ const UpadateContainer = (props) => {
           `${result.data.location}`
         );
         image.push(`${result.data.location}`)
-				uploadImage.push(`${result.data.location}`)
-        console.log(image, 'image')
+		uploadImage.push(`${result.data.location}`)
         quillInstance.current.setSelection(range.index + 1)
       } else {
         alert('error')
@@ -135,10 +132,7 @@ const UpadateContainer = (props) => {
 				deleteFiles: deleteFile,
 				deleteFilesInDB: deleteFileInDB, 
 			})
-			console.log(response2, 'response 2 check')
 		}
-
-		console.log(response, 'RESPONSE CHECK')
 		if (response.status === 200) {
 			alert('블로그 포스팅이 정상적으로 수정되었습니다.')
 			router.push(`/blog/${props.data.id}`)

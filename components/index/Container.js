@@ -38,15 +38,13 @@ const useStyles = makeStyles((theme) => ({
 		paddingLeft: '5vw',
 	},
 	indexImage: {
-		// border: '1px solid black',
 		position: 'relative',
 		maxWidth: '450px',
 		padding: 30,
-		left: '5vw',
 	},
 }))
 
-const Container2 = () => {
+const IndexContainer = () => {
 
 	const classes = useStyles()
 	const [mobile, setMobile] = useState(null)
@@ -71,7 +69,7 @@ const Container2 = () => {
 						i = 0
 					}
 				}
-				setInterval(typing, 300)
+				setInterval(typing, 200)
 			}
 		}
 	})
@@ -105,25 +103,19 @@ const Container2 = () => {
 							</div>
 						)}
 					</Grid>
-					<Grid item xs={12} md={7} className={classes.indexImage}>
-						<Box>
-							<div>
-								{mobile ? (
-									<Image src={'/images/con4.png'} width={100} height={80} layout="responsive" quality={60} />
-								) : (
-									<Image src={'/images/con4.png'} layout="fill" objectFit="contain" quality={60} />
-								)}
-							</div>
-						</Box>
+					<Grid item xs={1} />
+					<Grid item xs={12} md={6} className={classes.indexImage}>
+						{mobile ? (
+							<Image src={'/images/con4.png'} width={100} height={80} layout="responsive" quality={60} />
+						) : (
+							<Image src={'/images/con4.png'} layout="fill" objectFit="contain" quality={60} />
+						)}
 					</Grid>
 				</MuiThemeProvider>
-				{/* <Button>
-					check
-				</Button> */}
 			</Grid>
 		</Container>
     </>
   	)
 }
 
-export default Container2
+export default IndexContainer

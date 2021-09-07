@@ -6,7 +6,6 @@ const params = {
 }
 
 const ImageHandler = async (req, res) => {
-    console.log(req.method, 'deleteFile.js 진입')
     if (req.method === 'PUT') {
 		try {
             if (req.body.deleteFilesInDB) {

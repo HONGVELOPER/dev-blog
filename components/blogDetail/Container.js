@@ -45,7 +45,6 @@ function BlogDetailContainer(props)	 {
 				id: props.data.id
 			}
 		})
-		console.log(response)
 		if (response.status === 200) {
 			alert('블로그 포스팅이 정상적으로 삭제되었습니다.')
 			router.push('./')

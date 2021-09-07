@@ -11,7 +11,6 @@ const transporter = nodemailer.createTransport({
 const MailHandler = async (req, res) => {
     if (req.method === 'POST') {
         try {
-            console.log(req.body, 'body check')
             const mailOptions = {
                 from: process.env.MAIL_SENDER,
                 to: process.env.MAIL_RECIEVER,

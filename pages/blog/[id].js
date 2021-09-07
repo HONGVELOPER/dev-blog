@@ -23,7 +23,6 @@ export async function getServerSideProps(context) {
 			id: context.query.id,
 		}
 	})
-	console.log(response.data[0], 'response check')
 	return {
 	  props: {
 			data: response.data[0],

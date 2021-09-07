@@ -101,7 +101,6 @@ const footer = () => {
 			title: title,
 			text: text,
 		})
-		console.log(response, 'response check')
 		if (response.status === 200) {
 			alert('메일이 정상적으로 전송되었습니다')
 		} else {

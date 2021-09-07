@@ -10,7 +10,6 @@ imageFunctions.uploadFile = async (params) => {
     })
 
     const result = await s3.upload(params).promise()
-    console.log(result, 'result')
     return result.Location
 }
 

@@ -16,13 +16,10 @@ const Blog = ({ data }) => {
 export default Blog
 
 export async function getServerSideProps() {
-  console.log('ssr rendering start')
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog`)
-  // console.log(response.data, 'response check')
   return {
     props: {
       data: response.data,
     }
   }
 }
-
