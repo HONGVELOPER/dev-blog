@@ -1,7 +1,7 @@
 // 전역 css 설정 
 // style에 있는 파일도 컴포넌트로 생각하여 사용 가능
 
-import '../styles/global.css'
+// import '../styles/global.css'
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';

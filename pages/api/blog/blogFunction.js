@@ -33,12 +33,9 @@ blogFunctions.getAllPost = async function () {
 		console.log('진입??????\n\n\n\n')
 		const response = []
 		const results = await sql_query(`
-			select * from ${process.env.DB_DATABASE}.post order by P_ID desc
+			select * from ${process.env.DB_DATABASE}.post inner join ${process.env.DB_DATABASE}.file on ${process.env.DB_DATABASE}.post.P_ID = ${process.env.DB_DATABASE}.file.F_POST_ID where F_ID in (select min(F_ID) from ${process.env.DB_DATABASE}.file group by F_POST_ID)  order by P_ID desc
 		`)
 		console.log(results, '??\n\n\n\n\n\n\n')
-		const images = await sql_query(`
-			select * from ${process.env.DB_DATABASE}.file where F_ID in (select min(F_ID) from ${process.env.DB_DATABASE}.file group by F_POST_ID) order by F_ID desc
-		`)
 		for (const result of results) {
 			const temp = result.P_MOD_DT.split(' ')[0]
 			const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
@@ -50,14 +47,9 @@ blogFunctions.getAllPost = async function () {
 				writer: result.P_WRITER,
 				date: dateEdit,
 			}
-			if (images.length) {
-				for (const img of images) {
-					if (img.F_POST_ID === result.P_ID) {
-						final.img = img.F_IMG
-					}
-				}
-			}
-			if (!final.img) {
+			if (result.F_IMG.length) {
+				final.img = result.F_IMG
+			} else {
 				final.img = 'https://devhong-s3.s3.ap-northeast-2.amazonaws.com/developer-5063843_1920.jpg'
 			}
 			response.push(final)
