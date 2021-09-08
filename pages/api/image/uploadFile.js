@@ -14,7 +14,6 @@ const params = {
 }
 
 const ImageHandler = async (req, res) => {
-    console.log(req.method, 'image method check')
     if (req.method === 'POST') {
         try {
             const form = new formidable.IncomingForm({

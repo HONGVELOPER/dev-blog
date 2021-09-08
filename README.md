@@ -21,4 +21,6 @@ The purpose of this website is not to forget what i have studied
  
   ### What to do next
     + blog table of contents
+    + blog tag
     + SEO
+    + ORM

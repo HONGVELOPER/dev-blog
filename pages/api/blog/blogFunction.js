@@ -34,6 +34,7 @@ blogFunctions.getAllPost = async function () {
 		const results = await sql_query(`
 			select * from ${process.env.DB_DATABASE}.post inner join ${process.env.DB_DATABASE}.file on ${process.env.DB_DATABASE}.post.P_ID = ${process.env.DB_DATABASE}.file.F_POST_ID where F_ID in (select min(F_ID) from ${process.env.DB_DATABASE}.file group by F_POST_ID)  order by P_ID desc
 		`)
+		console.log(results, 'what?')
 		for (const result of results) {
 			const temp = result.P_MOD_DT.split(' ')[0]
 			const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
