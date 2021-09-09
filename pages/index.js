@@ -26,6 +26,7 @@ function Home() {
     <div>
       <Head>
         <meta name="description" content="dev hong main page" />
+        <meta property="og:title" content="dev hong main page" />
       </Head>
       <Header toAbout={abScroll} toSkill={skScroll} />
       <IndexContainer />
