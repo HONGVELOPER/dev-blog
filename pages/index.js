@@ -22,7 +22,10 @@ function Home() {
 
 
   return (
-    <div> 
+    <div>
+      <Head>
+        <meta name="description" content="dev hong main page" />
+      </Head>
       <Header toAbout={abScroll} toSkill={skScroll} />
       <IndexContainer />
       <About toAbout={abLocation} scrollChange={abScroll} />
