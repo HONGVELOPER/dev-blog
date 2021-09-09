@@ -3,6 +3,7 @@ import IndexContainer from '../components/index/Container.js'
 import Skill from '../components/index/Skill.js'
 import About from '../components/index/About.js'
 import Footer from '../components/index/Footer.js'
+import Head from 'next/head'
 import { useState } from "react"
 
 function Home() {
