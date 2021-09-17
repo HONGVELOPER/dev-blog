@@ -56,20 +56,6 @@ const IndexContainer = () => {
 			window.addEventListener('resize', function() {
 				window.innerWidth < divide ? setMobile(true) : setMobile(false)
 			}, {passive: true})
-			if (!mobile) {
-				const introduce = '안녕하세요,\n웹 브라우저로 생각을 표현하는 개발자 홍영진입니다.'
-				const text = document.querySelector('.text')
-				let i = 0
-				function typing() {
-					let temp = introduce[i++]
-					text.innerHTML += temp === '\n' ? '<br />': temp
-					if (i > introduce.length) {
-						text.textContent = ''
-						i = 0
-					}
-				}
-				setInterval(typing, 200)
-			}
 		}
 	})
 
@@ -91,14 +77,13 @@ const IndexContainer = () => {
 							</div>
 						) : (
 							<div className={classes.indexText}>
-								<div className='text'></div>
-								{/* 안녕하세요,<br />
+								안녕하세요,<br />
 								웹 브라우저로 생각을<br />
 								표현하는<br />
 								개발자 <span style={{color: '#218e16'}}>홍영진</span>입니다.
 								<div style={{fontSize: '20px', marginTop: '20px'}}>
 									성장하는 개발자가 될 것입니다.
-								</div> */}
+								</div>
 							</div>
 						)}
 					</Grid>

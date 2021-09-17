@@ -1,5 +1,6 @@
 import Header from '../../components/index/Header.js';
 import DetailContainer from '../../components/blogDetail/Container.js';
+// import TableOfContents from '../../components/blogDetail/TableOfContents';
 import Comment from '../../components/comment/comment.js';
 import axios from 'axios';
 

@@ -8,6 +8,7 @@ import axios from 'axios';
 import router from 'next/router';
 import Modal from '../posting/modal';
 import parse from 'html-react-parser';
+import TableOfContents from './TableOfContents';
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -22,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 function BlogDetailContainer(props)	 {
 	const classes = useStyles()
 	const [mobile, setMobile] = useState(null)
-
 	const [show, setShow] = useState(false)
 
 	function showHandler(showResult) {
@@ -30,16 +30,16 @@ function BlogDetailContainer(props)	 {
 	}
 
 	useEffect(() => {
+		const divide = 1000
 		if (mobile === null) {
-		window.innerWidth < 720 ? setMobile(true) : setMobile(false)
+			window.innerWidth < divide ? setMobile(true) : setMobile(false)
 		}
-		window.addEventListener('resize', function() {
-		window.innerWidth < 720 ? setMobile(true) : setMobile(false)
+			window.addEventListener('resize', function() {
+			window.innerWidth < divide ? setMobile(true) : setMobile(false)
 		}, {passive: true})
 	})
 
 	const deletePost = async () => {
-		
 		const response = await axios.delete('/api/blog', {
 			params: {
 				id: props.data.id
@@ -70,14 +70,23 @@ function BlogDetailContainer(props)	 {
 					</div>
 				</Grid>
 				<Grid item xs={12}>
-					<div>
-						{parse(props.data.content)}
-					</div>
-					{/* <div dangerouslySetInnerHTML={{__html: props.data.content}} /> */}
+					{mobile ? (
+						<div>
+							{parse(props.data.content)}
+						</div>
+					) : (
+						<Grid container>
+							<Grid item xs={10}>
+								<div>
+									{parse(props.data.content)}
+								</div>
+							</Grid>
+							<Grid item xs={2}>
+								<TableOfContents />
+							</Grid>
+						</Grid>
+					)}
 				</Grid>
-				{/* <Grid item xs={2} style={{display: 'inlineblock', marginLeft: '30px'}}>
-					check
-				</Grid> */}
 			</Grid>
 			<div>
 				{show ? (
