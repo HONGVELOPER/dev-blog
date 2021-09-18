@@ -25,7 +25,7 @@ export async function getServerSideProps(context) {
 	})
 	// (<u class="ul-\d">[\d\w]+<\/u>)
 	const tocData = []
-	const tocArray = response.data[0].content.match(/(<u class="ul-\d">[a-zA-Z0-9.]+<\/u>)/gm)
+	const tocArray = response.data[0].content.match(/(<u class="ul-\d">[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9.;\s]+<\/u>)/gm)
 	for (const data of tocArray) {
 		const result = data.replace(/(<([^>]+)>)/ig,"")
 		tocData.push(result)

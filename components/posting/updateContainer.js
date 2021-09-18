@@ -63,8 +63,24 @@ const UpadateContainer = (props) => {
 		const quill = quillInstance.current;
 		const toolbar = quill.getModule('toolbar')
 		toolbar.addHandler('image', onClickImageBtn)
+		toolbar.addHandler('underline', onClickUnderLine)
 		quill.root.innerHTML = props.data.content
   	}, []);
+
+	let ulCount = 0
+	let classCount = 0
+	const onClickUnderLine = () => {
+		console.log('under line button click!')
+		const position = quillInstance.current.getSelection(true) // position of dragged string
+		const ulText = quillInstance.current.getText(position.index, position.length) // get text of position
+		quillInstance.current.deleteText(position.index, position.length) // origin text delete
+		quillInstance.current.insertText(position.index, ulText, {'underline': true})
+		console.log(document.getElementsByTagName('u'), 'check')
+		const target = document.getElementsByTagName('u')[classCount]
+		target.setAttribute('class', `ul-${ulCount}`)
+		ulCount++
+		classCount++
+	}
 
 	const onClickImageBtn = () => {
 		const input = document.createElement('input')
