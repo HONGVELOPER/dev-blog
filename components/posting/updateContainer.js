@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 export const modules = {
 	toolbar: {
 		container: [
-			[{ 'size': ['small', false, 'large', 'huge'] }],
 			[{ 'header': [1, 2, 3, 4, 5, 6, false] }],
 			[{ 'font': [] }],
 

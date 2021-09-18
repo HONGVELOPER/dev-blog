@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme) => ({
 export const modules = {
   toolbar: {
     container: [
-      [{ 'size': ['small', false, 'large', 'huge'] }],
       [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
       [{ 'font': [] }],
 
@@ -45,6 +44,7 @@ const postContainer = () => {
   const quillInstance = useRef(null)
 
 	const [title, setTitle] = useState("")
+  const [underLine, setUnderline] = useState(false)
 
   useEffect(() => {
     if (quillElement.current) {
@@ -58,7 +58,23 @@ const postContainer = () => {
     const quill = quillInstance.current;
     const toolbar = quill.getModule('toolbar')
     toolbar.addHandler('image', onClickImageBtn)
+    toolbar.addHandler('underline', onClickUnderLine)
   }, []);
+
+  let ulCount = 0
+  let classCount = 0
+  const onClickUnderLine = () => {
+    console.log('under line button click!')
+    const position = quillInstance.current.getSelection(true) // position of dragged string
+    const ulText = quillInstance.current.getText(position.index, position.length) // get text of position
+    quillInstance.current.deleteText(position.index, position.length) // origin text delete
+    quillInstance.current.insertText(position.index, ulText, {'underline': true})
+    console.log(document.getElementsByTagName('u'), 'check')
+    const target = document.getElementsByTagName('u')[classCount]
+    target.setAttribute('class', `ul-${ulCount}`)
+    ulCount++
+    classCount++
+  }
 	
 	const titleHandler = (event) => {
 		setTitle(event.currentTarget.value)

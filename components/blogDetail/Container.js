@@ -8,7 +8,6 @@ import axios from 'axios';
 import router from 'next/router';
 import Modal from '../posting/modal';
 import parse from 'html-react-parser';
-import TableOfContents from './TableOfContents';
 
 const useStyles = makeStyles((theme) => ({
 	title: {
@@ -17,27 +16,65 @@ const useStyles = makeStyles((theme) => ({
 	img: {
 		height: '400px',
 		width: '600px',
-	}
+	},
+    fixed: {
+        position: 'fixed',
+    },
+    list: {
+        '&:hover': {
+            color: '#218e16',
+        }
+    },
+    button: {
+        fontSize: '15px',
+        padding: 0,
+        paddingBottom: '5px',
+		transition: '0.5s',
+		"& .MuiTouchRipple-root span":{
+			backgroundColor: '#FFF',
+		},
+        '&:hover': {
+            color: '#218e16',
+            backgroundColor: '#FFF',
+			transform: 'translateY(-5px)',
+        },
+		'&:focus': {
+			color: '#218e16'
+		}
+    }
 }))
 
 function BlogDetailContainer(props)	 {
+
+	console.log(props, 'checkkkk')
 	const classes = useStyles()
 	const [mobile, setMobile] = useState(null)
 	const [show, setShow] = useState(false)
+	const divide = 1000
 
 	function showHandler(showResult) {
 		setShow(showResult)
 	}
 
 	useEffect(() => {
-		const divide = 1000
 		if (mobile === null) {
-			window.innerWidth < divide ? setMobile(true) : setMobile(false)
-		}
+		  	window.innerWidth < divide ? setMobile(true) : setMobile(false)
+		} else {
 			window.addEventListener('resize', function() {
-			window.innerWidth < divide ? setMobile(true) : setMobile(false)
-		}, {passive: true})
+				window.innerWidth < divide ? setMobile(true) : setMobile(false)
+		  	}, {passive: true})
+		}
 	})
+
+	const moveByToc = (event) => {
+		document.querySelector(`.ul-${props.data.tocData.indexOf(event.target.innerHTML)}`).scrollIntoView({behavior: 'smooth'})
+	}
+
+	const toc = props.data.tocData.map((list) => (
+        <li key={list} className={classes.list}>
+            <Button className={classes.button} onClick={moveByToc}>{list}</Button>
+        </li>
+    ))
 
 	const deletePost = async () => {
 		const response = await axios.delete('/api/blog', {
@@ -54,38 +91,47 @@ function BlogDetailContainer(props)	 {
 	}
 
 	return (
-		<Container className={classes.root}>
+		<Container>
 			<Grid container spacing={2} style={{marginTop: '0px'}}>
 				<Grid item xs={12}>
 					<BreadCrumbs />
 				</Grid>
-				<Grid item xs={12}>
-					<div className={classes.title}>
-						<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
-					</div>
-					<div style={{marginTop: '10px', marginBottom: '35px', fontWeight: '100'}}>
-						<span>
-							{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
-						</span>
-					</div>
-				</Grid>
-				<Grid item xs={12}>
-					{mobile ? (
-						<div>
-							{parse(props.data.content)}
+				{mobile ? (
+					<Grid item xs={12}>
+						<div className={classes.title}>
+							<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
 						</div>
-					) : (
-						<Grid container>
-							<Grid item xs={10}>
-								<div>
-									{parse(props.data.content)}
-								</div>
-							</Grid>
-							<Grid item xs={2}>
-								<TableOfContents />
-							</Grid>
+						<div style={{marginTop: '10px', marginBottom: '35px', fontWeight: '100'}}>
+							<span>
+								{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
+							</span>
+						</div>
+					</Grid>
+				) : (
+					<>
+						<Grid item xs={10}>
+							<div className={classes.title}>
+								<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
+							</div>
+							<div style={{marginTop: '10px', marginBottom: '35px', fontWeight: '100'}}>
+								<span>
+									{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
+								</span>
+							</div>
 						</Grid>
-					)}
+						<Grid item xs={2}>
+							<div className={classes.fixed}>
+								<ul>
+									{toc}
+								</ul>
+							</div>
+						</Grid>
+					</>
+				)}
+				<Grid item xs={10}>
+					<div>
+						{parse(props.data.content)}
+					</div>
 				</Grid>
 			</Grid>
 			<div>

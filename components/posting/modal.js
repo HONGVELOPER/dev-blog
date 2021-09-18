@@ -72,7 +72,6 @@ const modal = (props) => {
 						</div>
 						<Divider variant="middle" />
 						<TextField
-							// required
 							type="password"
 							className={classes.password}
 							label="Password Check"
