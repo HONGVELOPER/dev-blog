@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 function BlogDetailContainer(props)	 {
 
-	console.log(props, 'checkkkk')
+
 	const classes = useStyles()
 	const [mobile, setMobile] = useState(null)
 	const [show, setShow] = useState(false)

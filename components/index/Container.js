@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 		position: 'relative',
 		maxWidth: '450px',
 		padding: 30,
+		bottom: '20px',
 	},
 }))
 

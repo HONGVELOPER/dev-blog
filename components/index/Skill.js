@@ -29,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 		boxShadow: '3px 3px 3px #3c5c5e',
 		display: 'inline-block',
 		marginLeft: '10px',
-		// marginRight: '10px',
 		marginBottom: '10px',
 		width: '6.5vw',
 		minWidth: '73px',

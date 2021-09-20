@@ -4,7 +4,6 @@ import Comment from '../../components/comment/comment.js';
 import axios from 'axios';
 
 const BlogDetail = ({ data }) => {
-	// const classes = useStyles()
 
 	return (
 		<div>
@@ -23,7 +22,6 @@ export async function getServerSideProps(context) {
 			id: context.query.id,
 		}
 	})
-	// (<u class="ul-\d">[\d\w]+<\/u>)
 	const tocData = []
 	const tocArray = response.data[0].content.match(/(<u class="ul-\d">[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9.;\s]+<\/u>)/gm)
 	for (const data of tocArray) {

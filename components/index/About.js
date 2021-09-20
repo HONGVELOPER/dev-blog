@@ -7,7 +7,6 @@ import Divider from '@material-ui/core/Divider';
 const useStyles = makeStyles((theme) => ({
 	root: {
 		marginTop: '40px',
-		// height: '200px',
 	},
 	about: {
 		marginTop: '4vh',
