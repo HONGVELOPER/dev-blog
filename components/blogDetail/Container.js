@@ -97,15 +97,22 @@ function BlogDetailContainer(props)	 {
 					<BreadCrumbs />
 				</Grid>
 				{mobile ? (
-					<Grid item xs={12}>
-						<div className={classes.title}>
-							<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
-						</div>
-						<div style={{marginTop: '10px', marginBottom: '35px', fontWeight: '100'}}>
-							<span>
-								{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
-							</span>
-						</div>
+					<Grid container>
+						<Grid item xs={12}>
+							<div className={classes.title}>
+								<h1 style={{marginBottom: 0}}>{props.data.title}</h1>
+							</div>
+							<div style={{marginTop: '10px', marginBottom: '35px', fontWeight: '100'}}>
+								<span>
+									{props.data.date}&nbsp;&nbsp; 조회수: {props.data.view}
+								</span>
+							</div>
+						</Grid>
+						<Grid item xs={12}>
+							<div>
+								{parse(props.data.content)}
+							</div>
+						</Grid>
 					</Grid>
 				) : (
 					<>
@@ -126,13 +133,14 @@ function BlogDetailContainer(props)	 {
 								</ul>
 							</div>
 						</Grid>
+						<Grid item xs={10}>
+							<div>
+								{parse(props.data.content)}
+							</div>
+						</Grid>
 					</>
 				)}
-				<Grid item xs={10}>
-					<div>
-						{parse(props.data.content)}
-					</div>
-				</Grid>
+				
 			</Grid>
 			<div>
 				{show ? (
