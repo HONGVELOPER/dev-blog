@@ -23,7 +23,7 @@ The purpose of this website is not to forget what i have studied
  ---
  
   ### What to do next
-    + blog table of contents
+    + blog table of contents (ok)
     + blog tag
     + SEO
     + ORM
