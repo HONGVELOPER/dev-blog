@@ -23,7 +23,7 @@ export async function getServerSideProps(context) {
 		}
 	})
 	const tocData = []
-	const tocArray = response.data[0].content.match(/(<u class="ul-\d">[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9.-;\s]+<\/u>)/gm)
+	const tocArray = response.data[0].content.match(/<u class="ul-\d">[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9.;-\s]+<\/u>/gm)
 	console.log(tocArray, 'TOC ARRAY CHECK')
 	for (const data of tocArray) {
 		const result = data.replace(/(<([^>]+)>)/ig,"")
