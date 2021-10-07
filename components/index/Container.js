@@ -68,10 +68,9 @@ const IndexContainer = () => {
 					<Grid item xs={12} md={5}>
 						{mobile ? (
 							<div className={classes.mobileIndexText}>
-								안녕하세요,<br />
-								웹 브라우저로 생각을
-								표현하는<br />
-								개발자 <span style={{color: '#218e16'}}>홍영진</span>입니다.
+								웹 브라우저로<br />
+								생각을 표현하는 개발자<br />
+								<span style={{color: '#218e16'}}>홍영진</span>입니다.
 								<div style={{fontSize: '3vw', marginTop: '20px'}}>
 									성장하는 개발자가 될 것입니다.
 								</div>
