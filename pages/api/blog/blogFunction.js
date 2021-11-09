@@ -15,7 +15,7 @@ blogFunctions.blogPost = async function (postData) {
 		if (postData.img.length) {
 			for (const img of postData.img) {
 				await sql_query(`
-					insert into ${process.env.DB_DATABASE}.file (F_POST_ID, F_IMG) VALUE (${result.insertId}, '${img}');
+					insert into ${process.env.DB_DATABASE}.file (P_ID, F_IMG) VALUE (${result.insertId}, '${img}');
 				`)
 			}
 		}
@@ -30,15 +30,14 @@ blogFunctions.blogPost = async function (postData) {
 // 블로그 글 전체 가져오기
 blogFunctions.getAllPost = async function () {
 	try {
-		const response = []
 		const results = await sql_query(`
-			select P_ID as id, P_TITLE as title, P_CONTENT as content, P_VIEW as view, P_WRITER as writer, P_MOD_DT as date, F_IMG as img
-			from ${process.env.DB_DATABASE}.post join ${process.env.DB_DATABASE}.file
-			on ${process.env.DB_DATABASE}.post.p_id = ${process.env.DB_DATABASE}.file.F_POST_ID
-			where f_id in (select min(F_ID) from ${process.env.DB_DATABASE}.file group by F_POST_ID)
-			order by p_id desc
+			select p_id as id, p_title as title, p_content as content, p_writer as writer,
+			p_view AS view, p_mod_dt as date, f_img as img
+			from ${process.env.DB_DATABASE}.post 
+			natural join ${process.env.DB_DATABASE}.file
+			where f_id in (select min(f_id) from ${process.env.DB_DATABASE}.file group by p_id)
+			order by p_id desc;
 		`)
-		console.log(results, 'checking')
 		results.forEach((result) => {
 			result.date = result.date.split(' ')[0]
 			result.content = result.content.replace(/(<([^>]+)>)/ig,"").substring(0, 90) + ' ···'
@@ -59,7 +58,7 @@ blogFunctions.getOnePost = async function (id) {
 			select * from ${process.env.DB_DATABASE}.post where P_ID = ${id}
 		`)
 		const img = await sql_query(`
-			select F_IMG from ${process.env.DB_DATABASE}.file where F_POST_ID = ${id}
+			select F_IMG from ${process.env.DB_DATABASE}.file where P_ID = ${id}
 		`)
 		const temp = result[0].P_MOD_DT.split(' ')[0]
 		const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
@@ -90,7 +89,7 @@ blogFunctions.updatePost = async function (updateData) {
 		if (updateData.img.length) {
 			for (const img of updateData.img) {
 				await sql_query(`
-					insert into ${process.env.DB_DATABASE}.file (F_POST_ID, F_IMG) VALUE (${updateData.id}, '${img}');
+					insert into ${process.env.DB_DATABASE}.file (P_ID, F_IMG) VALUE (${updateData.id}, '${img}');
 				`)
 			}
 		}
@@ -107,10 +106,10 @@ blogFunctions.deletePost = async function(id) {
 	let success = null
 	try {
 		const deleteInfo = await sql_query(`
-			select F_IMG from ${process.env.DB_DATABASE}.file where F_POST_ID = ${id};
+			select F_IMG from ${process.env.DB_DATABASE}.file where P_ID = ${id};
 		`)
 		await sql_query(`
-			delete from ${process.env.DB_DATABASE}.file where F_POST_ID = ${id};
+			delete from ${process.env.DB_DATABASE}.file where P_ID = ${id};
 		`)
 		await sql_query(`
 			delete from ${process.env.DB_DATABASE}.post where P_ID = ${id};
