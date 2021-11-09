@@ -32,27 +32,18 @@ blogFunctions.getAllPost = async function () {
 	try {
 		const response = []
 		const results = await sql_query(`
-			select * from ${process.env.DB_DATABASE}.post inner join ${process.env.DB_DATABASE}.file on ${process.env.DB_DATABASE}.post.P_ID = ${process.env.DB_DATABASE}.file.F_POST_ID where F_ID in (select min(F_ID) from ${process.env.DB_DATABASE}.file group by F_POST_ID)  order by P_ID desc
+			select P_ID as id, P_TITLE as title, P_CONTENT as content, P_VIEW as view, P_WRITER as writer, P_MOD_DT as date, F_IMG as img
+			from ${process.env.DB_DATABASE}.post join ${process.env.DB_DATABASE}.file
+			on ${process.env.DB_DATABASE}.post.p_id = ${process.env.DB_DATABASE}.file.F_POST_ID
+			where f_id in (select min(F_ID) from ${process.env.DB_DATABASE}.file group by F_POST_ID)
+			order by p_id desc
 		`)
-		for (const result of results) {
-			const temp = result.P_MOD_DT.split(' ')[0]
-			const dateEdit = temp.split('-')[0] + '년' + temp.split('-')[1] + '월' + temp.split('-')[2] + '일'
-			const final = {
-				id : result.P_ID,
-				title: result.P_TITLE,
-				content: result.P_CONTENT.replace(/(<([^>]+)>)/ig,"").substring(0, 90) + ' ···',
-				view: result.P_VIEW,
-				writer: result.P_WRITER,
-				date: dateEdit,
-			}
-			if (result.F_IMG.length) {
-				final.img = result.F_IMG
-			} else {
-				final.img = 'https://devhong-s3.s3.ap-northeast-2.amazonaws.com/developer-5063843_1920.jpg'
-			}
-			response.push(final)
-		}
-		return response
+		console.log(results, 'checking')
+		results.forEach((result) => {
+			result.date = result.date.split(' ')[0]
+			result.content = result.content.replace(/(<([^>]+)>)/ig,"").substring(0, 90) + ' ···'
+		})
+		return results
 	} catch (error) {
 		console.log(error)
 	}
@@ -117,6 +108,9 @@ blogFunctions.deletePost = async function(id) {
 	try {
 		const deleteInfo = await sql_query(`
 			select F_IMG from ${process.env.DB_DATABASE}.file where F_POST_ID = ${id};
+		`)
+		await sql_query(`
+			delete from ${process.env.DB_DATABASE}.file where F_POST_ID = ${id};
 		`)
 		await sql_query(`
 			delete from ${process.env.DB_DATABASE}.post where P_ID = ${id};

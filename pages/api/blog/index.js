@@ -22,6 +22,7 @@ const BlogHandler = async (req, res) => {
 			// 게시물 1개 가져올 때
 			if (Object.keys(req.query).length !== 0) { 
 				const result = await blogFuncitons.getOnePost(req.query.id)
+				console.log(result, 'result')
 				return res.status(200).json(result)
 			// 게시물 전체를 가져올 때
 			} else { 

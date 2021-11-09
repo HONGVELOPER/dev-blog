@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import router from 'next/router';
 import axios from 'axios';
+// import ImageResize from 'quill-image-resize';
+// Quill.register('modules/ImageResize', ImageResize);
+
 
 const useStyles = makeStyles((theme) => ({
 	editor: {
@@ -32,6 +35,10 @@ export const modules = {
 			['clean'],
 		],
 	},
+	// ImageResize: {
+	// 	parchment: Quill.import('parchment')
+	// }
+
 };
 
 const image = []
