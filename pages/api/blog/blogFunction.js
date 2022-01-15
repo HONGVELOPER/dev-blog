@@ -30,18 +30,27 @@ blogFunctions.blogPost = async function (postData) {
 // 블로그 글 전체 가져오기
 blogFunctions.getAllPost = async function () {
 	try {
+		let startTime = new Date()
+		// const results = await sql_query(`
+		// 	select p_id as id, p_title as title, p_content as content, p_writer as writer,
+		// 	p_view AS view, p_mod_dt as date, f_img as img
+		// 	from ${process.env.DB_DATABASE}.post 
+		// 	natural join ${process.env.DB_DATABASE}.file
+		// 	where f_id in (select min(f_id) from ${process.env.DB_DATABASE}.file group by p_id)
+		// 	order by p_id desc;
+		// `)
 		const results = await sql_query(`
 			select p_id as id, p_title as title, p_content as content, p_writer as writer,
-			p_view AS view, p_mod_dt as date, f_img as img
+			p_view AS view, p_mod_dt as date
 			from ${process.env.DB_DATABASE}.post 
-			natural join ${process.env.DB_DATABASE}.file
-			where f_id in (select min(f_id) from ${process.env.DB_DATABASE}.file group by p_id)
-			order by p_id desc;
 		`)
 		results.forEach((result) => {
+			result.img = 'https://devhong-s3.s3.ap-northeast-2.amazonaws.com/2020-07-10.png'
 			result.date = result.date.split(' ')[0]
 			result.content = result.content.replace(/(<([^>]+)>)/ig,"").substring(0, 90) + ' ···'
 		})
+		let endTime = new Date()
+		console.log(endTime - startTime, "SECOND TIME CHECK")
 		return results
 	} catch (error) {
 		console.log(error)

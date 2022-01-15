@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
 import React, { useState, useRef } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -114,7 +114,6 @@ const BlogContainer = (props) => {
   const handleValueChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const contentList = props.data.map((content) => (
     <MuiThemeProvider theme={theme} key={content.id}>
       <Grid item xs={12} sm={6} md={4} style={{padding: 10, minWidth: 300}}>

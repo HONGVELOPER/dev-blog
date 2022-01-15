@@ -130,6 +130,7 @@ const postContainer = () => {
     
     const deleteFile = image.filter(x => !imageArray.includes(x))
     if (deleteFile.length) {
+      console.log("front delete file 진입")
       await axios.put('/api/image/deleteFile', {
         deleteFiles: deleteFile,
       })
