@@ -9,13 +9,14 @@ const useStyles = makeStyles((theme) => ({
         height: 15,
         borderRadius: 5,
     },
-    colorPrimary: {
-        backgroundColor: "#EEEEEE",
-    },
-    bar: {
-        borderRadius: 5,
-        backgroundColor: "#1A90FF",
-    }
+    thHover: {
+        transition: '0.5s',
+        "&:hover": {
+          color: '#218e16',
+          backgroundColor: "#FFF",
+        //   transform: 'translateY(-5px)',
+        },
+      },
 }))
 
 function ThumbNail () {
@@ -24,17 +25,38 @@ function ThumbNail () {
 
     const [currentFile, setCurrentFile] = useState(null);
     const [previewImg, setPreviewImg] = useState(null);
-    // const [, setThFile] = useState(null);
-    // const [thFile, setThFile] = useState(null);
+    const [image, setImage] = useState(null);
+
 
     const chooseImg = () => {
         document.getElementById("btn-upload").click()
     }
 
-    const selectFile = (event) => {
+    const selectFile = async (event) => {
+
+        if (currentFile) {
+            console.log("진입")
+            await axios.put('/api/image/deleteFile', {
+                deleteFiles: delelteFile,
+            })
+        }
         console.log(event, 'event check')
         setCurrentFile(event.target.files[0])
         setPreviewImg(URL.createObjectURL(event.target.files[0]))
+    }
+
+    const thumbNailHandler = async () => {
+        const formData = new FormData()
+        formData.append('img', currentFile)
+
+        const result = await axios.post('/api/image/uploadFile', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        if (result.status === 200) {
+            console.log(result, "result")
+        }
     }
 
     return (
@@ -43,10 +65,7 @@ function ThumbNail () {
                 <Grid container>
                     <Grid item xs={12}>
                         <div>
-                            <h2>
-                                Select blog thumbNail image
-                            </h2>
-                            <div>
+                            <div style={{marginBottom: '10px', marginTop: '10px'}}>
                                 <input
                                     id="btn-upload" 
                                     name="btn-upload"
@@ -55,13 +74,16 @@ function ThumbNail () {
                                     style={{display: 'none'}}
                                     onChange={selectFile}
                                 />
-                                <Button variant="outlined" onClick={chooseImg} component="span">
-                                    Choose Image
+                                <Button variant="outlined" onClick={chooseImg} component="span" className={classes.thHover}>
+                                    Choose ThumbNail Image
                                 </Button>
-                                <span>
-                                    <img src={previewImg} alt=""  height={200} width={300} style={{display: 'inline-block'}} />
+                                <span style={{marginLeft: '20px'}}>
+                                    {currentFile ? currentFile.name : null}
                                 </span>
                             </div>
+                            <span>
+                                <img src={previewImg} alt=""  height={200} width={300} style={{display: 'inline-block'}} />
+                            </span>
                         </div>
                     </Grid>
                 </Grid>
