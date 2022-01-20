@@ -33,14 +33,6 @@ function ThumbNail () {
     }
 
     const selectFile = async (event) => {
-
-        if (currentFile) {
-            console.log("진입")
-            await axios.put('/api/image/deleteFile', {
-                deleteFiles: delelteFile,
-            })
-        }
-        console.log(event, 'event check')
         setCurrentFile(event.target.files[0])
         setPreviewImg(URL.createObjectURL(event.target.files[0]))
     }
@@ -82,7 +74,7 @@ function ThumbNail () {
                                 </span>
                             </div>
                             <span>
-                                <img src={previewImg} alt=""  height={200} width={300} style={{display: 'inline-block'}} />
+                                {previewImg ? <img src={previewImg} alt=""  height={200} width={300} style={{display: 'inline-block'}} /> : null}
                             </span>
                         </div>
                     </Grid>
