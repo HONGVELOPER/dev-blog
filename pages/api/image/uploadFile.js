@@ -14,7 +14,6 @@ const params = {
 }
 
 const ImageHandler = async (req, res) => {
-	console.log(req, 'req cehck')
     if (req.method === 'POST') {
         try {
             const form = new formidable.IncomingForm({
@@ -22,7 +21,7 @@ const ImageHandler = async (req, res) => {
     			multiples: true,
 				keepExtensions: false
 			})
-			form.parse(req, (err, fields, files) => {
+			form.parse(req, (err, fields, files) => {	
 				params.Key = files.img.name
 				params.Body = fs.createReadStream(files.img.path)
 				const s3 = new AWS.S3({

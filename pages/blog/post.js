@@ -22,7 +22,7 @@ function BlogPost() {
 			{show ? (
 				<>
 					<Header />
-					<ThumbNail />
+					{/* <ThumbNail /> */}
 					<PostContainer />
 				</>
 			) : (

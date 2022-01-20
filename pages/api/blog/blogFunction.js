@@ -9,8 +9,8 @@ blogFunctions.blogPost = async function (postData) {
 	let success =  null
 	try {
 		const result = await sql_query(`
-			insert into ${process.env.DB_DATABASE}.post (P_TITLE, P_CONTENT, P_WRITER)
-			VALUE ('${postData.title}', '${postData.content}', '${postData.writer}');
+			insert into ${process.env.DB_DATABASE}.post (P_TITLE, P_CONTENT, P_WRITER, P_THUMBNAIL)
+			VALUE ('${postData.title}', '${postData.content}', '${postData.writer}', '${postData.thumbNail}');
 		`)
 		if (postData.img.length) {
 			for (const img of postData.img) {
@@ -30,19 +30,14 @@ blogFunctions.blogPost = async function (postData) {
 // 블로그 글 전체 가져오기
 blogFunctions.getAllPost = async function () {
 	try {
-		console.log('ALL POST 진입')
-		// let startTime = new Date()
 		const results = await sql_query(`
 			select p_id as id, p_title as title, p_content as content, p_writer as writer,
 			p_view AS view, date(p_mod_dt) as date, p_thumbnail as img
 			from ${process.env.DB_DATABASE}.post 
 		`)
-		// console.log(results, 'result final')
 		results.forEach((result) => {
 			result.content = result.content.replace(/(<([^>]+)>)/ig,"").substring(0, 90) + ' ···'
 		})
-		// let endTime = new Date()
-		// console.log(endTime - startTime, "SECOND TIME CHECK")
 		return results
 	} catch (error) {
 		console.log(error)

@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         "&:hover": {
           color: '#218e16',
           backgroundColor: "#FFF",
-        //   transform: 'translateY(-5px)',
         },
       },
 }))
@@ -54,31 +53,7 @@ function ThumbNail () {
     return (
         <>
             <Container>
-                <Grid container>
-                    <Grid item xs={12}>
-                        <div>
-                            <div style={{marginBottom: '10px', marginTop: '10px'}}>
-                                <input
-                                    id="btn-upload" 
-                                    name="btn-upload"
-                                    type="file"
-                                    accept="image/*"
-                                    style={{display: 'none'}}
-                                    onChange={selectFile}
-                                />
-                                <Button variant="outlined" onClick={chooseImg} component="span" className={classes.thHover}>
-                                    Choose ThumbNail Image
-                                </Button>
-                                <span style={{marginLeft: '20px'}}>
-                                    {currentFile ? currentFile.name : null}
-                                </span>
-                            </div>
-                            <span>
-                                {previewImg ? <img src={previewImg} alt=""  height={200} width={300} style={{display: 'inline-block'}} /> : null}
-                            </span>
-                        </div>
-                    </Grid>
-                </Grid>
+                
             </Container>
         </>
     )
