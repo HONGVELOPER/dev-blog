@@ -13,13 +13,16 @@ const Blog = ({ data }) => {
   )
 }
 
-export default Blog
 
-export async function getServerSideProps() {
+Blog.getInitialProps = async () => {
   const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog`)
+  const data = response.data
+  console.log(data, 'data')
   return {
-    props: {
-      data: response.data,
-    }
+    data: data,
+    // props: {
+    // }
   }
 }
+
+export default Blog
