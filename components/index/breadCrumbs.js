@@ -35,8 +35,8 @@ const breadCrumble = (props) => {
 		<div>
 			<Breadcrumbs className={classes.breadCrumbs} separator={<NavigateNextIcon fontSize="small" />} aria-label="breadcrumb">
 				<Link href="/" style={{color: '#000000'}}>
-          Home
-        </Link>
+         			 Home
+        		</Link>
 				{list}
 			</Breadcrumbs>
 		</div>

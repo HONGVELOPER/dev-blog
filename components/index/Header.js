@@ -7,7 +7,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Box from '@material-ui/core/Box';
 import Drawer from '@material-ui/core/Drawer';
 import { useRouter } from 'next/router';
 

@@ -5,7 +5,6 @@ const blogFunctions = {}
 
 // 블로그 글 포스팅하기
 blogFunctions.blogPost = async function (postData) {
-	console.log(postData, 'post data ')
 	let success =  null
 	try {
 		const result = await sql_query(`

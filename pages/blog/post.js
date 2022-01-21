@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../../components/index/Header.js'
-import ThumbNail from '../../components/posting/thumbNail'
 import PostContainer from '../../components/posting/postContainer.js'
 import Modal from '../../components/posting/modal.js'
 
@@ -22,7 +21,6 @@ function BlogPost() {
 			{show ? (
 				<>
 					<Header />
-					{/* <ThumbNail /> */}
 					<PostContainer />
 				</>
 			) : (

@@ -127,27 +127,27 @@ const BlogContainer = (props) => {
               <img src={`${content.img}`} alt="card index" style={{display: 'block', height: '100%', width: 'auto'}} />
             </CardContent>
             <Divider variant="middle" style={{position: 'relative', top: 7}} />
-            <Box style={{padding: '5px'}}>
-              <Box className={classes.blogTitle}>
+            <div style={{padding: '5px'}}>
+              <div className={classes.blogTitle}>
                 <div>{content.title}</div>
-              </Box>
-              <Box className={classes.blogContent}>
+              </div>
+              <div className={classes.blogContent}>
                 {content.content}
-              </Box>
+              </div>
               <Grid container className={classes.blogWriter}>
                 <Grid item xs={12} style={{paddingTop: '2px', display: 'block'}}>
                   <SpaIcon />
-                  <Box style={{marginLeft: '5px', display: 'inline-block'}}>
+                  <div style={{marginLeft: '5px', display: 'inline-block'}}>
                     <div>
                       <span style={{fontWeight: 500, fontSize: '12px'}}>{content.writer}님이 작성함</span>
                     </div>
                     <div style={{fontWeight: 500, fontSize: '12px', bottom: '1px', position: 'relative'}}>
                       {content.date} &nbsp;&nbsp;조회수: <span style={{fontSize: '12px'}}>{content.view}</span>
                     </div>
-                  </Box>
+                  </div>
                 </Grid>
               </Grid> 
-            </Box>
+            </div>
           </Card>
         </Link>
       </Grid>
@@ -169,8 +169,7 @@ const BlogContainer = (props) => {
               display: 'none',
             }}}
           >
-            <Tab ref={focusRef} label="인기 게시물" {...a11yProps(0)} className={classes.bottom} />
-            <Tab label="최근 게시물" {...a11yProps(1)} className={classes.bottom} />
+            <Tab ref={focusRef} label="최근 게시물" {...a11yProps(0)} className={classes.bottom} />
           </Tabs>
         </MuiThemeProvider>
       </AppBar>
@@ -178,9 +177,6 @@ const BlogContainer = (props) => {
         <Grid container spacing={3} style={{padding: 0}}>
           {contentList}
         </Grid>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        Item Two
       </TabPanel>
     </Container>
   )

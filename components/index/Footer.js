@@ -135,10 +135,8 @@ const footer = () => {
 								>
 									<div className={classes.paper}>
 										<div style={{padding: 30, paddingBottom: 10, fontSize: '20px', color: '#218e16'}}>
-											Contect&nbsp; with&nbsp; Me&nbsp; by&nbsp; Mail 
-											{/* Please contact us by email */}
+											Contact&nbsp; with&nbsp; Me&nbsp; by&nbsp; Mail 
 										</div>
-										{/* <Divider variant="middle" style={{backgroundColor: '#218e16'}} /> */}
 										<Divider variant="middle" />
 										<div>
 											<TextField

@@ -83,7 +83,6 @@ const postContainer = () => {
 	}
 
 	const thumbNailHandler = async () => {
-		console.log('thumb 진입')
 		const formData = new FormData()
 		formData.append('img', currentFile)
 
@@ -93,7 +92,6 @@ const postContainer = () => {
 			}
 		})
 		if (result.status === 200) {
-			// console.log(result, "result")
 			return result.data.location
 		}
 	}
@@ -158,7 +156,7 @@ const postContainer = () => {
 		const uploadFile = image.filter(x => imageArray.includes(x))
 
 		const thumbNail = await thumbNailHandler()
-		
+
 		const response = await axios.post('/api/blog', {
 			title: title,
 			content: quillInstance.current.root.innerHTML,
