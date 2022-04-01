@@ -1,7 +1,5 @@
-import React, { useState, useRef } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import BreadCrumbs from "../../components/index/breadCrumbs.js";
-import SpaIcon from "@material-ui/icons/Spa";
 import {
 	Container,
 	Card,
@@ -9,119 +7,111 @@ import {
 	Grid,
 	Divider,
 	Link,
+	Avatar,
 } from "@material-ui/core";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-
-const theme = createMuiTheme({
-	palette: {
-		primary: {
-			main: "#218e16",
-		},
-	},
-	status: {
-		danger: "orange",
-	},
-	breakpoints: {
-		values: {
-			xs: 0,
-			sm: 750,
-			md: 1100,
-			lg: 1280,
-			xl: 1920,
-		},
-	},
-});
+import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-	card: {
-		transition: "0.5s",
-		"&:hover": {
-			opacity: 0.5,
-			transform: "translateY(-10px)",
-		},
-	},
-	bottom: {
-		display: "block",
-		marginLeft: "15px",
-		height: "20px",
-		"&:hover": {
-			transition: "0.5s",
-			"&:after": {
-				content: "''",
-				display: "block",
-				width: "60px",
-				borderBottom: "3px solid #218e16",
-				margin: "10px auto",
-			},
-		},
-	},
-	img: {
-		objectFit: "fill",
-	},
-	blogTitle: {
-		marginTop: "5px",
-		marginBottom: "15px",
-		fontSize: "24px",
-		fontWeight: 600,
-		height: "70px",
-	},
-	blogContent: {
-		height: "45px",
-		color: "#73716b",
-		fontSize: "12px",
-	},
-	blogWriter: {
-		marginTop: "20px",
-		fontSize: "10px",
-		fontWeight: 200,
+	avatar: {
+		height: theme.spacing(6),
+		width: theme.spacing(6),
 	},
 }));
 
 const BlogContainer = (props) => {
-	console.log(props, "props");
 	const classes = useStyles();
-
 	const postList = props.data.map((post) => (
-		<Grid item xs={12} style={{ width: "1000px" }}>
+		<Grid item xs={12} style={{ width: "1000px" }} key={post.id}>
 			<Link href={`blog/${post.id}`} style={{ textDecoration: "none" }}>
 				<Card elevation={0}>
-					<CardContent>
-						<Grid container>
+					<CardContent style={{ paddingTop: 0 }}>
+						<Grid
+							container
+							style={{
+								direction: "column",
+								alignItems: "center",
+							}}
+						>
 							<Grid
 								item
-								xs={10}
-								style={{ position: "relative", left: "20px" }}
+								xs={9}
+								style={{ position: "relative", left: "5px" }}
 							>
-								<h2>{post.title}</h2>
-								<div>{post.content}</div>
-								<span>
-									<span style={{ color: "#89a7c6" }}>
-										{post.writer}&nbsp;&nbsp;
-									</span>
+								<div>
+									<Avatar
+										className={classes.avatar}
+										src="/images/avatar3.jpg"
+										style={{
+											display: "inline-block",
+											margin: "5px",
+											marginLeft: "0px",
+										}}
+									/>
 									<span
 										style={{
+											fontWeight: 550,
+											fontSize: "12px",
 											position: "relative",
-											top: "1px",
-											color: "#BCBCBC",
-											fontSize: "14px",
-											padding: "15px 0px",
+											left: "11px",
+											bottom: "23px",
+											// color: "darkgrey",
 										}}
 									>
-										{post.date}
+										{post.writer}&nbsp;&nbsp;
 									</span>
-								</span>
+								</div>
+								<h2 style={{ marginBottom: "5px" }}>
+									{post.title}
+								</h2>
+								<div
+									style={{
+										color: "#555251",
+										fontWeight: 300,
+										marginLeft: "15px",
+									}}
+								>
+									{post.content}
+								</div>
 							</Grid>
-							<Grid item xs={2}>
+							<Grid
+								item
+								xs={3}
+								style={{
+									position: "relative",
+									left: "30px",
+									top: "10px",
+								}}
+							>
 								<img
 									src={`${post.img}`}
 									alt="card index"
 									style={{
 										display: "block",
-										height: "100%",
-										width: "100%",
+										// height: "100%",
+										// width: "100%",
+										maxHeight: "180px",
 									}}
 								/>
 							</Grid>
+							<div
+								style={{
+									position: "relative",
+									top: "10px",
+									color: "#BCBCBC",
+									fontSize: "14px",
+									// display: "flex",
+									// justifyContent: "flex-end",
+								}}
+							>
+								<span
+									style={{
+										padding: "15px 0px",
+									}}
+								>
+									{post.date}&nbsp;| 조회수 : {post.view}
+									&nbsp;&nbsp;
+								</span>
+							</div>
 						</Grid>
 					</CardContent>
 				</Card>
@@ -135,7 +125,13 @@ const BlogContainer = (props) => {
 			<Grid item xs={12} style={{ marginTop: 10, marginLeft: 30 }}>
 				<BreadCrumbs style={{ display: "inlineBlock" }} />
 			</Grid>
-			<Grid container spacing={2} direction="column" alignItems="center">
+			<Grid
+				container
+				spacing={2}
+				direction="column"
+				alignItems="center"
+				style={{ margin: "10px 0px" }}
+			>
 				{postList}
 			</Grid>
 		</Container>
