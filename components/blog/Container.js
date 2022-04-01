@@ -101,7 +101,7 @@ const BlogContainer = (props) => {
 									<span
 										style={{
 											position: "relative",
-											top: "2px",
+											top: "1px",
 											color: "#BCBCBC",
 											fontSize: "14px",
 											padding: "15px 0px",
@@ -130,104 +130,14 @@ const BlogContainer = (props) => {
 		</Grid>
 	));
 
-	const contentList = props.data.map((content) => (
-		<MuiThemeProvider theme={theme} key={content.id}>
-			<Grid
-				item
-				xs={12}
-				sm={6}
-				md={4}
-				style={{ padding: 10, minWidth: 300 }}
-			>
-				<Link href={`blog/${content.id}`}>
-					<Card
-						elevation={5}
-						className={classes.card}
-						style={{ height: "450px", maxWidth: "400px" }}
-					>
-						<CardContent style={{ padding: 0, height: "250px" }}>
-							<img
-								src={`${content.img}`}
-								alt="card index"
-								style={{
-									display: "block",
-									height: "100%",
-									width: "100%",
-								}}
-							/>
-							{/* <Image src={`${content.img}`} alt="img" width={300} height={300} /> */}
-						</CardContent>
-						<Divider
-							variant="middle"
-							style={{ position: "relative", top: 7 }}
-						/>
-						<div style={{ padding: "5px" }}>
-							<div className={classes.blogTitle}>
-								<div>{content.title}</div>
-							</div>
-							<div className={classes.blogContent}>
-								{content.content}
-							</div>
-							<Grid container className={classes.blogWriter}>
-								<Grid
-									item
-									xs={12}
-									style={{
-										paddingTop: "2px",
-										display: "block",
-									}}
-								>
-									<SpaIcon />
-									<div
-										style={{
-											marginLeft: "5px",
-											display: "inline-block",
-										}}
-									>
-										<div>
-											<span
-												style={{
-													fontWeight: 500,
-													fontSize: "12px",
-												}}
-											>
-												{content.writer}님이 작성함
-											</span>
-										</div>
-										<div
-											style={{
-												fontWeight: 500,
-												fontSize: "12px",
-												bottom: "1px",
-												position: "relative",
-											}}
-										>
-											{content.date} &nbsp;&nbsp;조회수:{" "}
-											<span style={{ fontSize: "12px" }}>
-												{content.view}
-											</span>
-										</div>
-									</div>
-								</Grid>
-							</Grid>
-						</div>
-					</Card>
-				</Link>
-			</Grid>
-		</MuiThemeProvider>
-	));
-
 	return (
-		<Container>
+		<Container style={{ width: "1100px" }}>
 			<Grid item xs={12} style={{ marginTop: 10, marginLeft: 30 }}>
 				<BreadCrumbs style={{ display: "inlineBlock" }} />
 			</Grid>
 			<Grid container spacing={2} direction="column" alignItems="center">
 				{postList}
 			</Grid>
-			{/* <Grid container spacing={3}>
-				{contentList}
-			</Grid> */}
 		</Container>
 	);
 };

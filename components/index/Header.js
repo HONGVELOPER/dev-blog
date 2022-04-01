@@ -149,7 +149,7 @@ const Header = (props) => {
 	);
 
 	return (
-		<Container>
+		<Container style={{ maxWidth: "1100px" }}>
 			<AppBar
 				elevation={0}
 				color="transparent"

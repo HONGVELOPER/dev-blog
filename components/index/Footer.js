@@ -204,12 +204,12 @@ const footer = () => {
 						<Grid item xs={12}>
 							{mobile ? (
 								<div>
-									Copyright ⓒ 2021 <br />
+									Copyright ⓒ 2022 <br />
 									DEV HONG All Rights Reserved.
 								</div>
 							) : (
 								<div>
-									Copyright ⓒ 2021 DEV HONG All Rights
+									Copyright ⓒ 2022 DEV HONG All Rights
 									Reserved.
 								</div>
 							)}
