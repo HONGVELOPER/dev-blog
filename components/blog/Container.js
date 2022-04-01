@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 	avatar: {
 		height: theme.spacing(6),
 		width: theme.spacing(6),
+		boxShadow: "3px 3px 6px #3c5c5e",
 	},
 }));
 
@@ -24,19 +25,15 @@ const BlogContainer = (props) => {
 		<Grid item xs={12} style={{ width: "1000px" }} key={post.id}>
 			<Link href={`blog/${post.id}`} style={{ textDecoration: "none" }}>
 				<Card elevation={0}>
-					<CardContent style={{ paddingTop: 0 }}>
+					<CardContent>
 						<Grid
 							container
+							spacing={0}
 							style={{
-								direction: "column",
 								alignItems: "center",
 							}}
 						>
-							<Grid
-								item
-								xs={9}
-								style={{ position: "relative", left: "5px" }}
-							>
+							<Grid item xs={9}>
 								<div>
 									<Avatar
 										className={classes.avatar}
@@ -49,12 +46,11 @@ const BlogContainer = (props) => {
 									/>
 									<span
 										style={{
-											fontWeight: 550,
+											fontWeight: 570,
 											fontSize: "12px",
 											position: "relative",
 											left: "11px",
 											bottom: "23px",
-											// color: "darkgrey",
 										}}
 									>
 										{post.writer}&nbsp;&nbsp;
@@ -67,7 +63,6 @@ const BlogContainer = (props) => {
 									style={{
 										color: "#555251",
 										fontWeight: 300,
-										marginLeft: "15px",
 									}}
 								>
 									{post.content}
@@ -78,7 +73,7 @@ const BlogContainer = (props) => {
 								xs={3}
 								style={{
 									position: "relative",
-									left: "30px",
+									left: "5px",
 									top: "10px",
 								}}
 							>
@@ -87,8 +82,7 @@ const BlogContainer = (props) => {
 									alt="card index"
 									style={{
 										display: "block",
-										// height: "100%",
-										// width: "100%",
+										width: "100%",
 										maxHeight: "180px",
 									}}
 								/>
@@ -99,8 +93,6 @@ const BlogContainer = (props) => {
 									top: "10px",
 									color: "#BCBCBC",
 									fontSize: "14px",
-									// display: "flex",
-									// justifyContent: "flex-end",
 								}}
 							>
 								<span
@@ -127,7 +119,7 @@ const BlogContainer = (props) => {
 			</Grid>
 			<Grid
 				container
-				spacing={2}
+				spacing={0}
 				direction="column"
 				alignItems="center"
 				style={{ margin: "10px 0px" }}
