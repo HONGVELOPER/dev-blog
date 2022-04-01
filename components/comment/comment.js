@@ -39,7 +39,7 @@ const commentContainer = () => {
 	}, []);
 
 	return (
-		<Container>
+		<Container style={{ width: "1000px" }}>
 			<h3 style={{ marginBottom: 5 }}>Comments</h3>
 			<Divider />
 			<div className={classes.comments} ref={commentRef} />

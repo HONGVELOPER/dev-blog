@@ -127,7 +127,7 @@ const IndexContainer = () => {
 						>
 							{mobile ? (
 								<Image
-									src={"/images/mainIamge.png"}
+									src={"/images/main.png"}
 									width={100}
 									height={80}
 									layout="responsive"
@@ -135,7 +135,7 @@ const IndexContainer = () => {
 								/>
 							) : (
 								<Image
-									src={"/images/mainIamge.png"}
+									src={"/images/main.png"}
 									layout="fill"
 									objectFit="contain"
 									quality={60}
