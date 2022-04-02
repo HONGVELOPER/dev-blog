@@ -49,17 +49,6 @@ const postContainer = () => {
 	const classes = useStyles();
 
 	const Quill = typeof window == "object" ? require("quill") : () => false;
-	const ImageResize =
-		typeof window == "object"
-			? require("@looop/quill-image-resize-module-react")
-			: () => false;
-
-	// console.log("check1");
-	if (Quill && ImageResize) {
-		Quill.register("modules/ImageResize", ImageResize);
-		console.log("Err");
-	}
-	console.log("check2");
 	const quillElement = useRef(null);
 	const quillInstance = useRef(null);
 
@@ -156,12 +145,12 @@ const postContainer = () => {
 
 	const blogPost = async (event) => {
 		event.preventDefault();
-		let ulCount = 0;
-		const ulList = document.getElementsByTagName("u");
-		for (const ulData of ulList) {
-			ulData.setAttribute("class", `ul-${ulCount}`);
-			ulCount++;
-		}
+		// let ulCount = 0;
+		// const ulList = document.getElementsByTagName("u");
+		// for (const ulData of ulList) {
+		// 	ulData.setAttribute("class", `ul-${ulCount}`);
+		// 	ulCount++;
+		// }
 
 		const imageSet = new Set();
 		const imgReg = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g;
@@ -176,7 +165,7 @@ const postContainer = () => {
 		const response = await axios.post("/api/blog", {
 			title: title,
 			content: quillInstance.current.root.innerHTML,
-			writer: "dev hong",
+			writer: "HongJin",
 			thumbNail: thumbNail,
 			img: uploadFile,
 		});
