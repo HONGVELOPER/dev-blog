@@ -1,7 +1,6 @@
 import React, { createRef, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
+import { Container, Divider, Grid } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -39,10 +38,14 @@ const commentContainer = () => {
 	}, []);
 
 	return (
-		<Container style={{ width: "1000px" }}>
+		<Container style={{ maxWidth: "1000px" }}>
 			<h3 style={{ marginBottom: 5 }}>Comments</h3>
 			<Divider />
-			<div className={classes.comments} ref={commentRef} />
+			<Grid container>
+				<Grid item xs={12}>
+					<div className={classes.comments} ref={commentRef} />
+				</Grid>
+			</Grid>
 		</Container>
 	);
 };

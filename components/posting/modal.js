@@ -44,10 +44,8 @@ const modal = (props) => {
 	};
 
 	const passwordCheck = async () => {
-		// const pass = "0725"; // 삭제 해야함
 		const response = await axios.post("/api/blog", {
 			password: password,
-			// password: pass, // 삭제 해야함
 		});
 		if (response.data.result) {
 			props.passwordCheck(true);
