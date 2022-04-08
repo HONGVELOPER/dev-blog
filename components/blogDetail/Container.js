@@ -24,7 +24,7 @@ function BlogDetailContainer(props) {
 	}
 
 	const deletePost = async () => {
-		const response = await axios.delete("/api/blog", {
+		const response = await axios.delete("/api/blog/post", {
 			params: {
 				id: props.data.id,
 			},

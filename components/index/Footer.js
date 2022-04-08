@@ -102,7 +102,7 @@ const footer = () => {
 	};
 
 	const mailSend = async () => {
-		const response = await axios.post("/api/mail", {
+		const response = await axios.post("/api/blog/mail", {
 			title: title,
 			text: text,
 		});
