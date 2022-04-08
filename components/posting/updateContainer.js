@@ -19,14 +19,10 @@ export const modules = {
 		container: [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],
 			[{ font: [] }],
-
 			["bold", "italic", "underline", "strike"],
 			["blockquote", "code-block"],
-
 			[{ list: "ordered" }, { list: "bullet" }],
-			,
 			[{ indent: "-1" }, { indent: "+1" }],
-
 			[{ color: [] }, { background: [] }],
 			[{ align: [] }],
 			["link", "image"],
@@ -41,10 +37,13 @@ const uploadImage = [];
 
 const UpadateContainer = (props) => {
 	const classes = useStyles();
+
 	const Quill = typeof window == "object" ? require("quill") : () => false;
 	const quillElement = useRef(null);
 	const quillInstance = useRef(null);
+
 	const [title, setTitle] = useState("");
+	const [quillFile, setQuillFile] = useState([]);
 
 	useEffect(() => {
 		setTitle(props.data.title);
@@ -64,107 +63,103 @@ const UpadateContainer = (props) => {
 		const quill = quillInstance.current;
 		const toolbar = quill.getModule("toolbar");
 		toolbar.addHandler("image", onClickImageBtn);
-		toolbar.addHandler("underline", onClickUnderLine);
 		quill.root.innerHTML = props.data.content;
 	}, []);
-
-	const onClickUnderLine = () => {
-		const position = quillInstance.current.getSelection(true); // position of dragged string
-		const ulText = quillInstance.current.getText(
-			position.index,
-			position.length
-		); // get text of position
-		quillInstance.current.deleteText(position.index, position.length); // origin text delete
-		quillInstance.current.insertText(position.index, ulText, {
-			underline: true,
-		});
-	};
 
 	const onClickImageBtn = () => {
 		const input = document.createElement("input");
 		input.setAttribute("type", "file");
 		input.setAttribute("accept", "image/*");
 		input.click();
-		input.onchange = async function () {
-			const file = input.files[0];
-			const formData = new FormData();
-			formData.append("img", file);
-
-			const result = await axios.post("/api/image/uploadFile", formData, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-			});
-			if (result.status === 200) {
-				const range = quillInstance.current.getSelection(true);
-				quillInstance.current.insertEmbed(
-					range.index,
-					"image",
-					`${result.data.location}`
-				);
-				image.push(`${result.data.location}`);
-				uploadImage.push(`${result.data.location}`);
-				quillInstance.current.setSelection(range.index + 1);
-			} else {
-				alert("error");
-			}
+		input.onchange = async (event) => {
+			const file = event.target.files[0];
+			const fileReader = new FileReader();
+			fileReader.onload = function (event) {
+				const base64Img = event.target.result;
+				const range = quillInstance.current.getSelection().index;
+				quillInstance.current.insertEmbed(range, "image", base64Img);
+				quillInstance.current.setSelection(range + 1);
+				setQuillFile((prev) => [
+					...prev,
+					{ base64: base64Img, file: file },
+				]);
+			};
+			fileReader.readAsDataURL(file);
 		};
 	};
 
-	const handleTitle = (event) => {
+	const titleHandler = (event) => {
 		setTitle(event.currentTarget.value);
 	};
 
 	const blogPost = async (event) => {
 		event.preventDefault();
-
-		let ulCount = 0;
-		const ulList = document.getElementsByTagName("u");
-		for (const ulData of ulList) {
-			ulData.setAttribute("class", `ul-${ulCount}`);
-			ulCount++;
+		const result = Array.from(
+			quillInstance.current.root.innerHTML.matchAll(
+				/<img[^>]+src=["']([^'">]+)['"]/gi
+			)
+		);
+		const quillImgTagArr = result.map((item) => item.pop() || "");
+		const updateFile = quillFile.filter((item) =>
+			quillImgTagArr.includes(item.base64)
+		);
+		if (updateFile.length !== quillFile.length) {
+			setQuillFile(updateFile);
 		}
-
-		const imageSet = new Set();
-		const imgReg = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g;
-		while (imgReg.test(quillInstance.current.root.innerHTML)) {
-			imageSet.add(RegExp.$2.trim());
+		const deleteFile = props.data.img.filter(
+			(item) => !quillImgTagArr.includes(item.F_IMG)
+		);
+		let finalContent = quillInstance.current.root.innerHTML;
+		let s3File = [];
+		if (updateFile.length) {
+			const formData = new FormData();
+			for (const img of updateFile) {
+				formData.append("img", img.file);
+			}
+			const s3Response = await axios.post(
+				"/api/image/uploadFile",
+				formData,
+				{
+					headers: {
+						"Content-Type": "multipart/form-data",
+					},
+				}
+			);
+			s3File = s3Response.data.location;
+			for (const i of updateFile) {
+				for (const j of s3File) {
+					if (i.file.name === j.split("/")[3]) {
+						finalContent = finalContent.replace(i.base64, j);
+					}
+				}
+			}
 		}
-		const imageArray = Array.from(imageSet);
-		const uploadFile = uploadImage.filter((x) => imageArray.includes(x));
-		const response = await axios.put("/api/blog", {
+		const response = await axios.put("/api/blog/post", {
 			id: props.data.id,
 			title: title,
-			content: quillInstance.current.root.innerHTML,
-			writer: "dev hong",
-			img: uploadFile,
+			content: finalContent,
+			writer: "HongJin",
+			uploadImg: s3File,
+			deleteImg: deleteFile,
 		});
-		const deleteFileInDB = imageCopy.filter((x) => !imageArray.includes(x));
-		const deleteFile = image.filter((x) => !imageArray.includes(x));
-		if (deleteFile.length) {
-			await axios.put("/api/image/deleteFile", {
-				deleteFiles: deleteFile,
-				deleteFilesInDB: deleteFileInDB,
-			});
-		}
 		if (response.status === 200) {
 			alert("블로그 포스팅이 정상적으로 수정되었습니다.");
 			router.push(`/blog/${props.data.id}`);
 		} else {
-			alert("BLOG UPDATE FAIL ERROR");
+			alert("블로그 수정에 실패하였습니다. 다시 시도해주세요.");
 		}
 	};
 
 	return (
 		<>
-			<Container className={classes.root}>
+			<Container style={{ maxWidth: "1100px" }}>
 				<form>
 					<TextField
 						placeholder="제목을 입력해주세요. "
 						helperText="필수 입력 사항입니다."
 						fullWidth
 						margin="normal"
-						onChange={handleTitle}
+						onChange={titleHandler}
 						defaultValue={props.data.title}
 					/>
 					<div ref={quillElement} className={classes.editor}></div>

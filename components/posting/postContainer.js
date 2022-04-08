@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -27,24 +27,18 @@ export const modules = {
 		container: [
 			[{ header: [1, 2, 3, 4, 5, 6, false] }],
 			[{ font: [] }],
-
 			["bold", "italic", "underline", "strike"],
 			["blockquote", "code-block"],
-
 			[{ list: "ordered" }, { list: "bullet" }],
-			,
 			[{ indent: "-1" }, { indent: "+1" }],
-
 			[{ color: [] }, { background: [] }],
 			[{ align: [] }],
 			["link", "image"],
 			["clean"],
 		],
 	},
-	imageResize: { modules: ["Resize"] },
 };
 
-const image = [];
 const postContainer = () => {
 	const classes = useStyles();
 
@@ -53,9 +47,9 @@ const postContainer = () => {
 	const quillInstance = useRef(null);
 
 	const [title, setTitle] = useState("");
-	const [underLine, setUnderline] = useState(false);
 	const [currentFile, setCurrentFile] = useState(null);
 	const [previewImg, setPreviewImg] = useState(null);
+	const [quillFile, setQuillFile] = useState([]);
 
 	useEffect(() => {
 		if (quillElement.current) {
@@ -65,26 +59,53 @@ const postContainer = () => {
 				modules: modules,
 			});
 		}
-
 		const quill = quillInstance.current;
 		const toolbar = quill.getModule("toolbar");
 		toolbar.addHandler("image", onClickImageBtn);
-		toolbar.addHandler("underline", onClickUnderLine);
 	}, []);
 
+	// 썸네일 선택 버튼 클릭시 input tag 클릭하도록
 	const chooseImg = () => {
 		document.getElementById("btn-upload").click();
 	};
-
+	//  썸네일 이미지 미리보기 생성
 	const selectFile = async (event) => {
 		setCurrentFile(event.target.files[0]);
 		setPreviewImg(URL.createObjectURL(event.target.files[0]));
 	};
 
+	// 제목 저장
+	const titleHandler = (event) => {
+		setTitle(event.currentTarget.value);
+	};
+
+	// 이미지 버튼 클릭시 미리보기(base64), file 따로 저장
+	const onClickImageBtn = () => {
+		const input = document.createElement("input");
+		input.setAttribute("type", "file");
+		input.setAttribute("accept", "image/*");
+		input.click();
+		input.onchange = async (event) => {
+			const file = event.target.files[0];
+			const fileReader = new FileReader();
+			fileReader.onload = function (event) {
+				const base64Img = event.target.result;
+				const range = quillInstance.current.getSelection().index;
+				quillInstance.current.insertEmbed(range, "image", base64Img);
+				quillInstance.current.setSelection(range + 1);
+				setQuillFile((prev) => [
+					...prev,
+					{ base64: base64Img, file: file },
+				]);
+			};
+			fileReader.readAsDataURL(file);
+		};
+	};
+
+	// 썸네일 이미지 저장
 	const thumbNailHandler = async () => {
 		const formData = new FormData();
 		formData.append("img", currentFile);
-
 		const result = await axios.post("/api/image/uploadFile", formData, {
 			headers: {
 				"Content-Type": "multipart/form-data",
@@ -95,99 +116,59 @@ const postContainer = () => {
 		}
 	};
 
-	const onClickUnderLine = () => {
-		const position = quillInstance.current.getSelection(true); // position of dragged string
-		const ulText = quillInstance.current.getText(
-			position.index,
-			position.length
-		); // get text of position
-		quillInstance.current.deleteText(position.index, position.length); // origin text delete
-		quillInstance.current.insertText(position.index, ulText, {
-			// ad origin text with underline
-			underline: true,
-		});
-	};
-
-	const titleHandler = (event) => {
-		setTitle(event.currentTarget.value);
-	};
-
-	const onClickImageBtn = () => {
-		const input = document.createElement("input");
-		input.setAttribute("type", "file");
-		input.setAttribute("accept", "image/*");
-		input.click();
-		input.onchange = async function () {
-			const file = input.files[0];
-			const formData = new FormData();
-			formData.append("img", file);
-			const result = await axios.post("/api/image/uploadFile", formData, {
-				headers: {
-					"Content-Type": "multipart/form-data",
-				},
-			});
-			console.log(result, "imgBtn click");
-			if (result.status === 200) {
-				const range = quillInstance.current.getSelection(true);
-				quillInstance.current.insertEmbed(
-					range.index,
-					"image",
-					`${result.data.location}`
-				);
-				console.log(quillInstance.current, "current check");
-				image.push(`${result.data.location}`);
-				quillInstance.current.setSelection(range.index + 1);
-			} else {
-				alert("error");
-			}
-		};
-	};
-
+	// 포스팅
 	const blogPost = async (event) => {
 		event.preventDefault();
-		// let ulCount = 0;
-		// const ulList = document.getElementsByTagName("u");
-		// for (const ulData of ulList) {
-		// 	ulData.setAttribute("class", `ul-${ulCount}`);
-		// 	ulCount++;
-		// }
-
-		const imageSet = new Set();
-		const imgReg = /(<img[^>]*src\s*=\s*[\"']?([^>\"']+)[\"']?[^>]*>)/g;
-		while (imgReg.test(quillInstance.current.root.innerHTML)) {
-			imageSet.add(RegExp.$2.trim());
+		const result = Array.from(
+			quillInstance.current.root.innerHTML.matchAll(
+				/<img[^>]+src=["']([^'">]+)['"]/gi
+			)
+		);
+		const quillImgTagArr = result.map((item) => item.pop() || "");
+		const filterFile = quillFile.filter(
+			(item) => quillImgTagArr.includes(item.base64) && item
+		);
+		if (filterFile.length !== quillFile.length) {
+			setQuillFile(filterFile);
 		}
-		const imageArray = Array.from(imageSet);
-		const uploadFile = image.filter((x) => imageArray.includes(x));
-
+		const formData = new FormData();
+		for (const img of filterFile) {
+			formData.append("img", img.file);
+		}
+		const s3Response = await axios.post("/api/image/uploadFile", formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		});
+		let finalContent = quillInstance.current.root.innerHTML;
+		const s3File = s3Response.data.location;
+		for (const i of filterFile) {
+			for (const j of s3File) {
+				if (i.file.name === j.split("/")[3]) {
+					finalContent = finalContent.replace(i.base64, j);
+				}
+			}
+		}
 		const thumbNail = await thumbNailHandler();
-
-		const response = await axios.post("/api/blog", {
+		const response = await axios.post("/api/blog/post", {
 			title: title,
-			content: quillInstance.current.root.innerHTML,
+			content: finalContent,
 			writer: "HongJin",
 			thumbNail: thumbNail,
-			img: uploadFile,
+			img: s3File,
 		});
 
-		const deleteFile = image.filter((x) => !imageArray.includes(x));
-		if (deleteFile.length) {
-			console.log("front delete file 진입");
-			await axios.put("/api/image/deleteFile", {
-				deleteFiles: deleteFile,
-			});
-		}
 		if (response.status === 200) {
-			alert("블로그 포스팅이 정상적으로 작동되었습니다.");
+			alert("블로그 포스팅이 정상적으로 작성되었습니다.");
 			router.push("/blog");
 		} else {
-			alert("BLOG POST FAIL ERROR");
+			alert("블로그 포스팅에 실패하였습니다. 다시 시도해주세요.");
 		}
 	};
 
 	return (
 		<>
-			<Container className={classes.root}>
+			<Container style={{ maxWidth: "1100px" }}>
 				<form>
 					<Grid container>
 						<Grid item xs={12}>
@@ -259,6 +240,7 @@ const postContainer = () => {
 								marginLeft: "auto",
 								color: "#218e16",
 								backgroundColor: "white",
+								paddingBottom: "10px",
 							}}
 						>
 							Submit
