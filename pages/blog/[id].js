@@ -24,17 +24,6 @@ export async function getServerSideProps(context) {
 			},
 		}
 	);
-	const tocData = [];
-	const tocArray = response.data[0].content.match(
-		/<u class="ul-\d">[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9.;-\s]+<\/u>/gm
-	);
-	if (tocArray) {
-		for (const data of tocArray) {
-			const result = data.replace(/(<([^>]+)>)/gi, "");
-			tocData.push(result);
-		}
-	}
-	response.data[0].tocData = tocData;
 	return {
 		props: {
 			data: response.data[0],
