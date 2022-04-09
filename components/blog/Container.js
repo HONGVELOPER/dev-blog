@@ -37,7 +37,7 @@ const BlogContainer = (props) => {
 								<div>
 									<Avatar
 										className={classes.avatar}
-										src="/images/avatar3.jpg"
+										src="/images/avatar.jpg"
 										style={{
 											display: "inline-block",
 											margin: "5px",
