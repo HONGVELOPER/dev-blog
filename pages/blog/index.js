@@ -13,10 +13,15 @@ const Blog = ({ data }) => {
 	);
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
+	const start = new Date();
+	console.log("request 시작");
 	const response = await axios.get(
 		`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog/post`
 	);
+	console.log("response 응답");
+	const end = new Date();
+	console.log("ttfb : ", end - start);
 	return {
 		props: {
 			data: response.data,
