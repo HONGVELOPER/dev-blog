@@ -1,13 +1,14 @@
 ## DEV HONG
 
-My website address is <https://developerhong.com>
+My website address is <https://dev-hong.com>
 
 The purpose of this website is not to forget what i have studied
 
 ---
 
   #### Deployment 
-   + Vercel: Hosting and SSL certification(SSL certificates are automatically authenticated at Vercel)
+   + EC2: Hosting 
+   + Nginx(Cerbot): SSL certification
 
   #### FrontEnd
    + React.js
@@ -23,7 +24,6 @@ The purpose of this website is not to forget what i have studied
  ---
  
   ### What to do next
-    + blog table of contents (ok)
     + blog tag
     + SEO
-    + ORM
+    + 
