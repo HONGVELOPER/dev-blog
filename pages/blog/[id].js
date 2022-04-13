@@ -2,10 +2,21 @@ import Header from "../../components/index/Header.js";
 import DetailContainer from "../../components/blogDetail/Container.js";
 import Comment from "../../components/comment/comment.js";
 import axios from "axios";
+import Head from "next/head";
 
 const BlogDetail = ({ data }) => {
 	return (
 		<div>
+			<Head>
+				<meta
+					property="og:title"
+					content={data.title ? data.title : "blog page"}
+				/>
+				<meta
+					property="og:description"
+					content={data.content ? data.content : "blog content"}
+				/>
+			</Head>
 			<Header />
 			<DetailContainer data={data} />
 			<Comment data={data.comment} />
