@@ -45,8 +45,8 @@ blogFunctions.getAllPost = async function () {
 		`);
 		results.forEach((result) => {
 			result.content =
-				result.content.replace(/(<([^>]+)>)/gi, "").substring(0, 90) +
-				" ···";
+				result.content.replace(/(<([^>]+)>)/gi, "").substring(0, 220) +
+				"···";
 		});
 		return results;
 	} catch (error) {
