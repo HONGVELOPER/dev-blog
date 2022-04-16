@@ -39,7 +39,7 @@ const BlogContainer = (props) => {
 								style={{
 									position: "relative",
 									top: "10px",
-									width: "150px",
+									maxWidth: "180px",
 									height: "150px",
 								}}
 							>
@@ -48,12 +48,16 @@ const BlogContainer = (props) => {
 									alt="blog post image"
 									style={{
 										display: "block",
-										width: "70%",
+										objectFit: "cover",
+										width: "100%",
 										height: "100%",
+										boxShadow:
+											"3px 3px 6px rgb(60,92,94, 0.3)",
+										borderRadius: "6px",
 									}}
 								/>
 							</Grid>
-							<Grid item xs={9} style={{ paddingLeft: "20px" }}>
+							<Grid item xs={9} style={{ paddingLeft: "30px" }}>
 								<div
 									style={{
 										marginBottom: "5px",
