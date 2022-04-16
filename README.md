@@ -12,14 +12,14 @@ The purpose of this website is not to forget what i have studied
 
   #### FrontEnd
    + React.js
-   + Next.js
+   + Next.js (v10.0.0)
   
   #### BackEnd
-   + Node.js
+   + Node.js (v16.13.1)
    + MySQL
 
    #### CSS FrameWork
-   + Material UI
+   + Material UI (v4.11.4)
    
  ---
  
