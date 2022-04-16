@@ -7,7 +7,7 @@ The purpose of this website is not to forget what i have studied
 ---
 
   #### Deployment 
-   + EC2: Hosting 
+   + EC2: Deployment
    + Nginx(Cerbot): SSL certification
 
   #### FrontEnd
@@ -26,4 +26,3 @@ The purpose of this website is not to forget what i have studied
   ### What to do next
     + blog tag
     + SEO
-    + 
