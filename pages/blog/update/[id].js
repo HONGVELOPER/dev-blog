@@ -20,7 +20,7 @@ const BlogUpdate = ({ data }) => {
 			{show ? (
 				<>
 					<Header />
-					<UpdateContainer data={data} />
+					<UpdateContainer post={data} />
 				</>
 			) : (
 				<>
@@ -35,16 +35,13 @@ export default BlogUpdate;
 
 export async function getServerSideProps(context) {
 	const response = await axios.get(
-		`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog/post`,
-		{
-			params: {
-				id: context.query.id,
-			},
-		}
+		`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/post/${context.query.id}`
 	);
-	return {
-		props: {
-			data: response.data[0],
-		},
-	};
+	if (response.data.success) {
+		return {
+			props: {
+				data: response.data,
+			},
+		};
+	}
 }

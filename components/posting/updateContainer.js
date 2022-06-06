@@ -31,11 +31,8 @@ export const modules = {
 	},
 };
 
-const image = [];
-const imageCopy = [];
-const uploadImage = [];
-
 const UpadateContainer = (props) => {
+	console.log(props.post.data, "props check~~");
 	const classes = useStyles();
 
 	const Quill = typeof window == "object" ? require("quill") : () => false;
@@ -46,13 +43,7 @@ const UpadateContainer = (props) => {
 	const [quillFile, setQuillFile] = useState([]);
 
 	useEffect(() => {
-		setTitle(props.data.title);
-		if (props.data.img) {
-			for (const i of props.data.img) {
-				image.push(i.F_IMG);
-				imageCopy.push(i.F_IMG);
-			}
-		}
+		setTitle(props.post.data.title);
 		if (quillElement.current) {
 			quillInstance.current = new Quill(quillElement.current, {
 				theme: "snow",
@@ -63,7 +54,7 @@ const UpadateContainer = (props) => {
 		const quill = quillInstance.current;
 		const toolbar = quill.getModule("toolbar");
 		toolbar.addHandler("image", onClickImageBtn);
-		quill.root.innerHTML = props.data.content;
+		quill.root.innerHTML = props.post.data.content;
 	}, []);
 
 	const onClickImageBtn = () => {
@@ -92,6 +83,21 @@ const UpadateContainer = (props) => {
 		setTitle(event.currentTarget.value);
 	};
 
+	const imageHandler = async (images) => {
+		const formData = new FormData();
+		for (const image of images) {
+			formData.append("multipartFileList", image.file);
+		}
+		const result = await axios.post("/api/v1/s3/images", formData, {
+			headers: {
+				"Content-Type": "multipart/form-data",
+			},
+		});
+		if (result.data.success) {
+			return result.data.list;
+		}
+	};
+
 	const blogPost = async (event) => {
 		event.preventDefault();
 		const result = Array.from(
@@ -106,45 +112,42 @@ const UpadateContainer = (props) => {
 		if (updateFile.length !== quillFile.length) {
 			setQuillFile(updateFile);
 		}
-		const deleteFile = props.data.img.filter(
-			(item) => !quillImgTagArr.includes(item.F_IMG)
-		);
-		let finalContent = quillInstance.current.root.innerHTML;
-		let s3File = [];
-		if (updateFile.length) {
-			const formData = new FormData();
-			for (const img of updateFile) {
-				formData.append("img", img.file);
-			}
-			const s3Response = await axios.post(
-				"/api/image/uploadFile",
-				formData,
-				{
-					headers: {
-						"Content-Type": "multipart/form-data",
-					},
-				}
+		let deleteFile = [];
+		if (props.post.data.imageResponseDtoList) {
+			deleteFile = props.post.data.imageResponseDtoList.filter(
+				(item) => !quillImgTagArr.includes(item.image)
 			);
-			s3File = s3Response.data.location;
+		}
+		let finalDeleteFile = [];
+		for (const i of deleteFile) {
+			finalDeleteFile.push(i.image.split(".com/")[1]);
+		}
+		let s3File = [];
+		let finalContent = quillInstance.current.root.innerHTML;
+		if (updateFile.length) {
+			const s3Response = await imageHandler(updateFile);
 			for (const i of updateFile) {
-				for (const j of s3File) {
-					if (i.file.name === j.split("/")[3]) {
-						finalContent = finalContent.replace(i.base64, j);
+				for (const j of s3Response) {
+					if (i.file.name === j[0]) {
+						finalContent = finalContent.replace(i.base64, j[1]);
 					}
+					s3File.push(j[1]);
 				}
 			}
 		}
-		const response = await axios.put("/api/blog/post", {
-			id: props.data.id,
+		console.log("deleteFIle", deleteFile);
+		const response = await axios.put(`/api/v1/post/${props.post.data.id}`, {
 			title: title,
 			content: finalContent,
-			writer: "HongJin",
-			uploadImg: s3File,
-			deleteImg: deleteFile,
+			author: "HongJin",
+			viewCount: 0,
+			thumbNail: props.post.data.thumbNail,
+			images: s3File,
+			deleteImages: finalDeleteFile,
 		});
-		if (response.status === 200) {
+		if (response.data.success) {
 			alert("블로그 포스팅이 정상적으로 수정되었습니다.");
-			router.push(`/blog/${props.data.id}`);
+			router.push(`/blog/${props.post.data.id}`);
 		} else {
 			alert("블로그 수정에 실패하였습니다. 다시 시도해주세요.");
 		}
@@ -160,7 +163,7 @@ const UpadateContainer = (props) => {
 						fullWidth
 						margin="normal"
 						onChange={titleHandler}
-						defaultValue={props.data.title}
+						defaultValue={props.post.data.title}
 					/>
 					<div ref={quillElement} className={classes.editor}></div>
 					<div style={{ display: "flex", paddingTop: "20px" }}>

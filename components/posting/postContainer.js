@@ -47,7 +47,7 @@ const postContainer = () => {
 	const quillInstance = useRef(null);
 
 	const [title, setTitle] = useState("");
-	const [currentFile, setCurrentFile] = useState(null);
+	const [currentFile, setCurrentFile] = useState();
 	const [previewImg, setPreviewImg] = useState(null);
 	const [quillFile, setQuillFile] = useState([]);
 
@@ -102,17 +102,27 @@ const postContainer = () => {
 		};
 	};
 
-	// 썸네일 이미지 저장
-	const thumbNailHandler = async () => {
+	// 이미지 저장
+	const imageHandler = async (images) => {
 		const formData = new FormData();
-		formData.append("img", currentFile);
-		const result = await axios.post("/api/image/uploadFile", formData, {
+		if (Array.isArray(images)) {
+			for (const image of images) {
+				formData.append("multipartFileList", image.file);
+			}
+		} else {
+			formData.append("multipartFileList", images);
+		}
+		const result = await axios.post("/api/v1/s3/images", formData, {
 			headers: {
 				"Content-Type": "multipart/form-data",
 			},
 		});
-		if (result.status === 200) {
-			return result.data.location;
+		if (result.data.success) {
+			if (Array.isArray(images)) {
+				return result.data.list;
+			} else {
+				return result.data.list[0][1];
+			}
 		}
 	};
 
@@ -131,34 +141,30 @@ const postContainer = () => {
 		if (filterFile.length !== quillFile.length) {
 			setQuillFile(filterFile);
 		}
-		const formData = new FormData();
-		for (const img of filterFile) {
-			formData.append("img", img.file);
-		}
-		const s3Response = await axios.post("/api/image/uploadFile", formData, {
-			headers: {
-				"Content-Type": "multipart/form-data",
-			},
-		});
+		let s3File = [];
 		let finalContent = quillInstance.current.root.innerHTML;
-		const s3File = s3Response.data.location;
-		for (const i of filterFile) {
-			for (const j of s3File) {
-				if (i.file.name === j.split("/")[3]) {
-					finalContent = finalContent.replace(i.base64, j);
+		if (filterFile.length) {
+			const s3Response = await imageHandler(filterFile);
+			for (const i of filterFile) {
+				for (const j of s3Response) {
+					if (i.file.name === j[0]) {
+						finalContent = finalContent.replace(i.base64, j[1]);
+					}
+					s3File.push(j[1]);
 				}
 			}
 		}
-		const thumbNail = await thumbNailHandler();
-		const response = await axios.post("/api/blog/post", {
+		const thumbNail = await imageHandler(currentFile);
+		const response = await axios.post("/api/v1/post", {
 			title: title,
 			content: finalContent,
-			writer: "HongJin",
+			author: "HongJin",
+			viewCount: 0,
 			thumbNail: thumbNail,
-			img: s3File,
+			images: s3File,
+			deleteImages: [],
 		});
-
-		if (response.status === 200) {
+		if (response.data.success) {
 			alert("블로그 포스팅이 정상적으로 작성되었습니다.");
 			router.push("/blog");
 		} else {

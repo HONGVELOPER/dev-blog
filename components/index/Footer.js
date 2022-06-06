@@ -125,9 +125,9 @@ const footer = () => {
 						>
 							<GitHubIcon color="inherit" fontSize="large" />
 						</Button>
-						<Button className={classes.hover} onClick={openHandler}>
+						{/* <Button className={classes.hover} onClick={openHandler}>
 							<MailIcon color="inherit" fontSize="large" />
-						</Button>
+						</Button> */}
 						<Button
 							className={classes.hover}
 							href="https://www.instagram.com/dudwls.h/"
@@ -140,65 +140,6 @@ const footer = () => {
 						>
 							<FacebookIcon color="inherit" fontSize="large" />
 						</Button>
-						<Grid container>
-							<Grid item xs={12}>
-								<Modal
-									open={open}
-									onClose={closeHandler}
-									className={classes.modal}
-								>
-									<div className={classes.paper}>
-										<div
-											style={{
-												padding: 30,
-												paddingBottom: 10,
-												fontSize: "20px",
-												color: "#218e16",
-											}}
-										>
-											Contact&nbsp; with&nbsp; Me&nbsp;
-											by&nbsp; Mail
-										</div>
-										<Divider variant="middle" />
-										<div>
-											<TextField
-												className={classes.title}
-												label="제목을 입력해주세요."
-												onChange={titleHandler}
-												defaultValue={title}
-											/>
-										</div>
-										<TextField
-											className={classes.text}
-											variant="outlined"
-											label="내용을 입력해주세요."
-											onChange={textHandler}
-											defaultValue={text}
-											multiline
-											rows={7}
-										/>
-										<div
-											style={{
-												marginTop: 30,
-												marginLeft: "7vw",
-												marginRight: "7vw",
-												display: "flex",
-											}}
-										>
-											<Button onClick={closeHandler}>
-												Cancel
-											</Button>
-											<Button
-												style={{ marginLeft: "auto" }}
-												onClick={mailSend}
-											>
-												Send
-											</Button>
-										</div>
-									</div>
-								</Modal>
-							</Grid>
-						</Grid>
 					</div>
 					<Grid container className={classes.footerText}>
 						<Grid item xs={12}>

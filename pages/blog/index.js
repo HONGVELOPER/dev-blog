@@ -24,15 +24,18 @@ const Blog = ({ data }) => {
 	);
 };
 
+export default Blog;
+// NEXT_PUBLIC_API_BASE_URL=http://ec2-15-164-215-13.ap-northeast-2.compute.amazonaws.com:3000
+
 export async function getServerSideProps() {
 	const response = await axios.get(
-		`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/blog/post`
+		`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/posts`
 	);
-	return {
-		props: {
-			data: response.data,
-		},
-	};
+	if (response.data.success) {
+		return {
+			props: {
+				data: response.data.list,
+			},
+		};
+	}
 }
-
-export default Blog;
