@@ -24,11 +24,9 @@ function BlogDetailContainer(props) {
 	}
 
 	const deletePost = async () => {
-		const response = await axios.delete("/api/blog/post", {
-			params: {
-				id: props.data.id,
-			},
-		});
+		const response = await axios.delete(
+			`/api/v1/post/${props.post.data.id}`
+		);
 		if (response.status === 200) {
 			alert("블로그 포스팅이 정상적으로 삭제되었습니다.");
 			router.push("./");
@@ -53,7 +51,7 @@ function BlogDetailContainer(props) {
 								marginTop: 20,
 							}}
 						>
-							{props.data.title}
+							{props.post.data.title}
 						</div>
 					</div>
 					<div
@@ -66,13 +64,13 @@ function BlogDetailContainer(props) {
 						}}
 					>
 						<span>
-							{props.data.date}&nbsp;&nbsp; 조회수:{" "}
-							{props.data.view}
+							{props.post.data.date}&nbsp;&nbsp; 조회수:{" "}
+							{props.post.data.viewCount}
 						</span>
 					</div>
 				</Grid>
 				<Grid item xs={12}>
-					<div>{parse(props.data.content)}</div>
+					<div>{parse(props.post.data.content)}</div>
 				</Grid>
 			</Grid>
 			<div>

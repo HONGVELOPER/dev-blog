@@ -7,8 +7,6 @@ import Head from "next/head";
 import { useState } from "react";
 
 function Home() {
-	// console.log("index rendering");
-
 	const [abLocation, setAbLocation] = useState(null);
 	const [skLocation, setSkLocation] = useState(null);
 

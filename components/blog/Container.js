@@ -9,18 +9,8 @@ import {
 	Link,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import Image from "next/image";
-
-const useStyles = makeStyles((theme) => ({
-	// avatar: {
-	// 	height: theme.spacing(6),
-	// 	width: theme.spacing(6),
-	// 	boxShadow: "3px 3px 6px #3c5c5e",
-	// },
-}));
 
 const BlogContainer = (props) => {
-	const classes = useStyles();
 	const postList = props.data.map((post) => (
 		<Grid item xs={12} style={{ width: "1000px" }} key={post.id}>
 			<Link href={`blog/${post.id}`} style={{ textDecoration: "none" }}>
@@ -44,7 +34,7 @@ const BlogContainer = (props) => {
 								}}
 							>
 								<img
-									src={`${post.img}`}
+									src={`${post.thumbNail}`}
 									alt="blog post image"
 									style={{
 										display: "block",
@@ -90,8 +80,8 @@ const BlogContainer = (props) => {
 											padding: "15px 0px",
 										}}
 									>
-										{post.writer}&nbsp;&nbsp; {post.date}
-										&nbsp;| 조회수 : {post.view}
+										{post.author}&nbsp;&nbsp; {post.date}
+										&nbsp;| 조회수 : {post.viewCount}
 										&nbsp;&nbsp;
 									</span>
 								</div>

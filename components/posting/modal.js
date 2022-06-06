@@ -44,10 +44,10 @@ const modal = (props) => {
 	};
 
 	const passwordCheck = async () => {
-		const response = await axios.post("/api/blog/password", {
+		const response = await axios.post("/api/v1/post/password", {
 			password: password,
 		});
-		if (response.data.result) {
+		if (response.data.success) {
 			props.passwordCheck(true);
 		} else {
 			alert("다시 입력해주세요.");
