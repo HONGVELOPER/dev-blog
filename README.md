@@ -11,11 +11,10 @@ The purpose of this website is not to forget what i have studied
    + Nginx(Cerbot): SSL certification
 
   #### FrontEnd
-   + React.js
    + Next.js (v10.0.0)
   
   #### BackEnd
-   + Node.js (v16.13.1)
+   + Spring boot (v2.6.4)
    + MySQL
 
    #### CSS FrameWork
