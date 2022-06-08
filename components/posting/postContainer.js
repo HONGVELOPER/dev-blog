@@ -128,6 +128,11 @@ const postContainer = () => {
 
 	// 포스팅
 	const blogPost = async (event) => {
+		if (!currentFile) {
+			return alert("썸네일 이미지를 선택해주세요.");
+		} else if (!title) {
+			return alert("제목을 작성해주세요.");
+		}
 		event.preventDefault();
 		const result = Array.from(
 			quillInstance.current.root.innerHTML.matchAll(

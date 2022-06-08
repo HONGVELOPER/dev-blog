@@ -32,7 +32,6 @@ export const modules = {
 };
 
 const UpadateContainer = (props) => {
-	console.log(props.post.data, "props check~~");
 	const classes = useStyles();
 
 	const Quill = typeof window == "object" ? require("quill") : () => false;
@@ -99,6 +98,9 @@ const UpadateContainer = (props) => {
 	};
 
 	const blogPost = async (event) => {
+		if (!title) {
+			return alert("제목을 작성해주세요.");
+		}
 		event.preventDefault();
 		const result = Array.from(
 			quillInstance.current.root.innerHTML.matchAll(
@@ -135,7 +137,6 @@ const UpadateContainer = (props) => {
 				}
 			}
 		}
-		console.log("deleteFIle", deleteFile);
 		const response = await axios.put(`/api/v1/post/${props.post.data.id}`, {
 			title: title,
 			content: finalContent,
