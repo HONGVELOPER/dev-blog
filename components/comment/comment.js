@@ -23,7 +23,7 @@ const commentContainer = () => {
 
 		const utterancesConfig = {
 			src: "https://utteranc.es/client.js",
-			repo: "HONGVELOPER/dev-blog",
+			repo: "HONGVELOPER/devlog-front-end",
 			theme: "github-light",
 			"issue-term": "pathname",
 			async: true,
