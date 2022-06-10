@@ -39,4 +39,6 @@ export async function getServerSideProps() {
 	}
 	// NEXT_PUBLIC_API_BASE_URL=http://ec2-15-164-215-13.ap-northeast-2.compute.amazonaws.com:8000
 	// DESTINATION_URL = 'https://www.dev-hong.com/api/:path*'
+	// 	NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+	// DESTINATION_URL = 'http://localhost:8081/api/:path*'
 }
