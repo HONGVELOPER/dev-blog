@@ -8,13 +8,15 @@ The purpose of this website is not to forget what i have studied
 
   #### Deployment 
    + EC2: Deployment
-   + Nginx(Cerbot): SSL certification
+   + S3 storage
+   + Nginx(Cerbot): SSL certification, proxy
 
   #### FrontEnd
    + Next.js (v10.0.0)
   
   #### BackEnd
    + Spring boot (v2.6.4)
+   + JPA
    + MySQL
 
    #### CSS FrameWork
@@ -24,4 +26,7 @@ The purpose of this website is not to forget what i have studied
  
   ### What to do next
     + blog tag
-    + SEO
+    + pagination
+    + SEO(o)
+    + code block highlight(o)
+    
