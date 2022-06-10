@@ -13,6 +13,13 @@ const useStyles = makeStyles((theme) => ({
 	title: {
 		fontWeight: "100",
 	},
+	codeBlock: {
+		"& .ql-syntax": {
+			backgroundColor: "#23241f",
+			color: "#f8f8f2",
+			overflow: "auto",
+		},
+	},
 }));
 
 function BlogDetailContainer(props) {
@@ -69,7 +76,7 @@ function BlogDetailContainer(props) {
 						</span>
 					</div>
 				</Grid>
-				<Grid item xs={12}>
+				<Grid item xs={12} className={classes.codeBlock}>
 					<div>{parse(props.post.data.content)}</div>
 				</Grid>
 			</Grid>
